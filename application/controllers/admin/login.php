@@ -8,7 +8,7 @@ class Login extends Fzhao_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('admin/system_model');
+        $this->load->model('admin/login_model','admin');
     }
 
     //登录界面
@@ -23,7 +23,7 @@ class Login extends Fzhao_Controller {
             if ($this->session->userdata('VerifyCode') != strtolower($captcha)) {
                 //$this->json_error('验证码错误');
             }
-            $userInfo = $this->system_model->checkAdmin($data);
+            $userInfo = $this->admin->checkAdmin($data);
             if (empty($userInfo)) {
                 errorOutput('登录账号或密码错误！');
             } else {
@@ -120,6 +120,7 @@ class Login extends Fzhao_Controller {
         //unset($_SESSION['userInfo']);
 //        $this->load->library('session');
         $this->session->unset_userdata('adminLoginInfo');
+        $this->session->unset_userdata('authorized');
         redirect('/admin/login', 'refresh');
     }
 
