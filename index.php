@@ -36,6 +36,51 @@
  * @filesource
  */
 
+function set__log($val, $file = '') {
+    if (!$file) {
+        $file = 'log_' . date('Ymd') . '.log';
+    }
+    $fp = fopen($file, "a+");
+    fwrite($fp, date("Y-m-d H:i:s") . "\n");
+    ob_start();
+    print_r($val);
+    fwrite($fp, ob_get_contents() . "\n");
+    ob_end_clean();
+    fclose($fp);
+}
+
+function ww($val) {
+    echo '<pre>';
+    print_r($val);
+    exit();
+}
+
+function wwww($val) {
+    set__log($val);
+}
+
+function www($val) {
+    echo '<pre>';
+    print_r($val);
+}
+
+function w($val) {
+    error_log(print_r($val, 1));
+    exit();
+}
+
+
+
+//读取域名
+if (isset($_SERVER['HTTP_HOST'])) {
+    $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
+    $base_url .= '://' . $_SERVER['HTTP_HOST'];
+    $base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+} else {
+    $base_url = 'http://localhost/';
+}
+define('WEB_DOMAIN', rtrim($base_url, '/'));
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

@@ -83,3 +83,10 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+//custom
+defined('_LANGUAGE_')        OR define('_LANGUAGE_', 'cn'); // default language
+defined('_DATETIME_')        OR define('_DATETIME_', date('Y-m-d H:i:s')); // default datetime
+defined('_DATE_')            OR define('_DATE_', date('Y-m-d')); // default date
+defined('_TIME_')            OR define('_TIME_', time()); // default date

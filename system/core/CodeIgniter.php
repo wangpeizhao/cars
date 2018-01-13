@@ -401,6 +401,18 @@ if ( ! is_php('5.4'))
 	$e404 = FALSE;
 	$class = ucfirst($RTR->class);
 	$method = $RTR->method;
+        $directory = $RTR->directory;
+        
+        //2018-01-13 
+        define('_CLASS',$class);
+	define('_METHOD',$method);
+        
+        //判断是否为后台链接
+        define('_ADMIN',strpos(strtolower($directory),'admin')>-1?true:false);
+	//判断是否为POST提交
+	define('IS_POST',(strtoupper($_SERVER['REQUEST_METHOD']) == 'POST'));
+	//判断是否为AJAX提交
+        define('IS_AJAX',!empty($_SERVER["HTTP_X_REQUESTED_WITH"]) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == "xmlhttprequest");
 
 	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
 	{

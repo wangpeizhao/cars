@@ -1,0 +1,30 @@
+/*******************************************************************************************************************
+*  Author: Parker (www.shoppinghao.com)                                                                           
+*  Date: 2013-7-27
+*******************************************************************************************************************/
+
+/*******************************************************************************************************************
+*  COMMON STYLES                                                                                             
+*******************************************************************************************************************/
+* {margin: 0;padding: 0;}
+body, div, span, p, a, img, ul, ol, li, form, dl, dt, dd, blockquote, applet, object {border: 0}
+ul, ol {list-style-type:none}
+.c {clear: both;display: block;height: 0;line-height: 0;font-size: 0;width: 100%}
+.hide {display: none}
+.l {float: left !important}
+.r {float: right !important}
+.bold {font-weight: bold !important}
+.small {font-size: 0.9em !important}
+.large {font-size: 1.1em !important}
+.italic {font-style: italic !important}
+.block {display: block !important}
+.inlineBlock {display: inline-block !important}
+.inline {display: inline !important}
+.taR {text-align: right !important}
+.taC {text-align: center !important}
+.taJ {text-align: justify !important}
+.verticalTop {vertical-align: top !important}
+.verticalBtm {vertical-align: bottom !important}
+.relative {position: relative !important}
+.absolute {position: absolute !important}
+.noB {border: 0 !important}
