@@ -6,7 +6,6 @@
 !*/cache/.htaccess
 
 #user_guide_src
-user_guide_src/*
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
@@ -17,3 +16,22 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+/nbproject/private/
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+
+## Sublime Text cache files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+/tests/tests/
+/tests/results/
+
+composer.lock
+
+!application/*/.htaccess
