@@ -2,7 +2,7 @@ function setData(currPage) {
     try {
         $.ajax({
             type: "POST",
-            url: baseUrl+lang + '/admin/system/newsInfo',
+            url: baseUrl+lang + '/admin/news/index',
             data: {
                 currPage: currPage,
                 rows: rows,

@@ -1,4 +1,5 @@
 <?php
+//phpinfo();return true;
 /**
  * CodeIgniter
  *
@@ -70,7 +71,7 @@ function w($val) {
 }
 
 
-
+date_default_timezone_set("Asia/Shanghai");
 //读取域名
 if (isset($_SERVER['HTTP_HOST'])) {
     $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';

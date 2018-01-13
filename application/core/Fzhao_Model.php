@@ -1,7 +1,8 @@
 <?php
 
-if (!defined('BASEPATH'))
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 /**
  * params 
@@ -10,7 +11,10 @@ if (!defined('BASEPATH'))
  */
 class Fzhao_Model extends CI_Model {
 
-    function __construct() {
+    public $table;
+    public $primary_key;
+
+    public function __construct() {
         parent::__construct();
     }
 
@@ -175,7 +179,7 @@ class Fzhao_Model extends CI_Model {
         $result = $this->db->insert_batch($table, $data);
         return $result;
     }
-    
+
     /**
      * Insert Or Update,根据Mysql的新特性 ON DUPLICATE KEY(INSERT INTO … ON DUPLICATE KEY UPDATE)
      * 先执行前面的Insert,如果主键重复，则执行后面的UPDATE
@@ -187,7 +191,7 @@ class Fzhao_Model extends CI_Model {
      * @return  Array <b>select result</b> if <i>program</i> is successful.
      * @author Parker <date>
      */
-    public function dbInsertOrUpdate($table,$insert,$update) {
+    public function dbInsertOrUpdate($table, $insert, $update) {
         if (empty($table)) {
             trigger_error("Table Name Cannot empty!", E_USER_ERROR);
             return false;
@@ -195,22 +199,22 @@ class Fzhao_Model extends CI_Model {
         if (empty($insert)) {
             trigger_error("Insert Data Cannot empty!", E_USER_ERROR);
             return false;
-        }else{
+        } else {
             $insert = new_addslashes($insert);
         }
         if (empty($update)) {
             trigger_error("Update Data Cannot empty!", E_USER_ERROR);
             return false;
-        }else{
+        } else {
             $update = new_addslashes($update);
         }
-        $sql = "INSERT INTO ".$this->dbprefix($table)."(".implode(",", array_keys($insert)).") VALUES ('".implode("','", array_values($insert))."')";
+        $sql = "INSERT INTO " . $this->dbprefix($table) . "(" . implode(",", array_keys($insert)) . ") VALUES ('" . implode("','", array_values($insert)) . "')";
         $sql .= " ON DUPLICATE KEY ";
         $sql .= "UPDATE ";
-        foreach($update as $k=>$item){
-            $sql .= $k." = '".$item."',";
+        foreach ($update as $k => $item) {
+            $sql .= $k . " = '" . $item . "',";
         }
-        $sql = rtrim($sql,",").";";
+        $sql = rtrim($sql, ",") . ";";
         $rows = $this->db->query($sql);
         return $rows;
     }
@@ -236,7 +240,7 @@ class Fzhao_Model extends CI_Model {
             trigger_error("data Cannot empty!", E_USER_ERROR);
             return false;
         }
-        if(!$conditions){
+        if (!$conditions) {
             trigger_error("dbUpdate Conditions Cannot empty!", E_USER_ERROR);
             return false;
         }
@@ -264,7 +268,7 @@ class Fzhao_Model extends CI_Model {
             trigger_error("data Cannot empty!", E_USER_ERROR);
             return false;
         }
-        if(!$conditions && !$in){
+        if (!$conditions && !$in) {
             trigger_error("dbUpdateIn Conditions And In Cannot empty!", E_USER_ERROR);
             return false;
         }
@@ -294,11 +298,11 @@ class Fzhao_Model extends CI_Model {
             trigger_error("data Cannot empty!", E_USER_ERROR);
             return false;
         }
-        if(!$conditions && !$ins){
+        if (!$conditions && !$ins) {
             trigger_error("dbUpdateIns Conditions And Ins Cannot empty!", E_USER_ERROR);
             return false;
         }
-        foreach ($ins as $in){
+        foreach ($ins as $in) {
             list($key, $val) = each($in);
             $this->db->where_in($key, $val);
         }
@@ -326,12 +330,12 @@ class Fzhao_Model extends CI_Model {
             trigger_error("data Cannot empty!", E_USER_ERROR);
             return false;
         }
-        if(!$conditions){
+        if (!$conditions) {
             trigger_error("dbSet Conditions Cannot empty!", E_USER_ERROR);
             return false;
         }
         $this->db->where($conditions);
-        $this->db->set(key($data),current($data),FALSE);
+        $this->db->set(key($data), current($data), FALSE);
         return $this->db->update($table);
     }
 
@@ -353,7 +357,7 @@ class Fzhao_Model extends CI_Model {
             trigger_error("data Cannot empty!", E_USER_ERROR);
             return false;
         }
-        if(!$conditions){
+        if (!$conditions) {
             trigger_error("dbDelete Conditions Cannot empty!", E_USER_ERROR);
             return false;
         }
@@ -378,7 +382,7 @@ class Fzhao_Model extends CI_Model {
             trigger_error("data Cannot empty!", E_USER_ERROR);
             return false;
         }
-        if(!$conditions && !$in){
+        if (!$conditions && !$in) {
             trigger_error("dbDeleteIn Conditions And In Cannot empty!", E_USER_ERROR);
             return false;
         }
@@ -405,7 +409,7 @@ class Fzhao_Model extends CI_Model {
             trigger_error("data Cannot empty!", E_USER_ERROR);
             return false;
         }
-        if(!$conditions && !$in){
+        if (!$conditions && !$in) {
             trigger_error("dbDeleteNotIn Conditions And In Cannot empty!", E_USER_ERROR);
             return false;
         }
@@ -573,14 +577,14 @@ class Fzhao_Model extends CI_Model {
             trigger_error('table没指定');
             exit;
         }
-        
+
         $distinct && $this->db->distinct();
-        if($compiled){
+        if ($compiled) {
             $this->db->from($table);
-        }else{
+        } else {
             $this->db->select($fields, ($escape === false ? false : true))->from($table);
         }
-        
+
         if ($join) {
             $len = count($join);
             if ($len % 2 != 0) {
@@ -690,13 +694,13 @@ class Fzhao_Model extends CI_Model {
             '_conditions' => '',
             'limit' => '', //指定的行数 array($limit,$offset)
             'order' => '', //排序array($fields,$order)
-            '_order' => '', 
+            '_order' => '',
             'join' => '', //联合查询的表 和条件array('table','a.id=b.id')
             'count' => '', //只查询数目
             'concat' => '', //联合查询的连接符
             'in' => '', //查询in语句 array('index',array(1,2,3))
-            'ins' => '', 
-            'not_ins' => '', 
+            'ins' => '',
+            'not_ins' => '',
             'or' => '', //查询or语句 
             'row' => '', //只返回一行数据
             'orders' => '', //多行排序
@@ -725,17 +729,17 @@ class Fzhao_Model extends CI_Model {
      */
     public function getTermByTaxonomy($taxonomy) {
         static $term;
-        if(!empty($term)){
+        if (!empty($term)) {
             return $term;
         }
-        if(!is_array($taxonomy)){
+        if (!is_array($taxonomy)) {
             $taxonomy = array($taxonomy);
         }
         $data = $this->getData(array(
             'fields' => 'id,name,parent,slug,taxonomy,count,subclass',
             'table' => 'term',
             'conditions' => array('is_valid' => 1, 'lang' => _LANGUAGE_),
-            'ins' => array(array('taxonomy'=>$taxonomy)),
+            'ins' => array(array('taxonomy' => $taxonomy)),
             'orders' => array('parent,sort', 'asc,desc'),
         ));
 
@@ -783,51 +787,156 @@ class Fzhao_Model extends CI_Model {
         if ($thepage <= 5) {
             for ($p = 1; $p <= $minpage; $p++) {
                 if ($p == $thepage) {
-                    $str.='<a class="on" title="' . $p . '">' . $p . '</a>';
+                    $str .= '<a class="on" title="' . $p . '">' . $p . '</a>';
                 } else {
-                    $str.='<a href="' . $url . $p . $postfix . '" title="' . $p . '">' . $p . '</a>';
+                    $str .= '<a href="' . $url . $p . $postfix . '" title="' . $p . '">' . $p . '</a>';
                 }
             }
         } elseif ($pages - $thepage <= 4) {
-            $str.='<a href="' . $url . '1' . $postfix . '" title="1">1</a><a>..</a>';
+            $str .= '<a href="' . $url . '1' . $postfix . '" title="1">1</a><a>..</a>';
             for ($p = $pages - 5; $p <= $pages; $p++) {
                 if ($p == $thepage) {
-                    $str.='<a class="on" title="' . $p . '">' . $p . '</a>';
+                    $str .= '<a class="on" title="' . $p . '">' . $p . '</a>';
                 } else {
-                    $str.='<a href="' . $url . $p . $postfix . '" title="' . $p . '">' . $p . '</a>';
+                    $str .= '<a href="' . $url . $p . $postfix . '" title="' . $p . '">' . $p . '</a>';
                 }
             }
         } else {
-            $str.='<a href="' . $url . '1' . $postfix . '" title="1">1</a><a>..</a>';
+            $str .= '<a href="' . $url . '1' . $postfix . '" title="1">1</a><a>..</a>';
             for ($p = $thepage - 2; $p <= $thepage + 2; $p++) {
                 if ($p == $thepage) {
-                    $str.='<a class="on" title="' . $p . '">' . $p . '</a>';
+                    $str .= '<a class="on" title="' . $p . '">' . $p . '</a>';
                 } elseif ($p <= $pages) {
-                    $str.='<a href="' . $url . $p . $postfix . '" title="' . $p . '">' . $p . '</a>';
+                    $str .= '<a href="' . $url . $p . $postfix . '" title="' . $p . '">' . $p . '</a>';
                 }
             }
         }
         if ($pages - $thepage > 2 && $pages > 6) {
-            $str.='<a>..</a><a href="' . $url . $pages . $postfix . '" title="' . $pages . '">' . $pages . '</a>';
+            $str .= '<a>..</a><a href="' . $url . $pages . $postfix . '" title="' . $pages . '">' . $pages . '</a>';
         }
         if ($thepage == $pages) {
-            $str.='<a class="page-next page-next-disabled"></a>';
+            $str .= '<a class="page-next page-next-disabled"></a>';
         } else {
-            $str.='<a href="' . $url . $next . $postfix . '" class="page-next" title="下一页"></a>';
+            $str .= '<a href="' . $url . $next . $postfix . '" class="page-next" title="下一页"></a>';
         }
         if ($select) {
-            $str.='<span class="select"><select ';
-            $str.="onchange='window.location=\"$url\"+this.value'>";
+            $str .= '<span class="select"><select ';
+            $str .= "onchange='window.location=\"$url\"+this.value'>";
             for ($i = 1; $i <= $pages; $i++) {
                 if ($i == $thepage) {
-                    $str.='<option value="' . $i . '" selected>' . $i . '页</option>';
+                    $str .= '<option value="' . $i . '" selected>' . $i . '页</option>';
                 } else {
-                    $str.='<option value="' . $i . '">' . $i . '页</option>';
+                    $str .= '<option value="' . $i . '">' . $i . '页</option>';
                 }
             }
-            $str.='</select></span>';
+            $str .= '</select></span>';
         }
         return $str;
+    }
+
+    /**
+     * getRowById
+     * 简介：根据ID读取信息
+     * 参数：$id int
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function getRowById($id) {
+        if (!$id) {
+            return null;
+        }
+        $result = $this->getData(array(
+            'fields' => '*',
+            'table' => $this->table,
+            'conditions' => array($this->primary_key => $id, 'lang' => _LANGUAGE_),
+            'row' => true
+        ));
+        return $result;
+    }
+
+    /**
+     * add
+     * 简介：添加
+     * 参数：$data array
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function add($data) {
+        return $this->dbInsert($this->table, $data, true);
+    }
+
+    /**
+     * edit
+     * 简介：编辑
+     * 参数：$data array
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function edit($data, $id) {
+        return $this->dbUpdate($this->table, $data, array($this->primary_key => $id, 'lang' => _LANGUAGE_));
+    }
+
+    /**
+     * del
+     * 简介：删除(放入回收站)
+     * 参数：$id mixed
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function del($id) {
+        if (!$id) {
+            return false;
+        }
+        $data = array(
+            'is_active' => 0
+        );
+        if (!is_array($id)) {
+            $id = array($id);
+        }
+        return $this->dbUpdateIn($this->table, $data, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
+    }
+
+    /**
+     * recover
+     * 简介：还原
+     * 参数：$id mixed
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function recover($id) {
+        if (!$id) {
+            return false;
+        }
+        $data = array(
+            'is_active' => 1
+        );
+        if (!is_array($id)) {
+            $id = array($id);
+        }
+        return $this->dbUpdateIn($this->table, $data, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
+    }
+
+    /**
+     * dump
+     * 简介：删除(彻底清除)
+     * 参数：$id mixed 
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function dump($id) {
+        if (!$id) {
+            return false;
+        }
+        if (!is_array($id)) {
+            $id = array($id);
+        }
+        $this->dbDeleteIn($this->table, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
     }
 
 }

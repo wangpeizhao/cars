@@ -14,9 +14,6 @@ if (!defined('BASEPATH')) {
  */
 class News_model extends Fzhao_Model {
 
-    private $table;
-    private $primary_key;
-
     public function __construct() {
         parent::__construct();
         $this->table = 'news';
@@ -31,66 +28,73 @@ class News_model extends Fzhao_Model {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function lists($data, $is_active = '1') {
-        $cond = isset($data['condition']) ? $data['condition'] : array();
-        $conditions = array('aa.is_active' => $is_active);
+    function lists($params, $is_valid = '1') {
+        $cond = isset($params['condition']) ? $params['condition'] : array();
+        $conditions = array('p.is_valid' => $is_valid, 'p.lang' => _LANGUAGE_);
         $like = array();
         if (isset($cond['type']) && $cond['type']) {
             switch ($cond['type']) {
                 case 'title':
-                    $like = array('like' => array('a.title', $cond['keywords']));
+                    $like[] = array('title', $cond['keywords']);
                     break;
-                case 'first_name':
-                    $like = array('like' => array('aa.first_name', $cond['keywords']));
+                case 'summary':
+                    $like[] = array('summary', $cond['keywords']);
                     break;
-                case 'last_name':
-                    $like = array('like' => array('aa.last_name', $cond['keywords']));
+                case 'content':
+                    $like[] = array('content', $cond['keywords']);
                     break;
                 case 'id':
-                    $conditions = array_merge($conditions, array('a.id' => $cond['keywords']));
-                    break;
-                case 'emal':
-                    $conditions = array_merge($conditions, array('aa.emal' => $cond['keywords']));
-                    break;
-                case 'phone':
-                    $conditions = array_merge($conditions, array('aa.phone' => $cond['keywords']));
-                    break;
-                case 'subject':
-                    $conditions = array_merge($conditions, array('aa.subject' => $cond['keywords']));
-                    break;
-                case 'message':
-                    $conditions = array_merge($conditions, array('aa.message' => $cond['keywords']));
+                    $conditions = array_merge($conditions, array('p.id' => $cond['keywords']));
                     break;
             }
         } else {
             if (isset($cond['term_id']) && $cond['term_id'] != '') {
-                $conditions = array_merge($conditions, array('a.term_id' => $cond['term_id']));
+                $conditions = array_merge($conditions, array('p.term_id' => $cond['term_id']));
+            }
+            if (isset($cond['is_commend']) && $cond['is_commend'] != '') {
+                $conditions = array_merge($conditions, array('p.is_commend' => $cond['is_commend']));
+            }
+            if (isset($cond['is_issue']) && $cond['is_issue'] != '') {
+                $conditions = array_merge($conditions, array('p.is_issue' => $cond['is_issue']));
             }
             if (isset($cond['startTime']) && $cond['startTime'] != '') {
-                $conditions = array_merge($conditions, array('aa.create_time >=' => $cond['startTime']));
+                $conditions = array_merge($conditions, array('p.create_time >=' => $cond['startTime']));
             }
             if (isset($cond['endTime']) && $cond['endTime'] != '') {
-                $conditions = array_merge($conditions, array('aa.create_time <=' => $cond['endTime']));
+                $conditions = array_merge($conditions, array('p.create_time <=' => $cond['endTime']));
             }
         }
-        $limit = array();
-        if (isset($data['rows']) && $data['rows'] && isset($data['currPage']) && $data['currPage']) {
-            $limit = array('limit' => array($data['rows'], $data['rows'] * ($data['currPage'] - 1)));
-        }
-        $_data = $this->getData(array_merge(array_merge(array(
-            'fields' => 't.name term_name,a.title,aa.*,t.slug',
-            'table' => $this->table . ' aa',
-            'join' => array('products a', 'a.id=aa.proId', 'term t', 't.id=a.term_id'),
+
+        $data = $this->getData(array(
+            'fields' => 'p.id,p.term_id,p.title,p.summary,p.is_valid,p.owner,p.views,p.from,p.author,p.is_commend,p.is_issue,p.create_time,t.name term_name,t.slug',
+            'table' => 'news p',
+            'join' => array('term t', 't.id=p.term_id'),
             'conditions' => $conditions,
-            'order' => array('aa.create_time', 'desc'),
-                                ), $like), $limit)); //ww($this->db->last_query());
-        $count = $this->getData(array_merge(array(
-            'table' => $this->table . ' aa',
-            'join' => array('products a', 'a.id=aa.proId', 'term t', 't.id=a.term_id'),
+            'order' => array('p.create_time', 'desc'),
+            'limit' => array($params['rows'], $params['rows'] * ($params['currPage'] - 1)),
+            'like' => $like
+        ));//ww($this->last_query());
+        $owners = array_column($data, 'owner');
+        if($owners){
+            $admin = $this->getData(array(
+                'fields' => 'id,nickname',
+                'table' => 'admin',
+                '_conditions' => array(array('is_active' => '1')),
+                'ins' => array(array('id'=>$owners)),
+            ));
+            $admins = array_column($admin, 'nickname' ,'id');
+            foreach($data as &$item){
+                $item['username'] = !empty($admins[$item['owner']])?$admins[$item['owner']]:'';
+            }
+        }
+        $count = $this->getData(array(
+            'table' => 'news p',
+            'join' => array('term t', 't.id=p.term_id', 'admin a', 'a.id=p.owner'),
             'conditions' => $conditions,
             'count' => true,
-                        ), $like));
-        return array('data' => $_data, 'count' => $count);
+            'like' => $like
+        ));
+        return array('data' => $data, 'count' => $count);
     }
 
     /**
@@ -103,111 +107,6 @@ class News_model extends Fzhao_Model {
      */
     function recycles($data) {
         return $this->lists($data, 0);
-    }
-
-    /**
-     * getRowById
-     * 简介：根据ID读取信息
-     * 参数：$id int
-     * 返回：Boole
-     * 作者：Parker
-     * 时间：2018-01-13
-     */
-    function getRowById($id) {
-        if (!$id) {
-            return null;
-        }
-        $result = $this->getData(array(
-            'fields' => '*',
-            'table' => $this->table,
-            'conditions' => array($this->primary_key => $id, 'lang' => _LANGUAGE_),
-            'row' => true
-        ));
-        return $result;
-    }
-
-    /**
-     * add
-     * 简介：添加
-     * 参数：$data array
-     * 返回：Boole
-     * 作者：Parker
-     * 时间：2018-01-13
-     */
-    function add($data) {
-        return $this->dbInsert($this->table, $data, true);
-    }
-
-    /**
-     * edit
-     * 简介：编辑
-     * 参数：$data array
-     * 返回：Boole
-     * 作者：Parker
-     * 时间：2018-01-13
-     */
-    function edit($data, $id) {
-        return $this->dbUpdate($this->table, $data, array($this->primary_key => $id, 'lang' => _LANGUAGE_));
-    }
-
-    /**
-     * del
-     * 简介：删除(放入回收站)
-     * 参数：$id mixed
-     * 返回：Boole
-     * 作者：Parker
-     * 时间：2018-01-13
-     */
-    function del($id) {
-        if (!$id) {
-            return false;
-        }
-        $data = array(
-            'is_active' => 0
-        );
-        if (!is_array($id)) {
-            $id = array($id);
-        }
-        return $this->dbUpdateIn($this->table, $data, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
-    }
-
-    /**
-     * recover
-     * 简介：还原
-     * 参数：$id mixed
-     * 返回：Boole
-     * 作者：Parker
-     * 时间：2018-01-13
-     */
-    function recover($id) {
-        if (!$id) {
-            return false;
-        }
-        $data = array(
-            'is_active' => 1
-        );
-        if (!is_array($id)) {
-            $id = array($id);
-        }
-        return $this->dbUpdateIn($this->table, $data, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
-    }
-
-    /**
-     * dump
-     * 简介：删除(彻底清除)
-     * 参数：$id mixed 
-     * 返回：Boole
-     * 作者：Parker
-     * 时间：2018-01-13
-     */
-    function dump($id) {
-        if (!$id) {
-            return false;
-        }
-        if (!is_array($id)) {
-            $id = array($id);
-        }
-        $this->dbDeleteIn($this->table, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
     }
 
 }

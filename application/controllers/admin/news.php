@@ -28,6 +28,7 @@ class News extends Fzhao_Controller {
             $result = $this->admin->lists($data);
             $this->doJson($result);
         } else {
+            $data['title'] = '新闻资讯';
             $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
             $this->view('admin/news', $data);
         }
@@ -76,8 +77,9 @@ class News extends Fzhao_Controller {
         }
 
         $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
-        $data['data'] = $this->admin->getNewsInfoById($id);
-        $this->view('admin/editNewsInfo', $data);
+        $data['data'] = $info;
+        $data['title'] = '编辑 - 新闻资讯'.$info['title'];
+        $this->view('admin/news_edit', $data);
     }
 
     /**
@@ -108,7 +110,8 @@ class News extends Fzhao_Controller {
             $this->doIframe($result);
         }
         $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
-        $this->view('admin/addNewsInfo', $data);
+        $data['title'] = '添加 - 新闻资讯';
+        $this->view('admin/news_add', $data);
     }
 
     /**
@@ -129,6 +132,7 @@ class News extends Fzhao_Controller {
             $this->doJson($result);
         } else {
             $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
+            $data['title'] = '回收站 - 新闻资讯';
             $this->view('admin/news_recycles', $data);
         }
     }

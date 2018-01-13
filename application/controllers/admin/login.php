@@ -25,13 +25,13 @@ class Login extends Fzhao_Controller {
             }
             $userInfo = $this->system_model->checkAdmin($data);
             if (empty($userInfo)) {
-                $this->json_error('登录账号或密码错误！');
+                errorOutput('登录账号或密码错误！');
             } else {
                 $_SESSION['authorized'] = $userInfo['authorized'];
                 unset($userInfo['password'], $userInfo['authorized']);
                 $this->session->set_userdata('adminLoginInfo', $userInfo);
             }
-            $this->json_success('登录成功');
+            successOutput('登录成功');
         } else {
             $this->load->helper('url');
             $data['url'] = $this->input->get('url');
@@ -65,11 +65,10 @@ class Login extends Fzhao_Controller {
         return;
         $vCode = $this->input->post('vCode');
         if (!$this->session->userdata('VerifyCode')) {
-            echo json_encode(array('done' => false, 'msg' => '验证码已过期'));
-            return;
+            errorOutput('验证码已过期');
         }
         if ($this->session->userdata('VerifyCode') == strtolower($vCode)) {
-            echo json_encode(array('done' => true, 'msg' => 1));
+            successOutput('');
         } else {
             echo json_encode(array('done' => true, 'msg' => '验证码错误'));
         }

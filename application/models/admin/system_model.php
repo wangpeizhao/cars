@@ -50,6 +50,7 @@ class System_Model extends Fzhao_Model {
             return false;
         }
         $userInfo['supervisor'] = $group['supervisor'];
+        $userInfo['grouptitle'] = $group['grouptitle'];
         
         $privs = $this->getData(array(
             'fields' => '*',

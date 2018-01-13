@@ -35,3 +35,7 @@ application/logs/*
 composer.lock
 
 !application/*/.htaccess
+
+.DS_Store
+
+application/session/*

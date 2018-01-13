@@ -53,7 +53,7 @@
 						alert('网络连接超时，请刷新页面');
 					},
 					success:function(data){
-						if(data.done==true){
+						if(data.code==1){
 							$(".tipsLogin").html('登录成功！正在跳转...');
 							$(".tipsLogin").css('color','#339900');
 							window.location.href = '<?=isset($url) && $url?$url:WEB_DOMAIN."/admin/system/options"?>';
