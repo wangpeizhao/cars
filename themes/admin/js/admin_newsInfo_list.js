@@ -1,13 +1,10 @@
 function setData(currPage) {
     try {
+        $('input[name="currentPage"]').val(currPage);
         $.ajax({
             type: "POST",
             url: baseUrl+lang + '/admin/news/index',
-            data: {
-                currPage: currPage,
-                rows: rows,
-                condition: condition
-            },
+            data: $('form[name="_Form_"]').serialize(),
             dataType: "json",
             timeout: 30000,
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -15,7 +12,6 @@ function setData(currPage) {
             },
             success: function(data) {
                 if (data.done === true) {
-                    $('input[name="currentPage"]').val(currPage);
                     fillData(data.data.data, currPage);
                     page_html(Math.ceil(data.data.count / rows), currPage);
                     if (Math.ceil(data.data.count / rows) > 1) $('#pageLists').fadeIn();

@@ -22,9 +22,9 @@ class News extends Fzhao_Controller {
     function index() {
         $data = array();
         if (IS_POST) {
+            $data = $this->input->post(null, true);
             $data['currPage'] = getPages();
             $data['rows'] = getPageSize();
-            $data['condition'] = getConditions();
             $result = $this->admin->lists($data);
             $this->doJson($result);
         } else {

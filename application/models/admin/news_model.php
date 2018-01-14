@@ -28,11 +28,10 @@ class News_model extends Fzhao_Model {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function lists($params, $is_valid = '1') {
-        $cond = isset($params['condition']) ? $params['condition'] : array();
-        $conditions = array('p.is_valid' => $is_valid, 'p.lang' => _LANGUAGE_);
+    function lists($cond, $is_valid = '1') {
+        $conditions = array(array('p.is_valid' => $is_valid), array('p.lang' => _LANGUAGE_));
         $like = array();
-        if (isset($cond['type']) && $cond['type']) {
+        if (!empty($cond['type']) && trim($cond['keywords'])) {
             switch ($cond['type']) {
                 case 'title':
                     $like[] = array('title', $cond['keywords']);
@@ -44,24 +43,24 @@ class News_model extends Fzhao_Model {
                     $like[] = array('content', $cond['keywords']);
                     break;
                 case 'id':
-                    $conditions = array_merge($conditions, array('p.id' => $cond['keywords']));
+                    $conditions[] = array('p.id' => $cond['keywords']);
                     break;
             }
         } else {
-            if (isset($cond['term_id']) && $cond['term_id'] != '') {
-                $conditions = array_merge($conditions, array('p.term_id' => $cond['term_id']));
+            if (isset($cond['term_id']) && $cond['term_id'] !== '') {
+                $conditions[] = array('p.term_id' => $cond['term_id']);
             }
-            if (isset($cond['is_commend']) && $cond['is_commend'] != '') {
-                $conditions = array_merge($conditions, array('p.is_commend' => $cond['is_commend']));
+            if (isset($cond['is_commend']) && $cond['is_commend'] !== '') {
+                $conditions[] = array('p.is_commend' => $cond['is_commend']);
             }
-            if (isset($cond['is_issue']) && $cond['is_issue'] != '') {
-                $conditions = array_merge($conditions, array('p.is_issue' => $cond['is_issue']));
+            if (isset($cond['is_issue']) && $cond['is_issue'] !== '') {
+                $conditions[] = array('p.is_issue' => $cond['is_issue']);
             }
-            if (isset($cond['startTime']) && $cond['startTime'] != '') {
-                $conditions = array_merge($conditions, array('p.create_time >=' => $cond['startTime']));
+            if (!empty($cond['startTime'])) {
+                $conditions[] = array('p.create_time >=' => $cond['startTime']);
             }
-            if (isset($cond['endTime']) && $cond['endTime'] != '') {
-                $conditions = array_merge($conditions, array('p.create_time <=' => $cond['endTime']));
+            if (!empty($cond['endTime'])) {
+                $conditions[] = array('p.create_time <=' => $cond['endTime']);
             }
         }
 
@@ -69,9 +68,9 @@ class News_model extends Fzhao_Model {
             'fields' => 'p.id,p.term_id,p.title,p.summary,p.is_valid,p.owner,p.views,p.from,p.author,p.is_commend,p.is_issue,p.create_time,t.name term_name,t.slug',
             'table' => 'news p',
             'join' => array('term t', 't.id=p.term_id'),
-            'conditions' => $conditions,
+            '_conditions' => $conditions,
             'order' => array('p.create_time', 'desc'),
-            'limit' => array($params['rows'], $params['rows'] * ($params['currPage'] - 1)),
+            'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
             'like' => $like
         ));//ww($this->last_query());
         $owners = array_column($data, 'owner');
@@ -90,7 +89,7 @@ class News_model extends Fzhao_Model {
         $count = $this->getData(array(
             'table' => 'news p',
             'join' => array('term t', 't.id=p.term_id', 'admin a', 'a.id=p.owner'),
-            'conditions' => $conditions,
+            '_conditions' => $conditions,
             'count' => true,
             'like' => $like
         ));

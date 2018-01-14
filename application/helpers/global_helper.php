@@ -755,9 +755,9 @@ if (!function_exists('getPages')) {
      */
     function getPages() {
         $CI = & get_instance();
-        $pages = intval($CI->input->get('currPage', true));
+        $pages = intval($CI->input->get('currentPage', true));
         if (!$pages) {
-            $pages = intval($CI->input->post('currPage', true));
+            $pages = intval($CI->input->post('currentPage', true));
         }
         return $pages ? $pages : 1;
     }

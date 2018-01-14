@@ -150,16 +150,11 @@ class My_Controller extends CI_Controller{
      * @return  String if <i>program</i> is successful.
      * @author Parker <2016-01-18>
      */
-    public function _doIframe($result, $status = 1, $lang = false, $callback = '', $exit = true) {
-        //$this->crm_api_tooltip($result,$status);
+    public function _doIframe($result, $status = 1, $callback = '', $exit = true) {
         if ($result) {
             if (is_array($result)) {
                 echo '<script type="text/javascript">var data = \'' . str_replace("'", "\'", str_replace('\\', '\\\\', json_encode($result))) . '\';window.top.window.iResult(data,"' . $callback . '");</script>';
             } else {
-                if ($lang) {
-                    //$CI = & get_instance();
-                    $result = $this->lang->line($result);
-                }
                 echo '<script type="text/javascript">window.top.window.iResultAlter(\'' . $result . '\',' . $status . ');</script>';
             }
             $exit && exit();
