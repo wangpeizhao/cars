@@ -53,18 +53,8 @@
 			</div>
 			<div class="searchbar">
 				<select class="auto" name="term_id">
-					<option value="">选择分类</option>
-					<?php if(!empty($terms)){
-						foreach($terms as $item){?>
-						<?php if(!empty($item['sunTerm'])){
-							foreach($item['sunTerm'] as $sunItem){?>
-								<option value="<?=$sunItem['id']?>" style="color:#ff6600;"><?=$sunItem['name']?></option>
-								<?php if(!empty($sunItem['grandson'])){?>
-									<?php foreach($sunItem['grandson'] as $son_key=>$son){?>
-								<option value="<?=$son['id']?>"> &nbsp;&nbsp;&nbsp;&nbsp;<?=$son['name']?></option>
-									<?php }?>
-								<?php }?>
-					<?php }}}}?>
+					<option value="">- 选择分类 -</option>
+					<?php include('terms.php');?>
 				</select>
 				<select class="auto" name="is_commend">
 					<option value="">选择推荐</option>

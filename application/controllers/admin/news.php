@@ -92,8 +92,6 @@ class News extends Fzhao_Controller {
      */
     function add() {
         $data = array();
-        $id = post_get('id');
-        $this->verify($id);
         if (IS_POST) {
             $fields = $this->_verifyForm();
             $fields['update_time'] = _DATETIME_;

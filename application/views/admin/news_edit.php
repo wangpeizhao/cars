@@ -95,15 +95,12 @@
                   </tr>
                   <tr>
                     <th>所属分类：</th>
-                    <td><select name="term_id" class="auto">
-						<option value="" selected>-请选择分类-</option>
-						<?php if(!empty($terms)){
-					foreach($terms as $item){?>
-					<?php if(!empty($item['sunTerm'])){
-						foreach($item['sunTerm'] as $sunItem){?>
-							<option value="<?=$sunItem['id']?>"<?=$data['term_id']==$sunItem['id']?' selected':''?> style="color:#ff6600;"><?=$sunItem['name']?></option>
-				<?php }}}}?>
-                    </select></td>
+                    <td>
+                      <select name="term_id" class="auto">
+            						<option value="" selected>- 请选择分类 -</option>
+            						<?php include('terms.php');?>
+                      </select>
+                    </td>
                   </tr>
                   <tr>
                     <th>新闻资讯摘要：</th>
