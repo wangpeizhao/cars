@@ -2,7 +2,7 @@ function setData(currPage) {
 	try {
 		$.ajax({
 			type: "POST",
-			url: baseUrl+lang + '/admin/upload/uploadImage',
+			url: baseUrl+lang + '/admin/upload/index',
 			data: {
 				currPage: currPage,
 				rows: rows,
@@ -36,9 +36,11 @@ function setData(currPage) {
 function fillData(data, currPage) {
 	try {
 		var html = '';
-		if (typeof(data.fullName) != 'undefined') {
-			for (var i = 0; i < data.fullName.length; i++) {
-				html += '<li id="i_' + i + '"><span><img srcval="' + site_url + data.fullName[i] + '" src="' + site_url + data.thumbName[i] + '"></span><a title="' + data.fileName[i] + '">' + data.fileName[i] + '</a><div class="cover_bg"></div><div class="cover" title="删除" id="' + i + '"></div></li>'
+		if (data.length) {
+			for (var i = 0; i < data.length; i++) {
+				html += '<li class="images" title="' + data[i].file_orig + '" id="i_' + data[i].id + '"><a href="javascript:;" class="del cover" title="删除" _id="' + data[i].id + '"></a><span><img srcval="' + site_url + data[i].file_path + '" src="' + site_url + data[i].thumb + '"></span>';
+				html += '<a>' + data[i].file_orig + '</a>';
+				html += '<div class="cover_bg"></div><div class="cover" id="' + data[i].id + '"></div></li>'
 			}
 		}
 		if (html == '') {

@@ -19,7 +19,35 @@ $(function(){
 						ids.push(idDOM.eq(i).val());
 					}
 				}
-				del(ids);
+				_del(ids);
+			}
+		});
+
+		//批量删除
+		$("#dumpAll").click(function(){
+			if(dumpAll('list_table')){
+				var idDOM = $("#list_table"+" :checkbox");
+				var ids = [];
+				for(var i=0;i<idDOM.length;i++){
+					if(idDOM[i].checked){
+						ids.push(idDOM.eq(i).val());
+					}
+				}
+				_dump(ids);
+			}
+		});
+
+		//批量还原
+		$("#recoverAll").click(function(){
+			if(recoverAll('list_table')){
+				var idDOM = $("#list_table"+" :checkbox");
+				var ids = [];
+				for(var i=0;i<idDOM.length;i++){
+					if(idDOM[i].checked){
+						ids.push(idDOM.eq(i).val());
+					}
+				}
+				_recover(ids);
 			}
 		});
 
@@ -43,8 +71,18 @@ $(function(){
                       event_link(baseUrl + lang +'/admin/'+_TYPE_+'/edit/'+id+'.html');
 						break;
 					case 'del':
-						if(confirm('是否把信息放到回收站内？')){
-							del(id);
+						if(confirm('确定要把'+(_TITLE_?_TITLE_:'信息')+'放到回收站内？')){
+							_del(id);
+						}
+						break;
+					case 'recover':
+						if(confirm('确定要还原该'+(_TITLE_?_TITLE_:'信息')+'吗？')){
+							_recover(id);
+						}
+						break;
+					case 'del':
+						if(confirm('确定要彻底删除该'+(_TITLE_?_TITLE_:'信息')+'？不能回撤的哦！')){
+							_dump(id);
 						}
 						break;
 				}
@@ -92,7 +130,7 @@ function iResultAlter(str, status) {//#5cb85c;
     return true;
 }
 
-function del(id){
+function _del(id){
 	$.post(baseUrl + lang + '/admin/'+_TYPE_+'/del',{id:id}, function(data){
 		if (data.done === true) {
 			alert('已放入回收站');
@@ -105,6 +143,44 @@ function del(id){
 			return false;
 		}
 	},"json");
+}
+
+function _dump(id){
+	try{
+		$.post(baseUrl + lang + "/admin/'+_TYPE_+'/dump",{id:id}, function(data){
+			if (data.done === true) {
+				alert('已彻底粉碎该'+(_TITLE_?_TITLE_:'信息'));
+				setData($('input[name="currentPage"]').val());
+			}else if(data.msg){
+				alert(data.msg);
+				return false;
+			}else{
+				alert('提交失败，请重试');
+				return false;
+			}
+		},"json");
+	}catch(e){
+		alert(e.message);
+	}
+}
+
+function _recover(id){
+	try{
+		$.post(baseUrl + lang + '/admin/'+_TYPE_+'/recover',{id:id}, function(data){
+			if (data.done === true) {
+				alert('已还原该'+(_TITLE_?_TITLE_:'信息'));
+				setData($('input[name="currentPage"]').val());
+			}else if(data.msg){
+				alert(data.msg);
+				return false;
+			}else{
+				alert('提交失败，请重试');
+				return false;
+			}
+		},"json");
+	}catch(e){
+		alert(e.message);
+	}
 }
 
 //搜索

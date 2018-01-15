@@ -21,7 +21,7 @@ class Index extends Fzhao_Controller {
         ));
         $data['data']['news'] = $this->system_model->getData(array(
             'table' => 'news',
-            'conditions' => array('is_valid' => 1),
+            'conditions' => array('isHidden' => '0'),
             'count' => true,
         ));
         $data['data']['services'] = $this->system_model->getData(array(

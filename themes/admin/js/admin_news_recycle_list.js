@@ -1,13 +1,10 @@
 function setData(currPage) {
     try {
+        $('input[name="currentPage"]').val(currPage);
         $.ajax({
             type: "POST",
-            url: baseUrl+lang + '/admin/system/newsInfoRecycleList',
-            data: {
-                currPage: currPage,
-                rows: rows,
-                condition: condition
-            },
+            url: baseUrl+lang + '/admin/news/recycles',
+            data: $('form[name="_Form_"]').serialize(),
             dataType: "json",
             timeout: 30000,
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -15,7 +12,6 @@ function setData(currPage) {
             },
             success: function(data) {
                 if (data.done === true) {
-                    $('input[name="currentPage"]').val(currPage);
                     fillData(data.data.data, currPage);
                     page_html(Math.ceil(data.data.count / rows), currPage);
                     if (Math.ceil(data.data.count / rows) > 1) $('#pageLists').fadeIn();
@@ -38,7 +34,7 @@ function fillData(data, currPage) {
         for (var i = 0; i < data.length; i++) {
             html += '<tr id="' + data[i]['id'] + '">';
             html += '	<td><input type="checkbox" value="' + data[i]['id'] + '" class="cursor"/></td>';
-            html += '	<td>' + (rows * (currPage - 1) + 1 + i) + '</td>';
+            html += '	<td>' + data[i]['id'] + '</td>';
 			html += '	<td><a href="' + baseUrl + lang + '/news/sort/' + data[i]['slug'] + '" target="_blank">' + data[i]['term_name'] + '</a></td>';
 			html += '	<td><a href="' + baseUrl + lang + '/news/info/' + data[i]['id'] + '.html' + '" target="_blank" title="' + data[i]['title'] + '">' + data[i]['title'] + '</a>' + '</td>';
 			html += '	<td title="' + data[i]['summary'] + '">' + data[i]['summary'] + '</td>';

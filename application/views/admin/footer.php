@@ -4,6 +4,7 @@
 	<div id="separator"></div>
 </div>
 <script type='text/javascript'>
+	// 用于富文本选择添加图片
 	var _getDialog;
 
 	function _getDialogImage(_retFile){

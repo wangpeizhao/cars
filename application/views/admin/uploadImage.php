@@ -11,11 +11,12 @@
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/page.js"></script>
 <script type="text/javascript">
 <!--
-	var lang = '/<?=_LANGUAGE_?>';
+	var lang = '';
 	var baseUrl = '<?=WEB_DOMAIN?>',
 		site_url = '<?=site_url('')?>',
 		rows = 8,
-		pathVal = '';
+		pathVal = '',
+		thumb = '';
 	$(function(){
 		try{
 			setData(1);
@@ -41,12 +42,14 @@
 				$(this).siblings().find("div.cover").fadeOut('fast');
 				//获取值
 				pathVal = $(this).find('span img').attr('srcval');
+				thumb = $(this).find('span img').attr('src');
 			});
 			
 			$(document).on('dblclick','.div_box ul li',function(){
 				$(this).addClass('selected').siblings().removeClass('selected');
 				//获取值
 				pathVal = $(this).find('span img').attr('srcval');
+				thumb = $(this).find('span img').attr('src');
 				//传值
 				_return_value();
 				window.close();
@@ -78,20 +81,12 @@
 				}
 			});
 
-			$(document).on('click','div.cover',function(){
+			$(document).on('click','a.del',function(){
 				if(confirm("确定要删除")){
-					var path = $(this).parent().find("span img").attr('srcval');
-					var path_thumb = $(this).parent().find("span img").attr('src');
-					var id = $(this).attr('id');
-					$.post(baseUrl + lang + "/admin/upload/dumpUploadImage",{path:path,path_thumb:path_thumb}, function(data){
+					var id = $(this).attr('_id');
+					$.post(baseUrl + lang + "/admin/upload/del",{id:id}, function(data){
 						if(data.done===true){
-							$("#i_"+id+" div.cover_bg").slideDown();
-							$("#i_"+id+" div.cover").fadeIn('slow');
-							$("#i_"+id+" div.cover").addClass('success');
-							$("#i_"+id).addClass('success');
-							setTimeout(function(){
-								$("#i_"+id).fadeOut();
-							},'2000');
+							$("#i_"+id).fadeOut();
 						}else if(data.msg){
 							alert(data.msg);
 							return false;
@@ -109,6 +104,11 @@
 
 	//return value
 	function _return_value(){
+		var act = getQueryString('act');
+		if(act == 'specify'){
+			window.opener.window.chooseImage(pathVal,thumb);
+			return true;
+		}
 		var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
 		if(isChrome){
 			window.opener.window._getDialogImage(pathVal);
@@ -152,7 +152,7 @@
 <body>
 <div class="container">
 	<div class="headbar">
-		<div class="position"><h1>后台管理 - 产品图片管理 - 浏览/上传<br><font color="#ff0000">注：一次只能选择插入一张;双击单张可插入;</font></h1></div>
+		<div class="position"><h1>后台管理 - 图片管理 - 浏览/上传<br><font color="#ff0000">注：一次只能选择插入一张;双击单张可直接插入;可批量上传图片</font></h1></div>
 		<ul class="tab" style="margin-top:0px;">
 			<li class="selected" id="li_1"><a href="javascript:;">浏览图片</a></li>
 			<li id="li_2" class=""><a href="javascript:;">上传图片</a></li>
@@ -173,7 +173,7 @@
 				</div>
 			</div>
 			<div class="div" style="display: none;margin:20px;" align="left">
-				<form method="post" enctype="multipart/form-data" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/upload/uploadImage" novalidate="true" target="ajaxifr" onSubmit="return checkForm();">
+				<form method="post" enctype="multipart/form-data" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/upload/uploading" novalidate="true" target="ajaxifr" onSubmit="return checkForm();">
 					<input type="file" id="file" size="30" name="file[]" multiple="">
 					<input type="submit" class="button" style="margin-left:10px;" value="上传">
 					<img src="<?=site_url()?>/themes/common/images/progress_bar.gif" style="margin-left:3px;display:none;position:relative;top:3px;" id="progress_bar" alt="正在上传...">

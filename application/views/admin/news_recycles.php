@@ -1,229 +1,74 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>后台管理-新闻资讯-新闻资讯回收站</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="<?=site_url('')?>/themes/admin/css/admin.css" />
-<script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.4.4.min.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/common.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/admin/js/admin_newsInfo_recycle_list.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/page.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/DatePicker/WdatePicker.js"></script>
-<script type="text/javascript">
-<!--
-	var baseUrl = '<?=WEB_DOMAIN?>',
-		site_url = '<?=site_url('')?>',
-		rows = 10,
-		condition = [];
-	$(function(){
-		try{
-			setData(1);
-
-			$("a").live('click',function(){
-				 this.blur();
-			});
-
-			$("#list_table a").live('click',function(){
-				var act = $(this).attr('act');
-				var id = $(this).parent().attr('id');
-				switch(act){
-					case 'recover':
-						if(confirm('确定要还原该新闻资讯吗？')){
-							recoverNewsInfo(id);
-						}
-						break;
-					case 'del':
-						if(confirm('确定要彻底删除该新闻资讯？不再回收的哦！')){
-							dumpNewsInfo(id);
-						}
-						break;
-				}
-			});
-
-			//全选/全否选
-			$("#selectAll").click(function(){
-				selectAll('list_table');
-			});
-
-			//批量删除
-			$("#dumpAll").click(function(){
-				if(dumpAll('list_table')){
-					var idDOM = $("#list_table"+" :checkbox");
-					var ids = [];
-					for(var i=0;i<idDOM.length;i++){
-						if(idDOM[i].checked){
-							ids.push(idDOM.eq(i).val());
-						}
-					}
-					dumpNewsInfo(ids);
-				}
-			});
-
-			//批量还原
-			$("#recoverAll").click(function(){
-				if(recoverAll('list_table')){
-					var idDOM = $("#list_table"+" :checkbox");
-					var ids = [];
-					for(var i=0;i<idDOM.length;i++){
-						if(idDOM[i].checked){
-							ids.push(idDOM.eq(i).val());
-						}
-					}
-					recoverNewsInfo(ids);
-				}
-			});
-
-			//返回列表
-			$("#import").click(function(){
-				event_link(baseUrl + lang +'/admin/system/newsInfo')
-			});
-
-		}catch(e){
-			alert(e.message);
-		}
-	});
-
-	function dumpNewsInfo(id){
-		try{
-			$.post(baseUrl + lang + "/admin/system/dumpNewsInfo",{id:id}, function(data){
-				if (data.done === true) {
-					alert('已彻底粉碎该新闻资讯');
-					setData($('input[name="currentPage"]').val());
-				}else if(data.msg){
-					alert(data.msg);
-					return false;
-				}else{
-					alert('提交失败，请重试');
-					return false;
-				}
-			},"json");
-		}catch(e){
-			alert(e.message);
-		}
-	}
-
-	function recoverNewsInfo(id){
-		try{
-			$.post(baseUrl + lang + "/admin/system/recoverNewsInfo",{id:id}, function(data){
-				if (data.done === true) {
-					alert('已还原该新闻资讯');
-					setData($('input[name="currentPage"]').val());
-				}else if(data.msg){
-					alert(data.msg);
-					return false;
-				}else{
-					alert('提交失败，请重试');
-					return false;
-				}
-			},"json");
-		}catch(e){
-			alert(e.message);
-		}
-	}
-
-	//搜索
-	function doSearch(){
-		//$('select[name="term_id"]').val('');
-		//$('select[name="is_commend"]').val('');
-		//$('select[name="is_issue"]').val('');
-		//$('input[name="startTime"]').val('');
-		//$('input[name="endTime"]').val('');
-		condition = [];
-		condition.push({"type":$('select[name="search"]').val(),'keywords':$('input[name="keywords"]').val()});
-		setData(1);
-	}
-
-	//筛选
-	function doSelect(){
-		//$('select[name="search"]').val('');
-		//$('input[name="keywords"]').val('');
-		condition = [];
-		condition.push({
-			"term_id":$('select[name="term_id"]').val(),
-			"is_commend":$('select[name="is_commend"]').val(),
-			"is_issue":$('select[name="is_issue"]').val(),
-			"startTime":$('input[name="startTime"]').val(),
-			"endTime":$('input[name="endTime"]').val()
-		});
-		setData(1);
-	}
-//-->
-</script>
-</head>
-<body>
-<div class="container">
 <!-- 引入头部-->
 <?php include('header.php');?>
 <!-- /引入头部-->
 <!-- 引入二级菜单-->
 <?php include('submenu.php');?>
 <!-- /引入二级菜单-->
+<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/page.js"></script>
+<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/DatePicker/WdatePicker.js"></script>
+<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin_lists.js"></script>
+<script type='text/javascript' src="<?=site_url('')?>/themes/admin/js/admin_news_recycle_list.js"></script>
+<script type="text/javascript">
+	var _TYPE_ = 'news';
+</script>
 <div id="admin_right">
 <div class="headbar">
-  <div class="position"><span>系统</span><span>></span><span>新闻资讯</span><span>></span><span>新闻资讯回收站</span></div>
-  <div class="operating">
-    <div class="search f_r">
-		<select class="auto" name="search">
-			<option value="id">新闻资讯ID</option>
-			<option value="title">新闻资讯名称</option>
-			<option value="summary">新闻资讯摘要</option>
-			<option value="content">新闻资讯内容</option>
-		</select> 
-		<input class="small" name="keywords" type="text" value="" />
-		<button class="btn" type="submit" onclick="doSearch();">
-			<span class="sch">搜 索</span>
-		</button>
-	</div>
-	<div class="operating"> 
-		<a href="javascript:;" id="import"><button class="operating_btn" type="button"><span class="import">返回列表</span></button></a> 
-		<a href="javascript:;" id="selectAll" status="uncheck"><button class="operating_btn" type="button"><span class="sel_all">全选</span></button></a> 
-		<a href="javascript:;" id="dumpAll"><button class="operating_btn" type="button"><span class="delete">彻底删除</span></button></a> 
-		<a href="javascript:;" id="recoverAll"><button class="operating_btn" type="button"><span class="recover">批量还原</span></button></a> 
-	</div>
-  </div>
-  <div class="searchbar">
-      <input type='hidden' name='controller' value='goods' />
-      <input type='hidden' name='action' value='goods_list' />
-      <select class="auto" name="term_id">
-        <option value="">选择分类</option>
-        <?php if(!empty($terms)){
-					foreach($terms as $item){?>
-					<?php if(!empty($item['sunTerm'])){
-						foreach($item['sunTerm'] as $sunItem){?>
-							<option value="<?=$sunItem['id']?>" style="color:#ff6600;"><?=$sunItem['name']?></option>
-							<?php if(!empty($sunItem['grandson'])){?>
-								<?php foreach($sunItem['grandson'] as $son_key=>$son){?>
-							<option value="<?=$son['id']?>"> &nbsp;&nbsp;&nbsp;&nbsp;<?=$son['name']?></option>
-								<?php }?>
-							<?php }?>
-				<?php }}}}?>
-      </select>
-      <select class="auto" name="is_commend">
-        <option value="">选择推荐</option>
-        <option value="0" >未推荐</option>
-        <option value="1" >已推荐</option>
-      </select>
-      <select class="auto" name="is_issue">
-        <option value="">选择发布</option>
-        <option value="0" >未发布</option>
-        <option value="1" >已发布</option>
-      </select>
-      <input class="small" name="startTime" id="startTime" style="width:120px;" type="text" value="" onfocus="WdatePicker({startDate:'%y-%M-%d 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'2011-11-11 11:11:11',maxDate:'<?=date("Y-m-d H:i:s")?>'})"/>
-	  <input class="small" name="endTime" id="endTime" style="width:120px;" type="text" value="" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'<?=date("Y-m-d H:i:s")?>'})"/>
-	  <button class="btn" type="submit" onclick="doSelect();">
-		<span class="sel">筛 选</span>
-	  </button>
-  </div>
+	<form action="" method="POST" name="_Form_" target="_MrParker_">
+	  <div class="position"><span>系统</span><span>></span><span><?=$_title_?></span><span>></span><span>回收站</span></div>
+	  <div class="operating">
+	    <div class="search f_r">
+			<select class="auto" name="search">
+				<option value="id"><?=$_title_?>ID</option>
+				<option value="title"><?=$_title_?>名称</option>
+				<option value="summary"><?=$_title_?>摘要</option>
+				<option value="content"><?=$_title_?>内容</option>
+			</select> 
+			<input class="small" name="keywords" type="text" value="" />
+			<button class="btn" type="submit" onclick="doSearch();">
+				<span class="sch">搜 索</span>
+			</button>
+		</div>
+		<div class="operating"> 
+			<a href="/admin/news/index" id="import"><button class="operating_btn" type="button"><span class="import">返回列表</span></button></a> 
+			<a href="javascript:;" id="selectAll" status="uncheck"><button class="operating_btn" type="button"><span class="sel_all">全选</span></button></a> 
+			<a href="javascript:;" id="dumpAll"><button class="operating_btn" type="button"><span class="delete">彻底删除</span></button></a> 
+			<a href="javascript:;" id="recoverAll"><button class="operating_btn" type="button"><span class="recover">批量还原</span></button></a> 
+		</div>
+	  </div>
+	  <div class="searchbar">
+	      <input type='hidden' name='controller' value='goods' />
+	      <input type='hidden' name='action' value='goods_list' />
+	      <select class="auto" name="term_id">
+	        <option value="">- 选择分类 -</option>
+	        <?php include('terms.php');?>
+	      </select>
+	      <select class="auto" name="is_commend">
+	        <option value="">- 选择推荐 -</option>
+	        <option value="0" >未推荐</option>
+	        <option value="1" >已推荐</option>
+	      </select>
+	      <select class="auto" name="is_issue">
+	        <option value="">- 选择发布 -</option>
+	        <option value="0" >未发布</option>
+	        <option value="1" >已发布</option>
+	      </select>
+			<input class="small" name="startTime" id="startTime" style="width:150px;" type="text" value=""/>
+			<input class="small" name="endTime" id="endTime" style="width:150px;" type="text" value="<?=_DATETIME_?>"/>
+			<button class="btn" type="button" onclick="doSearch();">
+				<span class="sel">筛 选</span>
+			</button>
+	  </div>
+	</form>
+	<iframe name="_MrParker_" style="display:none;"></iframe>
 </div>
 <div class="content">
   <table id="list_table" class="list_table settingList" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#e1e5ee" style="line-height: 25px;">
 	<tr class="field">
 		<th width="3%">选择</th>
-		<th width="5%">编号</th>
-		<th width="8%">分组名称</th>
-		<th width="20%">新闻资讯标题</th>
-		<th width="15%">新闻资讯摘要</th>
+		<th width="5%">ID</th>
+		<th width="8%">分类</th>
+		<th width="20%">标题</th>
+		<th width="15%">摘要</th>
 		<th width="12%">管理员</th>
 		<th width="5%">来源</th>
 		<th width="5%">作者</th>

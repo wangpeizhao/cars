@@ -1,9 +1,10 @@
 <?php
 
-if (!defined('BASEPATH'))
+if (!defined('BASEPATH')){
     exit('No direct script access allowed');
+}
 /*
- * Fzhao 2012/8/22
+ * Parker 2018/01/15
  */
 
 // PHP二维数组排序
@@ -84,6 +85,13 @@ function delSpace($str) {
     return str_replace($space, $trim, $str);
 }
 
+function changeImagePath($path,$type='tiny'){
+    $ext = pathinfo($path,PATHINFO_EXTENSION);
+    $search = array('/images/','.'.$ext);
+    $replace = array('/'.$type.'/','_thumb.'.$ext);
+    return str_replace($search, $replace, $path);
+}
+
 /**
  * bytes
  * 简介：统计文件大小，以GB、MB、KB、B输出
@@ -98,150 +106,6 @@ function bytes($size) {
         $size /= 1024;
     }
     return round($size, 2) . $units[$i];
-}
-
-/**
- * setZoneBitCode
- * 简介：汉字转区位码
- * 参数：NULL
- * 返回：Array
- * 作者：Fzhao
- * 时间：2013-1-1
- */
-function setZoneBitCode($str) {
-    if (is_array($str)) {
-        $code = array();
-        foreach ($str as $key => $item) {
-            $code[$key] = ZoneBitCode($item);
-        }
-        return $code;
-    }
-    return ZoneBitCode($str);
-}
-
-/**
- * ZoneBitCode
- * 简介：一个汉字转区位码 如果是英文或数字直接返回不做处理
- * 参数：NULL
- * 返回：Array
- * 作者：Fzhao
- * 时间：2013-1-1
- */
-function ZoneBitCode($str) {
-    if (preg_match("/^[a-z0-9 ]+$/i", $str)) {
-        return $str;
-    } else {
-        $str1 = substr($str, 0, 2);
-        $str_qwm = sprintf("%02d%02d", ord($str1[0]) - 160, ord($str1[1]) - 160);
-        $str2 = substr($str, 2, 4);
-        $str_qwm .= sprintf("%02d%02d", ord($str2[0]) - 160, ord($str2[1]) - 160);
-        return $str_qwm;
-    }
-}
-
-/**
- * getCharacter
- * 简介：汉字转区位码
- * 参数：NULL
- * 返回：Array
- * 作者：Fzhao
- * 时间：2013-1-1
- */
-function getCharacter($str) {
-    $arr = explode(' ', $str);
-    $Tstr = array();
-    if (!empty($arr)) {
-        foreach ($arr as $item) {
-            if (preg_match("/^[0-9]+$/i", $item)) {
-                $strs = '';
-                $strs = chr(substr(substr($item, 0, 4), 0, 2) + 160) . chr(substr(substr($item, 0, 4), 2, 2) + 160);
-                $strs .= chr(substr(substr($item, 4, 8), 0, 2) + 160) . chr(substr(substr($item, 4, 8), 2, 2) + 160);
-                $Tstr[] = $strs;
-            } else {
-                $Tstr[] = $item;
-            }
-        }
-    }
-    return !empty($Tstr) ? implode('', $Tstr) : $str;
-}
-
-/**
- * binaryParticiple
- * 简介：二元分词
- * 参数：NULL
- * 返回：Array
- * 作者：Fzhao
- * 时间：2013-1-1
- */
-function binaryParticiple($str) {
-    $str = preg_replace("/[\x80-\xff]{2}/", "\\0" . chr(0x00), $str);
-    //拆分的分割符
-    $search = array(",", "/", "\\", ".", ";", ":", "\"", "!", "~", "`", "^", "(", ")", "?", "-", "\t", "\n", "'", "<", ">", "\r", "\r\n", "$", "&", "%", "#", "@", "+", "=", "{", "}", "[", "]", "：", "）", "（", "．", "。", "，", "！", "；", "“", "”", "‘", "’", "［", "］", "、", "—", "　", "《", "》", "－", "…", "【", "】",);
-    //替换所有的分割符为空格
-    $str = str_replace($search, ' ', $str);
-    //用正则匹配半角单个字符或者全角单个字符,存入数组$ar
-    preg_match_all("/[\x80-\xff]?./", $str, $ar);
-    $ar = $ar[0];
-    //去掉$ar中ASCII为0字符的项目
-    for ($i = 0; $i < count($ar); $i++)
-        if ($ar[$i] != chr(0x00))
-            $ar_new[] = $ar[$i];
-    $ar = $ar_new;
-    unset($ar_new);
-    $oldsw = 0;
-    //把连续的半角存成一个数组下标,或者全角的每2个字符存成一个数组的下标
-    for ($ar_str = '', $i = 0; $i < count($ar); $i++) {
-        $sw = strlen($ar[$i]);
-        if ($i > 0 and $sw != $oldsw)
-            $ar_str.=" ";
-        if ($sw == 1)
-            $ar_str.=$ar[$i];
-        else
-        if (isset($ar[$i + 1]) && strlen($ar[$i + 1]) == 2)
-            $ar_str.=$ar[$i] . $ar[$i + 1] . ' ';
-        elseif ($oldsw == 1 or $oldsw == 0)
-            $ar_str.=$ar[$i];
-        $oldsw = $sw;
-    }
-    //去掉连续的空格
-    $ar_str = trim(preg_replace("# {1,}#i", " ", $ar_str)); //$ar_str = "Monkey s 二元 元分 分词"
-    //返回拆分后的结果
-    return explode(' ', $ar_str);
-}
-
-/**
- * wordSegment
- * 简介：中文分词函数
- * 参数：NULL
- * 返回：Array
- * 作者：Fzhao
- * 时间：2013-1-1
- */
-function wordSegment($str) {
-    $search = array(",", "/", "\\", ".", ";", ":", "\"", "!", "~", "`", "^", "(", ")", "?", "-", "\t", "\n", "'", "<", ">", "\r", "\r\n", "$", "&", "%", "#", "@", "+", "=", "{", "}", "[", "]", "：", "）", "（", "．", "。", "，", "！", "；", "“", "”", "‘", "’", "［", "］", "、", "—", "　", "《", "》", "－", "…", "【", "】",);
-    $str = str_replace($search, ' ', $str);
-    //英文单词3个以上，中文2词
-    preg_match_all('#([A-Za-z0-9]{3,}|([\xC0-\xFF][\x80-\xBF]+)+)#', $str, $array, PREG_PATTERN_ORDER);
-    $ss = array();
-    if (!empty($array[1])) {
-        foreach ($array[1] as $val) {
-            //英文单词
-            if (preg_match('/\w+/', $val)) {
-                $ss[] = $val;
-            } else {//中文字符
-                preg_match_all('#[\xC0-\xFF][\x80-\xBF]+#', $val, $out, PREG_PATTERN_ORDER);
-                if (!empty($out[0])) {
-                    $count = count($out[0]);
-                    for ($i = 0; $i < $count - 1; $i++) {
-                        $t = $out[0][$i] . $out[0][$i + 1];
-                        $t = kc_iconv($t, 'GBK', 'UTF-8');
-                        $ss[] = sprintf("%02d%02d%02d%02d", ord($t{0}) - 160, ord($t{1}) - 160, ord($t{2}) - 160, ord($t{3}) - 160);
-                    }
-                }
-            }
-        }
-    }
-    return empty($ss) ? '' : implode(' ', array_unique($ss));
 }
 
 /**
@@ -341,21 +205,6 @@ function addslashes_deep($value) {
 }
 
 /**
- * 将一个字串中含有全角的数字字符、字母、空格或'%+-()'字符转换为相应半角字符
- *
- * @access public
- * @param $str string
- *       	 待转换字串
- *       	
- * @return string $str 处理后字串
- */
-function make_semiangle($str) {
-    $arr = array('０' => '0', '１' => '1', '２' => '2', '３' => '3', '４' => '4', '５' => '5', '６' => '6', '７' => '7', '８' => '8', '９' => '9', 'Ａ' => 'A', 'Ｂ' => 'B', 'Ｃ' => 'C', 'Ｄ' => 'D', 'Ｅ' => 'E', 'Ｆ' => 'F', 'Ｇ' => 'G', 'Ｈ' => 'H', 'Ｉ' => 'I', 'Ｊ' => 'J', 'Ｋ' => 'K', 'Ｌ' => 'L', 'Ｍ' => 'M', 'Ｎ' => 'N', 'Ｏ' => 'O', 'Ｐ' => 'P', 'Ｑ' => 'Q', 'Ｒ' => 'R', 'Ｓ' => 'S', 'Ｔ' => 'T', 'Ｕ' => 'U', 'Ｖ' => 'V', 'Ｗ' => 'W', 'Ｘ' => 'X', 'Ｙ' => 'Y', 'Ｚ' => 'Z', 'ａ' => 'a', 'ｂ' => 'b', 'ｃ' => 'c', 'ｄ' => 'd', 'ｅ' => 'e', 'ｆ' => 'f', 'ｇ' => 'g', 'ｈ' => 'h', 'ｉ' => 'i', 'ｊ' => 'j', 'ｋ' => 'k', 'ｌ' => 'l', 'ｍ' => 'm', 'ｎ' => 'n', 'ｏ' => 'o', 'ｐ' => 'p', 'ｑ' => 'q', 'ｒ' => 'r', 'ｓ' => 's', 'ｔ' => 't', 'ｕ' => 'u', 'ｖ' => 'v', 'ｗ' => 'w', 'ｘ' => 'x', 'ｙ' => 'y', 'ｚ' => 'z', '（' => '(', '）' => ')', '［' => '[', '］' => ']', '【' => '[', '】' => ']', '〖' => '[', '〗' => ']', '「' => '[', '」' => ']', '『' => '[', '』' => ']', '｛' => '{', '｝' => '}', '《' => '<', '》' => '>', '％' => '%', '＋' => '+', '—' => '-', '－' => '-', '～' => '-', '：' => ':', '。' => '.', '、' => ',', '，' => '.', '、' => '.', '；' => ',', '？' => '?', '！' => '!', '…' => '-', '‖' => '|', '＂' => '"', '＇' => '`', '｀' => '`', '｜' => '|', '〃' => '"', '　' => ' ');
-
-    return strtr($str, $arr);
-}
-
-/**
  * 获取服务器的ip
  *
  * @access public
@@ -449,47 +298,8 @@ function json_errorCode($msg = '', $retval = null, $jqremote = false) {
     echo $json;
 }
 
-/**
- *
- *
- * 发送邮件方法
- *
- * @param $TO 发送的目标邮箱       	
- * @param $SUBJECT 文件名       	
- * @param $CONTENT 正文       	
- * @param $FROM 发送人邮箱       	
- * @param $RETURN_PATH 返回邮箱       	
- * @param $TO_ENCODING 发出时的编码       	
- * @param $FROM_ENCODING 返回时的编码       	
- */
-function iMail($TO, $SUBJECT, $CONTENT, $FROM, $RETURN_PATH = "", $TO_ENCODING = "GBK", $FROM_ENCODING = "UTF-8") {
-    if (is_array($FROM)) {
-        $FROM_ADDR = $FROM [0];
-        $FROM_NAME = $FROM [1];
-    } else {
-        $FROM_ADDR = $FROM_NAME = $FROM;
-    }
-    $FROM_NAME = mb_encode_mimeheader($FROM_NAME, $TO_ENCODING, $FROM_ENCODING);
-    $HEADERS = "From: {$FROM_NAME}<{$FROM_ADDR}>\n";
-    $HEADERS .= "Reply-To: {$FROM_NAME}<{$FROM_ADDR}>\n";
-    if ($RETURN_PATH != "") {
-        if (is_array($RETURN_PATH)) {
-            $RETURN_PATH_ADDR = $RETURN_PATH [0];
-            $RETURN_PATH_NAME = $RETURN_PATH [1];
-        } else {
-            $RETURN_PATH_ADDR = $RETURN_PATH_NAME = $RETURN_PATH;
-        }
-        $RETURN_PATH_NAME = mb_encode_mimeheader($RETURN_PATH_NAME, $TO_ENCODING, $FROM_ENCODING);
-        $HEADERS .= "Return-Path: {$RETURN_PATH_NAME}<{$RETURN_PATH_ADDR}>\n";
-    }
-    $SUBJECT = mb_convert_encoding($SUBJECT, $TO_ENCODING, $FROM_ENCODING);
-    $CONTENT = mb_convert_encoding($CONTENT, $TO_ENCODING, $FROM_ENCODING);
-    // return mb_send_mail($TO, $SUBJECT, $CONTENT, $HEADERS);
-    //return mail ( $TO, $SUBJECT, $CONTENT, $HEADERS );
-    return myMail($TO, $SUBJECT, $CONTENT, $HEADERS);
-}
 
-function myMail($TO, $SUBJECT, $CONTENT, $HEADERS) {
+function myMail() {
     $this->load->library('email');
     $config['protocol'] = 'smtp';
     $config['charset'] = 'utf8';
@@ -498,7 +308,6 @@ function myMail($TO, $SUBJECT, $CONTENT, $HEADERS) {
     $config['smtp_pass'] = 'wangpeizhao0615';
     $config['smtp_port'] = 25;
     $config['smtp_timeout'] = 5;
-    www($config);
     $this->email->initialize($config);
 
     $this->email->from('italentedu@italentedu.com', '国际人才圈');
@@ -509,22 +318,6 @@ function myMail($TO, $SUBJECT, $CONTENT, $HEADERS) {
     $result = $this->email->print_debugger();
     //www($result);
     return $result;
-    /*
-      require 'application/ch/third_party/email/class.phpmailer.php';
-      $mail = new PHPMailer();
-      $mail->IsSMTP();
-      $mail->Host = "smtp.qq.com";
-      $mail->SMTPAuth = true;
-      $mail->Username = '342823274@qq.com';
-      $mail->Password = 'wangpeizhao0615';
-      $mail->Port=587;
-      $mail->From ='italentedu@italentedu.com';
-      $mail->AddAddress($TO,'国际人才圈');
-      $mail->Subject = $SUBJECT;
-      $mail->FromName = "www.italentedu.com";
-      $mail->Body ="尊敬的66ka会员：".$CONTENT." 您好: 您在 ".date("Y年m月d日 H:i:s")." 提交了找回密码的申请，如果您确定该申请，请点击以下链接：(该链接在12小时内有效)如果该链接无法点击，请直接拷贝以上链接到浏览器(例如IE)地址栏中访问。如果您错误地收到了此电子邮件，您无需执行任何操作!此为自动发送邮件，请勿直接回复！如有疑问欢迎联系我们：(QQ:1290394971).".$HEADERS;
-      return $mail->Send();
-     */
 }
 
 // ------------------------------------------------------------------------
@@ -741,7 +534,7 @@ if (!function_exists('createFolder')) {
 
     function createFolder($path) {
         if (!file_exists($path)) {
-            $this->createFolder(dirname($path));
+            createFolder(dirname($path));
             mkdir($path, 0777);
         }
     }
@@ -753,11 +546,11 @@ if (!function_exists('getPages')) {
     /**
      * 获取当前页参数
      */
-    function getPages() {
+    function getPages($index = 'currentPage') {
         $CI = & get_instance();
-        $pages = intval($CI->input->get('currentPage', true));
+        $pages = intval($CI->input->get($index, true));
         if (!$pages) {
-            $pages = intval($CI->input->post('currentPage', true));
+            $pages = intval($CI->input->post($index, true));
         }
         return $pages ? $pages : 1;
     }

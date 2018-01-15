@@ -820,7 +820,7 @@ class Fzhao_Model extends CI_Model {
             return false;
         }
         $data = array(
-            'is_active' => 0
+            'isHidden' => '1'
         );
         if (!is_array($id)) {
             $id = array($id);
@@ -841,7 +841,7 @@ class Fzhao_Model extends CI_Model {
             return false;
         }
         $data = array(
-            'is_active' => 1
+            'isHidden' => '0'
         );
         if (!is_array($id)) {
             $id = array($id);

@@ -7,13 +7,13 @@
 <script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.4.4.min.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/common.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/page.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 <!--
 	var baseUrl = '<?=WEB_DOMAIN?>',
 		site_url = '<?=site_url('')?>',
-		_DATETIME_ = '<?=_DATETIME_?>';
+		_DATETIME_ = '<?=_DATETIME_?>',
+		_TITLE_ = '<?=!empty($_title_)?$_title_:''?>';
+		id = '<?=!empty($data['id'])?$data['id']:0?>';
 //-->
 </script>
 </head>

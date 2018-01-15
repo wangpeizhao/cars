@@ -337,7 +337,7 @@ button span {
 	height:20px;
 	line-height:20px;
 	height:18px\9;
-	padding:0 5px;
+	padding:0 15px;
 	white-space:nowrap;
 	background:url(../images/icon.gif) 0 -1000px no-repeat
 }
@@ -1947,7 +1947,7 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 }
 .div_box ul li img{
 	width:150px;
-	max-height:150px;
+	/*max-height:150px;*/
 	border:1px #ddd solid;
 	overflow: hidden;
 }
@@ -1974,6 +1974,14 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 	background:#000;
 	display:none;
 }
+.div_box ul li.images a.del{
+	position: absolute;
+	top:0px;
+	right: 0px;
+	height:16px;
+	width:16px;
+	background: url("../images/del_b_16x16.png") no-repeat 0px 0px transparent;
+}
 .div_box ul li div.cover{
 	width:100%;
 	z-index:101;
@@ -1982,7 +1990,7 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 	bottom:0px;
 	left:0px;
 	display:none;
-	background: url("../images/del_r_16x16.png") no-repeat 72px 2px transparent;
+	background: url("../images/right_b.gif") no-repeat 72px 2px transparent;
 	cursor:pointer;
 }
 .div_box ul li div.success{
@@ -2141,4 +2149,25 @@ table.member td.c label{
 }
 table.member td.c input{
 	margin-right:1px;
+}
+
+a.choose{
+	color: blue;
+	text-decoration:underline
+}
+.chooseImage{
+	
+}
+.chooseImage .thumbImage{
+	position: relative;
+	width:80px;
+}
+.chooseImage a.del{
+	display: none;
+	position: absolute;
+	top: -8px;
+	right: 0px;
+	height:16px;
+	width:16px;
+	background: url("../images/del_b_16x16.png") no-repeat 0px 0px transparent;
 }

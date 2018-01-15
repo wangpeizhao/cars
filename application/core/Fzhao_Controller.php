@@ -427,7 +427,7 @@ class Fzhao_Controller extends My_Controller {
         $img_config['new_image'] = 'uploads/' . $folder . '/small/' . $pPath["basename"]; //指定生成图片的路径
         $img_config['height'] = 200;
         $img_config['width'] = 200 * $imageInfo[0] / $imageInfo[1];
-        $this->createFolder('uploads/' . $folder . '/small');
+//        $this->createFolder('uploads/' . $folder . '/small');
         $this->image_lib->initialize($img_config);
         if (!$this->image_lib->resize()) {
             $this->doIframe(-4);
@@ -442,7 +442,7 @@ class Fzhao_Controller extends My_Controller {
         $img_config['new_image'] = 'uploads/' . $folder . '/tiny/' . $pPath["basename"]; //指定生成图片的路径
         $img_config['width'] = 125;
         $img_config['height'] = 125 * $imageInfo[1] / $imageInfo[0];
-        $this->createFolder('uploads/' . $folder . '/tiny');
+//        $this->createFolder('uploads/' . $folder . '/tiny');
         $this->image_lib->initialize($img_config);
         if (!$this->image_lib->resize()) {
             $this->doIframe(-5);

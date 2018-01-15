@@ -28,8 +28,8 @@ class News_model extends Fzhao_Model {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function lists($cond, $is_valid = '1') {
-        $conditions = array(array('p.is_valid' => $is_valid), array('p.lang' => _LANGUAGE_));
+    function lists($cond, $isHidden = '0') {
+        $conditions = array(array('p.isHidden' => $isHidden), array('p.lang' => _LANGUAGE_));
         $like = array();
         if (!empty($cond['type']) && trim($cond['keywords'])) {
             switch ($cond['type']) {
@@ -65,7 +65,7 @@ class News_model extends Fzhao_Model {
         }
 
         $data = $this->getData(array(
-            'fields' => 'p.id,p.term_id,p.title,p.summary,p.is_valid,p.owner,p.views,p.from,p.author,p.is_commend,p.is_issue,p.create_time,t.name term_name,t.slug',
+            'fields' => 'p.id,p.term_id,p.title,p.summary,p.isHidden,p.owner,p.views,p.from,p.author,p.is_commend,p.is_issue,p.create_time,t.name term_name,t.slug',
             'table' => 'news p',
             'join' => array('term t', 't.id=p.term_id'),
             '_conditions' => $conditions,
@@ -88,7 +88,7 @@ class News_model extends Fzhao_Model {
         }
         $count = $this->getData(array(
             'table' => 'news p',
-            'join' => array('term t', 't.id=p.term_id', 'admin a', 'a.id=p.owner'),
+            'join' => array('term t', 't.id=p.term_id'),
             '_conditions' => $conditions,
             'count' => true,
             'like' => $like
@@ -105,7 +105,32 @@ class News_model extends Fzhao_Model {
      * 时间：2018-01-13
      */
     function recycles($data) {
-        return $this->lists($data, 0);
+        return $this->lists($data, '1');
+    }
+
+    /**
+     * getRowById
+     * 简介：根据Title读取信息
+     * 参数：$id int
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-15
+     */
+    function getRowByTitle($title,$conditions) {
+        if (!$title) {
+            return null;
+        }
+        $_conditions = array(array('title' => $title),array('lang' => _LANGUAGE_));
+        if($conditions){
+            $_conditions = array_merge($_conditions,$conditions);
+        }
+        $result = $this->getData(array(
+            'fields' => '*',
+            'table' => $this->table,
+            '_conditions' => $_conditions,
+            'row' => true
+        ));
+        return $result;
     }
 
 }
