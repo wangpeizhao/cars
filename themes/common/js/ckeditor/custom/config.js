@@ -30,7 +30,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// need to have in the Standard(s) toolbar.
 	config.removeButtons = 'Underline,Subscript,Superscript';
 	config.width = 900;
-	config.height = 450;
+	config.height = 500;
 	//config.height = 600;
 	config.toolbarCanCollapse = true;
 	config.toolbarGroupCycling = true;

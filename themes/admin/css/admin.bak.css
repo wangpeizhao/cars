@@ -905,7 +905,7 @@ span.recharge {
 	float:left;
 }
 .form_table label {
-	margin-left:10px;
+	margin-left:0px;
 	padding:7px 0 0
 }
 .form_table label.attr {
@@ -922,8 +922,7 @@ span.recharge {
 	font-size:12px;
 	color:#333;
 	border:1px #d2d2d2 solid;
-	line-height:18px;
-	border-radius: 6px;
+	line-height:18px
 }
 .form_table textarea.big {
 	width:465px;
@@ -1716,9 +1715,8 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 	height:100%;
 	left:0;
 	top:0;
-	/*filter:alpha(opacity=50);
-	opacity:0.5;*/
-	background: rgba(255,255,255,0.6);
+	filter:alpha(opacity=50);
+	opacity:0.5;
 	z-index:98;
 	position:fixed!important;
 	position:absolute;
@@ -1949,7 +1947,7 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 }
 .div_box ul li img{
 	width:150px;
-	/*max-height:150px;*/
+	max-height:150px;
 	border:1px #ddd solid;
 	overflow: hidden;
 }
@@ -1976,14 +1974,6 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 	background:#000;
 	display:none;
 }
-.div_box ul li.images a.del{
-	position: absolute;
-	top:0px;
-	right: 0px;
-	height:16px;
-	width:16px;
-	background: url("../images/del_b_16x16.png") no-repeat 0px 0px transparent;
-}
 .div_box ul li div.cover{
 	width:100%;
 	z-index:101;
@@ -1992,7 +1982,7 @@ _top:       expression(eval(document.compatMode &&  document.compatMode=='CSS1Co
 	bottom:0px;
 	left:0px;
 	display:none;
-	background: url("../images/right_b.gif") no-repeat 72px 2px transparent;
+	background: url("../images/del_r_16x16.png") no-repeat 72px 2px transparent;
 	cursor:pointer;
 }
 .div_box ul li div.success{
@@ -2151,25 +2141,4 @@ table.member td.c label{
 }
 table.member td.c input{
 	margin-right:1px;
-}
-.form_table input.normal{width:470px!important;}
-a.choose{
-	color: blue;
-	text-decoration:underline
-}
-.chooseImage img{
-	max-width: 72px;
-}
-.chooseImage .thumbImage{
-	position: relative;
-	width:80px;
-}
-.chooseImage a.del{
-	display: none;
-	position: absolute;
-	top: -8px;
-	right: 0px;
-	height:16px;
-	width:16px;
-	background: url("../images/del_b_16x16.png") no-repeat 0px 0px transparent;
 }

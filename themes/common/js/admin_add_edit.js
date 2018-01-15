@@ -42,8 +42,9 @@ $(function(){
             //return false;
         }
         $('.chooseImage a.del').click(function(){
-            $('.chooseImage a.thumb').attr('href','');
-            $('.chooseImage a img').attr('src','');
+            // $('.chooseImage a.thumb').attr('href','');
+            $('.chooseImage a img').attr('src','/themes/admin/images/tv-expandable.gif');
+            $('.chooseImage a img').attr('_src','/themes/admin/images/tv-expandable.gif');
             $('.chooseImage input[name="thumb"]').val('');
             $('.chooseImage a.del').hide();
         });

@@ -75,31 +75,25 @@
                   </tr>
                   <tr>
                     <th>设置浏览次数：</th>
-                    <td><input type="text" placeholder="浏览次数" value="<?=isset($data['views'])?$data['views']:''?>" name="views" class="normal"></td>
+                    <td><input type="number" placeholder="浏览次数" value="<?=isset($data['views'])?$data['views']:''?>" name="views" class="normal"></td>
                   </tr>
                   <tr>
                     <th>新闻缩略图：<br>显示于首页的新闻频道：</th>
                     <td class="f chooseImage">
                       <div class="thumbImage">
-            						<a style="margin:0 0 3px 1px;" target="_blank" class="thumb" href="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.$data['news_img']:''?>">
-                          <img width="72" src="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.str_replace(array('images','.'),array('tiny','_thumb.'),$data['news_img']):''?>">
+            						<a style="margin:0 0 3px 1px;" target="_blank" class="thumb" href="javascript:;">
+                          <img class="popover" 
+                          _src="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.$data['news_img']:'/themes/admin/images/tv-expandable.gif'?>" 
+                          src="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.str_replace(array('images','.'),array('tiny','_thumb.'),$data['news_img']):'/themes/admin/images/tv-expandable.gif'?>">
                         </a>
                         <a href="javascript:;" class="del" title="删除"></a>
                       </div>
           						<div class="clear"></div>
           						<input type="hidden" name="thumb" value="<?=isset($data['news_img'])?$data['news_img']:''?>">
           						<a href="javascript:;" class="choose">选择缩略图</a> <span>仅支持格式：jpg、jpeg、gif和png！</span>
-                      <script type="text/javascript">
-                        function chooseImage(image,thumb){
-                            $('.chooseImage a.thumb').attr('href',image);
-                            $('.chooseImage a img').attr('src',thumb);
-                            $('.chooseImage input[name="thumb"]').val(image);
-                            $('.chooseImage a.del').fadeIn();
-                        }
-                        <?php if(!empty($data['news_img'])){?>
-                          $('.chooseImage a.del').fadeIn();
-                        <?php }?>
-                      </script>
+                      <!-- 引入图片弹出层-->
+                      <?php include('popover.php');?>
+                      <!-- /引入图片弹出层-->
                     </td>
                   </tr>
                   <tr>
@@ -132,4 +126,4 @@
       <!--/container-->
       <!-- 引入底部-->
       <?php include('footer.php');?>
-    <!-- /引入底部-->
+      <!-- /引入底部-->

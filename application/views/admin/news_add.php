@@ -70,28 +70,25 @@
                   </tr>
                   <tr>
                     <th>设置浏览次数：</th>
-                    <td><input type="text" placeholder="浏览次数" name="views" class="normal" value="999" maxlength="10"></td>
+                    <td><input type="number" placeholder="浏览次数" name="views" class="normal" value="999" maxlength="10"></td>
                   </tr>
                   <tr>
                     <th>新闻宣传图片：<br>显示于首页的新闻频道：</th>
                     <td class="f chooseImage">
                       <div class="thumbImage">
-                        <a style="margin:0 0 3px 1px;" target="_blank" class="thumb" href="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.$data['news_img']:''?>">
-                          <img width="72" src="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.str_replace(array('images','.'),array('tiny','_thumb.'),$data['news_img']):''?>">
+                        <a style="margin:0 0 3px 1px;" target="_blank" class="thumb" href="javascript:;">
+                          <img class="popover" 
+                          _src="/themes/admin/images/tv-expandable.gif" 
+                          src="/themes/admin/images/tv-expandable.gif">
                         </a>
                         <a href="javascript:;" class="del" title="删除"></a>
                       </div>
                       <div class="clear"></div>
-                      <input type="hidden" name="thumb" value="<?=isset($data['news_img'])?$data['news_img']:''?>">
+                      <input type="hidden" name="thumb" value="">
                       <a href="javascript:;" class="choose">选择缩略图</a> <span>仅支持格式：jpg、jpeg、gif和png！</span>
-                      <script type="text/javascript">
-                        function chooseImage(image,thumb){
-                            $('.chooseImage a.thumb').attr('href',image);
-                            $('.chooseImage a img').attr('src',thumb);
-                            $('.chooseImage input[name="thumb"]').val(image);
-                            $('.chooseImage a.del').fadeIn();
-                        }
-                      </script>
+                      <!-- 引入图片弹出层-->
+                      <?php include('popover.php');?>
+                      <!-- /引入图片弹出层-->
                     </td>
                   </tr>
                   <tr>
