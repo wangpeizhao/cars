@@ -2152,7 +2152,7 @@ table.member td.c label{
 table.member td.c input{
 	margin-right:1px;
 }
-.form_table input.normal{width:470px!important;}
+.form_content .form_table input.normal{width:470px!important;}
 a.choose{
 	color: blue;
 	text-decoration:underline

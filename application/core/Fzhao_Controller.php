@@ -273,7 +273,7 @@ class Fzhao_Controller extends My_Controller {
                 $this->_authentical();
             }
         }
-        $this->grade = intval($adminLoginInfo['grade']);
+        $this->grade = intval($adminLoginInfo['role_id']);
         $this->isLogin = true;
         defined('ADMIN_ID') or define('ADMIN_ID', $this->userId);
     }

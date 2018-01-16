@@ -32,21 +32,21 @@ class Login_model extends Fzhao_Model {
         $this->db->select('*');
         $this->db->from('admin');
         //$this->db->join('group', 'admin.grade = group.groupid');
-        $array = array('username' => $data['username'], 'is_valid' => '1'); //, 'password' => encryption($data['password'])
+        $array = array('username' => $data['username'], 'isHidden' => '0'); //, 'password' => encryption($data['password'])
         $this->db->where($array);
         $query = $this->db->get();
         $userInfo = $query->row_array();
         if (empty($userInfo)) {
             return false;
         }
-        if ($userInfo['password'] != encryption($data['password'])) {
+        if ($userInfo['password'] != encryption($data['password'].$userInfo['salt'])) {
             return false;
         }
 
         $group = $this->getData(array(
             'fields' => '*',
             'table' => 'group',
-            '_conditions' => array(array('groupid' => intval($userInfo['grade'])), array('is_active' => '1')),
+            '_conditions' => array(array('groupid' => intval($userInfo['role_id'])), array('isHidden' => '0')),
             'row' => true
         ));
         if (!$group) {
@@ -58,7 +58,7 @@ class Login_model extends Fzhao_Model {
         $privs = $this->getData(array(
             'fields' => '*',
             'table' => 'priv',
-            'conditions' => array('role_id' => intval($userInfo['grade']))
+            'conditions' => array('role_id' => intval($userInfo['role_id']))
         ));
         $authorized = array();
         if ($privs) {
@@ -70,7 +70,11 @@ class Login_model extends Fzhao_Model {
             }
         }
         $userInfo['authorized'] = array_values(array_filter(array_unique($authorized)));
-        $this->db->update('admin', array('last_login_time' => date('Y-m-d H:i:s')), array('id' => $userInfo['id']));
+        $updateData = array(
+            'last_login_time' => _DATETIME_,
+            'last_login_ip' => real_ip()
+        );
+        $this->db->update('admin', $updateData, array('id' => $userInfo['id']));
         return $userInfo;
     }
 

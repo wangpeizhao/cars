@@ -55,7 +55,7 @@
 	  <a>您好:<?php $userInfo=$this->session->userdata('adminLoginInfo');?>
 			<label class='bold'><?=isset($userInfo['username'])?$userInfo['username']:''?></label>
 			 ，当前身份
-			<label class='bold'><?=isset($userInfo['grouptitle'])?$userInfo['grouptitle']:''?></label>
+			<label class='bold'><?=isset($userInfo['role_name'])?$userInfo['role_name']:''?></label>
     </a>
 	</p>
   </div>

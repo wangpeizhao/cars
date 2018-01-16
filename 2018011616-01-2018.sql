@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.17)
 # Database: automobile_service
-# Generation Time: 2018-01-15 16:45:55 +0000
+# Generation Time: 2018-01-16 00:23:30 +0000
 # ************************************************************
 
 
@@ -30,7 +30,8 @@ CREATE TABLE `tab_admin` (
   `username` varchar(30) NOT NULL COMMENT '管理员登录名',
   `nickname` varchar(30) DEFAULT NULL COMMENT '管理员真实姓名',
   `password` varchar(40) NOT NULL COMMENT '管理员登录密码',
-  `grade` tinyint(3) NOT NULL COMMENT '管理员角色等级ID',
+  `salt` char(6) DEFAULT NULL COMMENT '密码干扰字符串',
+  `role_id` int(10) NOT NULL DEFAULT '0' COMMENT '管理员角色等级ID',
   `branch` varchar(50) DEFAULT NULL COMMENT '管理员所属部门',
   `email` varchar(40) DEFAULT NULL COMMENT '管理员Email',
   `phone` varchar(12) DEFAULT NULL COMMENT '管理员电话号码',
@@ -38,12 +39,12 @@ CREATE TABLE `tab_admin` (
   `qq` varchar(13) DEFAULT NULL COMMENT '管理员QQ号码',
   `describe` varchar(500) DEFAULT NULL COMMENT '管理员个人描述',
   `sort` smallint(3) NOT NULL DEFAULT '0' COMMENT '排序(前台显示排序),越大越靠前',
-  `last_login_time` datetime DEFAULT NULL COMMENT '上次登录时间',
-  `login_ip` char(15) DEFAULT NULL COMMENT '注册IP',
-  `is_active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：1有效，0无效',
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '生成时间',
-  `create_user` int(10) NOT NULL DEFAULT '0' COMMENT '操作用户ID',
-  `is_valid` tinyint(1) NOT NULL DEFAULT '1',
+  `last_login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
+  `last_login_ip` char(15) DEFAULT NULL COMMENT '最后登录IP',
+  `isHidden` enum('0','1') DEFAULT '0' COMMENT '状态：1有效，0无效',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '编辑时间',
+  `uid` int(10) NOT NULL DEFAULT '0' COMMENT '操作用户ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台管理员表';
@@ -51,12 +52,44 @@ CREATE TABLE `tab_admin` (
 LOCK TABLES `tab_admin` WRITE;
 /*!40000 ALTER TABLE `tab_admin` DISABLE KEYS */;
 
-INSERT INTO `tab_admin` (`id`, `username`, `nickname`, `password`, `grade`, `branch`, `email`, `phone`, `mobile`, `qq`, `describe`, `sort`, `last_login_time`, `login_ip`, `is_active`, `create_time`, `create_user`, `is_valid`)
+INSERT INTO `tab_admin` (`id`, `username`, `nickname`, `password`, `salt`, `role_id`, `branch`, `email`, `phone`, `mobile`, `qq`, `describe`, `sort`, `last_login_time`, `last_login_ip`, `isHidden`, `create_time`, `update_time`, `uid`)
 VALUES
-	(2,'admin','王培照','deb6e94ac8b42e7718979d9e1471b478',2,'技术部','342823274@qq.com','13533615794','13533615794','342823274','php工程师',98,'2017-08-21 16:29:12','127.0.0.1',1,'2013-01-29 23:08:10',1,1),
-	(9,'15622299006','王培照','6945191869322a071322c57fefeab93a',1,'系统管理部','342823274@qq.com','15622299006','15622299006','34343343','',1,'2018-01-15 21:08:14','127.0.0.1',1,'2017-07-26 16:23:28',0,1);
+	(2,'admin','王培照','deb6e94ac8b42e7718979d9e1471b478','x8sjd9',2,'技术部','342823274@qq.com','13533615794','13533615794','342823274','php工程师',98,'2017-08-21 16:29:12','127.0.0.1','0','2013-01-29 23:08:10',NULL,1),
+	(9,'15622299006','王培照','a3e879b139fed00e052be8f7d64a5a6d','g2kbn5',1,'系统管理部','342823274@qq.com','15622299006','15622299006','34343343','',1,'2018-01-16 08:02:46','127.0.0.1','0','2017-07-26 16:23:28',NULL,0);
 
 /*!40000 ALTER TABLE `tab_admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table tab_admin_role
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `tab_admin_role`;
+
+CREATE TABLE `tab_admin_role` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户组角色ID',
+  `role_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户组角色名称',
+  `supervisor` enum('0','1') DEFAULT '0' COMMENT '是否为超级管理员',
+  `isHidden` enum('0','1') DEFAULT '0' COMMENT '状态：1有效，0无效',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '编辑时间',
+  `uid` int(10) NOT NULL DEFAULT '0' COMMENT '操作用户ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员用户角色(用户组)';
+
+LOCK TABLES `tab_admin_role` WRITE;
+/*!40000 ALTER TABLE `tab_admin_role` DISABLE KEYS */;
+
+INSERT INTO `tab_admin_role` (`id`, `role_name`, `supervisor`, `isHidden`, `create_time`, `update_time`, `uid`)
+VALUES
+	(1,'管理员','0','0','2014-01-18 08:42:10',NULL,0),
+	(2,'超级管理员','1','0','2014-01-17 21:02:29',NULL,0),
+	(3,'网站会员','0','0','2014-01-24 20:03:11',NULL,0),
+	(27,'新闻编辑管理多','0','0','2014-03-01 14:10:11',NULL,0),
+	(28,'拖遥有有','0','0','2017-07-26 10:34:35',NULL,0),
+	(29,' 入脾手主','0','0','2017-07-26 10:34:36',NULL,0);
+
+/*!40000 ALTER TABLE `tab_admin_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -226,38 +259,6 @@ VALUES
 	(9,'message',0,'王培照',0,'15622299006','342823274@qq.com',NULL,'王培照在测试洽谈','113.119.161.160',NULL,1,0,1,1507435150,1507435150,0);
 
 /*!40000 ALTER TABLE `tab_comments` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table tab_group
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `tab_group`;
-
-CREATE TABLE `tab_group` (
-  `groupid` smallint(3) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户组角色ID',
-  `grouptitle` varchar(30) NOT NULL COMMENT '用户组角色名称',
-  `regulars` text COMMENT '权限集',
-  `supervisor` enum('0','1') DEFAULT '0' COMMENT '是否为超级管理员',
-  `is_active` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态：1有效，0无效',
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '生成时间',
-  `create_user` int(10) NOT NULL DEFAULT '0' COMMENT '操作用户ID',
-  PRIMARY KEY (`groupid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员用户角色(用户组)';
-
-LOCK TABLES `tab_group` WRITE;
-/*!40000 ALTER TABLE `tab_group` DISABLE KEYS */;
-
-INSERT INTO `tab_group` (`groupid`, `grouptitle`, `regulars`, `supervisor`, `is_active`, `create_time`, `create_user`)
-VALUES
-	(1,'管理员','26|33|34|27|28|29|30|31|32','0',1,'2014-01-18 08:42:10',0),
-	(2,'超级管理员','|','1',1,'2014-01-17 21:02:29',0),
-	(3,'网站会员','member-index|member-info|member-edit|member-avatar|member-edit_n|member-edit_p|member-password|member-unit','0',0,'2014-01-24 20:03:11',0),
-	(27,'新闻编辑管理多',NULL,'0',1,'2014-03-01 14:10:11',0),
-	(28,'拖遥有有',NULL,'0',1,'2017-07-26 10:34:35',0),
-	(29,' 入脾手主',NULL,'0',1,'2017-07-26 10:34:36',0);
-
-/*!40000 ALTER TABLE `tab_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

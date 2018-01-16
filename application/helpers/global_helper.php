@@ -37,7 +37,7 @@ function conv($str) {
 
 //加密算法
 function encryption($str = '') {
-    return md5(sha1(hash('md4', $str) . 'hlh*wpz'));
+    return md5(sha1(hash('md4', $str) . 'cqy*wpz'));
 }
 
 // 清除HTML标签
