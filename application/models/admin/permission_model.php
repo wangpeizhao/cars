@@ -154,7 +154,7 @@ class permission_model extends Fzhao_Model {
                         . '<input type="checkbox" name="permissions[' . $v['pid'] . '][' . $v['id'] . ']" value="' . $v['id'] . '" cid="' . $v['id'] . '" pid="' . $v['pid'] . '" '
                         . 'class="dn"' . $checked . ' param="' . (isset($v['parameter']) ? $v['parameter'] : '') . '">'
                         . '<button type="button" class="btn_perm" title="' . $v['title'] . '">' . $v['title'] . '</button>'
-                        . '<i class="iconfont-add' . $dn . '">√</i>'
+                        . '<i class="iconfont-add' . $dn . '">✓</i>'
                         . '</div>';
                 $html .= '          <a class="js-toggle toggle addImg"> </a>';
                 $html .= '      </div>';

@@ -4,197 +4,76 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Cases extends Fzhao_Controller {
-
-    protected $_type_ = 'cases';
-    protected $_title_ = '成功案例';
-
+class Comments extends Fzhao_Controller {
+    
+    private $title = '';
     function __construct() {
         parent::__construct();
-//        $this->checkLP(); //检测登录状态和权限
-        $this->load->library('uri');
-        $this->load->model('admin/cases_model');
-        $this->model = $this->cases_model;
+        $this->load->model('admin/comments_model', 'admin');
+        $this->title = '留言';
     }
 
     /**
-     * index
-     * 简介：活动列表
+     * news
+     * 简介：新闻资讯
      * 参数：NULL
      * 返回：Array
-     * 作者：Fzhao
-     * 时间：2014-1-19
+     * 作者：Parker
+     * 时间：2018-01-13
      */
     function index() {
+        $data = array();
         if (IS_POST) {
-            $data['currPage'] = $this->input->post('currPage', true);
-            $data['rows'] = $this->input->post('rows', true);
-            $data['condition'] = $this->input->post('condition', true);
-            if (empty($data['condition']) || !is_array($data['condition'])) {
-                unset($data['condition']);
-            } else {
-                $data['condition'] = $data['condition'][0];
-            }
-            $result = $this->model->get_list($data);
+            $data = $this->input->post(null, true);
+            $data['currPage'] = getPages();
+            $data['rows'] = getPageSize();
+            $result = $this->admin->lists($data);
             $this->doJson($result);
         } else {
-            $data = array();
-            $data['terms'] = $this->model->getTermByTaxonomy($this->_type_);
-            $data['_title_'] = $this->_title_;
-            $data['_type_'] = $this->_type_;
-            $this->view('admin/cases', $data);
+            $data['title'] = $this->title;
+            $data['_title_'] = $this->title;
+            $data['terms'] = $this->admin->getTermByTaxonomy('comments');
+            $this->view('admin/comments', $data);
         }
     }
 
     /**
-     * add
-     * 简介：添加活动
+     * recycles
+     * 简介：回收站
      * 参数：NULL
      * 返回：Array
-     * 作者：Fzhao
-     * 时间：2014-1-19
+     * 作者：Parker
+     * 时间：2018-01-13
      */
-    function add() {
+    function recycles() {
         $data = array();
         if (IS_POST) {
-            $post = $this->input->post();
-            $data['term_id'] = intval($post['term_id']) ? intval($this->input->post('term_id', true)) : 0;
-            $data['is_commend'] = intval($this->input->post('is_commend', true));
-            $data['is_issue'] = intval($this->input->post('is_issue', true));
-            $data['sort'] = intval($this->input->post('sort', true));
-            $data['title'] = trim($post['title']) ? $this->input->post('title', true) : '';
-            $data['ft_title'] = wordSegment($data['title']);
-            $data['content'] = str_replace(site_url(''), 'LWWEB_LWWEB_DEFAULT_URL', trim($post['content']) ? htmlspecialchars($this->input->post('content')) : '');
-            $data['SEOKeywords'] = trim($post['SEOKeywords']) ? htmlspecialchars($this->input->post('SEOKeywords', true)) : '';
-            $data['SEODescription'] = trim($post['SEODescription']) ? htmlspecialchars($this->input->post('SEODescription', true)) : '';
-            $data['owner'] = $this->userId;
-            $data['create_time'] = date('Y-m-d H:i:s');
-            $data['lang'] = _LANGUAGE_;
-
-            $tid = $data['term_id'];
-            $result = $this->model->add($data);
-            if ($result) {
-                $this->model->iUpdate(array('table' => 'term', 'field' => 'count', 'val' => 'count+1', 'id' => $tid));
-            }
-            $this->doIframe($result);
+            $data = $this->input->post(null, true);
+            $data['currPage'] = getPages();
+            $data['rows'] = getPageSize();
+            $result = $this->admin->recycles($data);
+            $this->doJson($result);
         } else {
-            $data['terms'] = $this->model->getTermByTaxonomy($this->_type_);
-            $data['_title_'] = $this->_title_;
-            $data['_type_'] = $this->_type_;
-            $this->view('admin/casesAdd', $data);
-        }
-    }
-
-    /**
-     * edit
-     * 简介：编辑活动
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2014-1-19
-     */
-    function edit($id = null) {
-        $data = array();
-        if (IS_POST) {
-            $id = intval($this->input->get_post('id', true));
-            $service = $this->model->get_info_byI_id($id);
-            if (!$service) {
-                $this->doIframe('找不到数据', 0);
-            }
-            $post = $this->input->post();
-            $path = addslashes($this->input->post('path', true));
-            $id = intval($post['id']) ? intval($this->input->post('id', true)) : 0;
-            $data['term_id'] = intval($post['term_id']) ? intval($this->input->post('term_id', true)) : 0;
-            $data['is_commend'] = intval($post['is_commend']) ? intval($this->input->post('is_commend', true)) : 0;
-            $data['is_issue'] = intval($post['is_issue']) ? intval($this->input->post('is_issue', true)) : 0;
-            $data['sort'] = intval($this->input->post('sort', true));
-            $data['title'] = trim($post['title']) ? $this->input->post('title', true) : '';
-            $data['ft_title'] = wordSegment($data['title']);
-            $data['content'] = str_replace(site_url(''), 'LWWEB_LWWEB_DEFAULT_URL', trim($post['content']) ? htmlspecialchars($this->input->post('content')) : '');
-            $data['SEOKeywords'] = trim($post['SEOKeywords']) ? htmlspecialchars($this->input->post('SEOKeywords', true)) : '';
-            $data['SEODescription'] = trim($post['SEODescription']) ? htmlspecialchars($this->input->post('SEODescription', true)) : '';
-            $data['update_time'] = date('Y-m-d H:i:s');
-
-            $result = $this->model->dbUpdate('cases', $data, array('id' => $id));
-            $this->doIframe($result);
-        } else {
-            $n = in_array($this->uri->segment(1), array('cn', 'en')) ? 5 : 4;
-            $id = intval($this->uri->segment($n));
-            $service = $this->model->get_info_byI_id($id);
-            if (!$service) {
-                show_404();
-            }
-            $data['terms'] = $this->model->getTermByTaxonomy($this->_type_);
-            $data['data'] = $service;
-            $data['_title_'] = $this->_title_;
-            $data['_type_'] = $this->_type_;
-            $this->view('admin/casesEdit', $data);
+            $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
+            $data['title'] = $this->title.'回收站';
+            $data['_title_'] = $this->title;
+            $this->view('admin/news_recycles', $data);
         }
     }
 
     /**
      * del
-     * 简介：删除(放入回收站)活动
+     * 简介：删除(放入回收站)
      * 参数：NULL
      * 返回：Array
-     * 作者：Fzhao
-     * 时间：2014-1-21
+     * 作者：Parker
+     * 时间：2018-01-13
      */
     function del() {
         if (IS_POST) {
-            $id = $this->input->post('id', true);
-            if (is_numeric($id) || is_array($id)) {
-                $result = $this->model->del($id);
-            } else {
-                $result = false;
-            }
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * recycle
-     * 简介：活动回收站
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2014-1-22
-     */
-    function recycle() {
-        $data = array();
-        if (IS_POST) {
-            $data['currPage'] = intval($this->input->post('currPage', true));
-            $data['rows'] = intval($this->input->post('rows', true));
-            $data['condition'] = $this->input->post('condition', true);
-            if (empty($data['condition']) || !is_array($data['condition'])) {
-                unset($data['condition']);
-            } else {
-                $data['condition'] = $data['condition'][0];
-            }
-            $result = $this->model->get_recycle_list($data);
-            $this->doJson($result);
-        } else {
-            $data['terms'] = $this->model->getTermByTaxonomy($this->_type_);
-            $data['_title_'] = $this->_title_;
-            $data['_type_'] = $this->_type_;
-            $this->view('admin/casesRecycle', $data);
-        }
-    }
-
-    /**
-     * recover
-     * 简介：还原活动信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2014-1-22
-     */
-    function recover() {
-        if (IS_POST) {
-            $id = $this->input->post('id', true);
-            $result = $this->model->recover($id);
+            $id = post_get('id');
+            $this->verify($id);
+            $result = $this->admin->del($id);
             $this->doJson($result);
         } else {
             show_404();
@@ -203,96 +82,77 @@ class Cases extends Fzhao_Controller {
 
     /**
      * dump
-     * 简介：彻底删除活动信息
+     * 简介：彻底删除信息
      * 参数：NULL
      * 返回：Array
-     * 作者：Fzhao
-     * 时间：2014-1-22
+     * 作者：Parker
+     * 时间：2018-01-13
      */
     function dump() {
         if (IS_POST) {
-            $id = $this->input->post('id', true);
-            $result = $this->model->dump($id);
+            $id = post_get('id');
+            $this->verify($id);
+            $result = $this->admin->dump($id);
             $this->doJson($result);
         } else {
             show_404();
         }
     }
 
-    function uploadTfile($fileData) {
-        if (!empty($fileData)) {
-            $targetFolder = 'uploads/files/activities';
-            $this->createFolder($targetFolder);
-            $tempFile = $fileData['tmp_name'];
-            $targetPath = $targetFolder;
-            $fileParts = pathinfo($fileData['name']);
-            $fName = date("YmdHis") . '_' . rand(100, 999);
-            $post['fileext'] = '.' . strtolower($fileParts['extension']);
-            $post['fileType'] = $fileData['type'];
-            $post['file_name'] = $fName . $post['fileext'];
-            $targetFile = $post['file_path'] = rtrim($targetPath, '/') . '/' . $fName . '.' . strtolower($fileParts['extension']);
-
-            $fileTypes = array('jpg', 'jpeg', 'gif', 'png', 'txt', 'rar', 'zip', 'pdf', 'csv', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'chm'); // File extensions
-            $filesize = abs(filesize($tempFile)); //图片大小 
-            $post['filesize'] = $filesize;
-            if ($filesize >= 5120000) {
-                clearstatcache();
-                echo '<script type="text/javascript">window.top.window.fileResult("' . kc_iconv("上传文档太大,请重新选择,\\n支持文档大小为5M！") . '");</script>';
-                exit();
-            }
-            if (in_array(strtolower($fileParts['extension']), $fileTypes)) {
-                move_uploaded_file($tempFile, $targetFile);
-            } else {
-                clearstatcache();
-                echo '<script type="text/javascript">window.top.window.fileResult("' . kc_iconv("上传文档格式不正确,请重新选择,\\n支持文档格式：\'jpg\',\'jpeg\',\'gif\',\'png\',\'txt\',\'rar\',\'zip\',\'pdf\',\'csv\',\'doc\',\'docx\',\'xls\',\'xlsx\',\'ppt\',\'pptx\',\'chm\'！") . '");</script>';
-                exit();
-            }
-        }
-        return $post;
-    }
-
     /**
-     * uploadPic
-     * 简介：上传图片
-     * 参数：Array
+     * recover
+     * 简介：还原信息
+     * 参数：NULL
      * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-22
+     * 作者：Parker
+     * 时间：2018-01-13
      */
-    function uploadPic($FILES, $realmName, $targetFolder = 'uploads/membervip', $filePath = '') {
-        $this->createFolder($targetFolder);
-        $tempFile = $FILES['tmp_name'];
-        $targetPath = $targetFolder;
-        $fileParts = pathinfo($FILES['name']);
-        $targetFile = rtrim($targetPath, '/') . '/' . $realmName . '_' . $this->random() . '.' . strtolower($fileParts['extension']);
-
-        $fileTypes = array('jpg', 'jpeg', 'gif', 'png'); // File extensions
-        $filesize = abs(filesize($tempFile)); //图片大小 
-        if ($filesize > 358400) {
-            clearstatcache();
-            echo '<script type="text/javascript">window.top.window.iResult("' . kc_iconv("上传图片太大,请重新选择,\\n支持图片大小为小于300K！") . '");</script>';
-            if ($filePath && file_exists($filePath)) {
-                unlink($filePath);
-            }
-            exit();
-        }
-        if (in_array(strtolower($fileParts['extension']), $fileTypes)) {
-            move_uploaded_file($tempFile, $targetFile);
+    function recover() {
+        if (IS_POST) {
+            $id = post_get('id');
+            $this->verify($id);
+            $result = $this->admin->recover($id);
+            $this->doJson($result);
         } else {
-            clearstatcache();
-            echo '<script type="text/javascript">window.top.window.iResult("' . kc_iconv("上传图片格式不正确,请重新选择,\\n支持图片格式：jpg、jpeg、gif和png！") . '");</script>';
-            if ($filePath && file_exists($filePath)) {
-                unlink($filePath);
-            }
-            exit();
+            show_404();
         }
-        return $targetFile;
     }
-
-    function random() {
-        $seed = current(explode(" ", microtime())) * 10000;
-        $random = rand(10000, intval($seed));
-        return date("YmdHis", time()) . $random;
+    
+    /**
+     * batch
+     * 简介：批量操作
+     * 参数：NULL
+     * 返回：Array
+     * 作者：Parker
+     * 时间：2018-01-15
+     */
+    function batch() {
+        if (IS_POST) {
+            $type = post_get('val');
+            $this->verify($type,'操作类型不能为空');
+            $ids = $this->input->post('ids', true);
+            $this->verify($ids,'请至少选择一项');
+            $conditions = array('lang'=>_LANGUAGE_);
+            $data = array();
+            switch ($type){
+                case '1';//批量标记推荐
+                    $data = array('is_commend' => '1');
+                    break;
+                case '2';//批量取消推荐
+                    $data = array('is_commend' => '0');
+                    break;
+                case '3';//批量标记发布
+                    $data = array('is_issue' => '1');
+                    break;
+                case '4';//批量取消发布
+                    $data = array('is_issue' => '0');
+                    break;
+            }
+            $result = $this->admin->dbUpdateIn('news',$data,$conditions,array('id'=>$ids));
+            $this->doJson($result);
+        } else {
+            show_404();
+        }
     }
 
 }

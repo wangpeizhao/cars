@@ -68,28 +68,28 @@ class Tree {
      * @return array
      */
     public function get_child($myid) {
-		static $newarr;
-		if(isset($newarr)){
-			return isset($newarr[$myid])?$newarr[$myid]:array();
-		}
-		if(!$this->arr){
-			return array();
-		}
-		foreach($this->arr as $item){
-			$newarr[$item['pid']][] = $item;
-		}
-		return isset($newarr[$myid])?$newarr[$myid]:array();
-
-		/*
-        $a = $newarr = array();
-        if (is_array($this->arr)) {
-            foreach ($this->arr as $id => $a) {
-                if ($a['pid'] == $myid)
-                    $newarr[$id] = $a;
-            }
+        static $newarr;
+        if (isset($newarr)) {
+            return isset($newarr[$myid]) ? $newarr[$myid] : array();
         }
-        return $newarr ? $newarr : false;
-		*/
+        if (!$this->arr) {
+            return array();
+        }
+        foreach ($this->arr as $item) {
+            $newarr[$item['pid']][] = $item;
+        }
+        return isset($newarr[$myid]) ? $newarr[$myid] : array();
+
+        /*
+          $a = $newarr = array();
+          if (is_array($this->arr)) {
+          foreach ($this->arr as $id => $a) {
+          if ($a['pid'] == $myid)
+          $newarr[$id] = $a;
+          }
+          }
+          return $newarr ? $newarr : false;
+         */
     }
 
     /**
@@ -99,7 +99,7 @@ class Tree {
      */
     public function get_pos($myid, &$newarr) {
         $a = array();
-        if (!isset($this->arr[$myid])){
+        if (!isset($this->arr[$myid])) {
             return false;
         }
         $newarr[] = $this->arr[$myid];

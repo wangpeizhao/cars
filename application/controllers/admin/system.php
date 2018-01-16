@@ -181,7 +181,7 @@ class System extends Fzhao_Controller {
         $data['select_menus'] = $tree->get_tree(0, $str);
         
         //menus lists
-        $menus_lists = $this->system_model->_get_menu_tree_html($menus,($plat?$plat:'admin'));
+        $menus_lists = $this->system_model->_get_menu_tree_html($menus);
         $data['menus_lists'] = $menus_lists;
         successOutput($data);
     }
@@ -550,7 +550,7 @@ EOM;
         }
         $cacheTime = $this->input->post('cache', true);
         if ($cacheTime == 0) {
-            $path = 'application/' . APPLICATION . '/cache/en/';
+            $path = 'application/cache/en/';
             $files = array();
             $handle = opendir($path);
             while ($file = readdir($handle)) {
@@ -563,7 +563,7 @@ EOM;
                 }
             }
 
-            $path = 'application/' . APPLICATION . '/cache/cn/';
+            $path = 'application/cache/cn/';
             $files = array();
             $handle = opendir($path);
             while ($file = readdir($handle)) {
@@ -582,296 +582,6 @@ EOM;
         $options[] = $option;
         $result = $this->system_model->editOptions($options);
         $this->doIframe($result);
-    }
-
-    /**
-     * editUserInfo
-     * 简介：管理员列表
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function adminList() {
-        if (IS_POST) {
-            $data['currPage'] = $this->input->post('currPage', true);
-            $data['rows'] = $this->input->post('rows', true);
-            $result = $this->system_model->getAdminList($data);
-            $this->doJson($result);
-        } else {
-            $data['role'] = $this->system_model->getRoleList();
-            $data['uid'] = $this->userId;
-            $this->view('admin/adminList', $data);
-        }
-    }
-
-    /**
-     * editUserInfo
-     * 简介：修改管理员信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function editUserInfo() {
-        if (IS_POST) {
-            $data = $this->input->post(NULL, TRUE);
-            if ($data['uid'] == 2 && $this->userId != 2) {
-                $this->doJson(false);
-            }
-            if (isset($data['act']) && $data['act'] == 'getUserInfo') {//读取数据
-                $uid = $this->input->post('uid', true); //过虑处理 用户地址内容id
-                $result['userInfo'] = $this->system_model->getUserInfo($uid);
-            } else {//修改数据
-                if ($data['password']) {
-                    $data['data']['password'] = encryption($data['password']);
-                }
-                $result = $this->system_model->editUserInfo($data, $this->userId);
-            }
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * addUserInfo
-     * 简介：添加管理员信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function addUserInfo() {
-        if (IS_POST) {
-            $act = $this->input->post('act', true);
-            if (isset($act) && $act == 'check') {
-                $username = trim($this->input->post('username', true));
-                $result = $this->system_model->checkUsername($username);
-            } else {
-                $data = $this->input->post(NULL, TRUE);
-                $data['data']['login_ip'] = real_ip();
-                $result = $this->system_model->addUserInfo($data['data']);
-            }
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * delUserInfo
-     * 简介：添加管理员信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function delUserInfo() {
-        if (IS_POST) {
-            $id = $this->input->post('id', true);
-            $result = $this->system_model->delUserInfo($id);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * adminRecycleList
-     * 简介：管理员信息回收站
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function adminRecycleList() {
-        if (IS_POST) {
-            $data['currPage'] = $this->input->post('currPage', true);
-            $data['rows'] = $this->input->post('rows', true);
-            $result = $this->system_model->getAdminRecycleList($data);
-            $this->doJson($result);
-        } else {
-            $data['role'] = $this->system_model->getRoleList();
-            $this->view('admin/adminRecycleList', $data);
-        }
-    }
-
-    /**
-     * dumpUserInfo
-     * 简介：彻底删除管理员信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function dumpUserInfo() {
-        if (IS_POST) {
-            $id = $this->input->post('id', true);
-            $result = $this->system_model->dumpUserInfo($id);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * recoverUserInfo
-     * 简介：还原管理员信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function recoverUserInfo() {
-        if (IS_POST) {
-            $id = $this->input->post('id', true);
-            $result = $this->system_model->recoverUserInfo($id);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * adminRoleList
-     * 简介：管理员角色列表
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-14
-     */
-    function adminRoleList() {
-        if (IS_POST) {
-            $data['currPage'] = $this->input->post('currPage', true);
-            $data['rows'] = $this->input->post('rows', true);
-            $result = $this->system_model->adminRoleList($data);
-            $this->doJson($result);
-        } else {
-            $this->view('admin/adminRoleList');
-        }
-    }
-
-    /**
-     * addRole
-     * 简介：管理员角色
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-11
-     */
-    function addRole() {
-        if (IS_POST) {
-            $data = $this->input->post('data', true);
-            $result = $this->system_model->addRole($data);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * delRole
-     * 简介：删除管理员角色
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-14
-     */
-    function delRole() {
-        if (IS_POST) {
-            $gid = $this->input->post('gid', true);
-            $result = $this->system_model->delRole($gid);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * editRole
-     * 简介：修改管理员角色
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-14
-     */
-    function editRole() {
-        if (IS_POST) {
-            $gid = $this->input->post('gid', true);
-            $newTitle = $this->input->post('newTitle', true);
-            $result = $this->system_model->editRole($gid, $newTitle);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * regular
-     * 简介：管理员角色列表
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-14
-     */
-    function regular() {
-        if (!IS_POST) {
-            $roleId = intval($this->input->get('roleId',true));
-            $this->load->model('admin/permission_model','permission');
-            $data = $this->permission->edit_role($roleId,array());
-
-            $data['roles'] = $this->system_model->getData(array(
-                'fields' => '*',
-                'table' => 'group',
-                '_conditions' => array(array('is_active' => '1')),
-            ));
-            $data['roleId'] = $roleId;
-            
-            $this->view('admin/regular', $data);
-            return true;
-        }
-        $roleId = intval($this->input->post('roleId', true));
-        if(!$roleId){
-            $this->json_error('参数错误');
-        }
-        $role = $this->system_model->getData(array(
-            'fields' => '*',
-            'table' => 'group',
-            '_conditions' => array(array('is_active' => '1'),array('groupid' => $roleId)),
-            'row' => true
-        ));
-        if(!$role){
-            $this->json_error('角色不存在');
-        }
-        $regulars = $this->input->post('regular', true);
-        $menus = array();
-        if($regulars){
-            $roleIds = array_values($regulars);
-            $menus = $this->system_model->getData(array(
-                'fields' => 'id,m,c,a',
-                'table' => 'menus',
-                '_conditions' => array(array('status' => '1')),
-                'ins' => array(array('id' => $roleIds)),
-            ));
-        }
-        $privs = array();
-        if($menus){
-            foreach($menus as $item){
-                $privs[] = array(
-                    'role_id' => $roleId,
-                    'm' => $item['m'],
-                    'c' => $item['c'],
-                    'a' => $item['a'],
-                    'menu_id' => $item['id']
-                );
-            }
-        }
-        $this->system_model->trans_start();
-        $this->system_model->dbDelete('priv',array('role_id'=>$roleId));
-        $privs && $this->system_model->dbInsertBatch('priv',$privs);
-        $this->system_model->trans_complete();
-        $this->doJson('success');
     }
 
     /**
@@ -1761,248 +1471,6 @@ EOM;
     }
 
     /**
-     * news
-     * 简介：新闻资讯
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-12-10
-     */
-    function newsInfo() {
-        if (IS_POST) {
-            $data['currPage'] = $this->input->post('currPage', true);
-            $data['rows'] = $this->input->post('rows', true);
-            $data['condition'] = $this->input->post('condition', true);
-            if (empty($data['condition']) || !is_array($data['condition'])) {
-                unset($data['condition']);
-            } else {
-                $data['condition'] = $data['condition'][0];
-            }
-            $result = $this->system_model->getNewsInfoList($data);
-            $this->doJson($result);
-        } else {
-            $data['terms'] = $this->system_model->getTermByTaxonomy('newsInfo');
-            $this->view('admin/newsInfo', $data);
-        }
-    }
-
-    /**
-     * editNewsInfo
-     * 简介：修改新闻资讯
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012/12/10
-     */
-    function editNewsInfo() {
-        if (IS_POST) {
-            if ($this->input->post('act', true) == 'checkLP') {
-                $this->json_success('success');
-                exit();
-            }
-            $post = $this->input->post(NULL, TRUE);
-            $data = array();
-            $path = addslashes($this->input->post('path', true));
-            $id = intval($post['id']) ? intval($this->input->post('id', true)) : 0;
-            $data['term_id'] = intval($post['term_id']) ? intval($this->input->post('term_id', true)) : 0;
-            $data['is_commend'] = intval($post['is_commend']) ? intval($this->input->post('is_commend', true)) : 0;
-            $data['is_issue'] = intval($post['is_issue']) ? intval($this->input->post('is_issue', true)) : 0;
-            $data['views'] = intval($post['views']) ? intval($this->input->post('views', true)) : 0;
-            $data['from'] = addslashes($this->input->post('from', true));
-            $data['author'] = addslashes($this->input->post('author', true));
-            $data['title'] = trim($post['title']) ? $this->input->post('title', true) : '';
-            $data['ft_title'] = wordSegment($data['title']);
-            $data['summary'] = trim($post['summary']) ? htmlspecialchars($this->input->post('summary', true)) : '';
-            $data['content'] = str_replace(site_url(''), 'LWWEB_LWWEB_DEFAULT_URL', trim($post['content']) ? htmlspecialchars($this->input->post('content')) : '');
-            $data['SEOKeywords'] = trim($post['SEOKeywords']) ? htmlspecialchars($this->input->post('SEOKeywords', true)) : '';
-            $data['SEODescription'] = trim($post['SEODescription']) ? htmlspecialchars($this->input->post('SEODescription', true)) : '';
-            $data['update_time'] = date('Y-m-d H:i:s');
-            $data['sort'] = intval($post['sort']) ? intval($this->input->post('sort', true)) : 0;
-            /*
-              if (isset($_FILES['news_img']) && $_FILES['news_img']['tmp_name']) {
-              $data['news_img'] = $news_img = $this->uploadPic($_FILES['news_img'], 'news', 'uploads/news/images');
-              $news_img && $this->zoomImage($news_img, 'news');
-              if ($path && $news_img) {
-              $small = $this->getPImageFormat2($path, 'small');
-              if (file_exists($small)) {
-              unlink($small);
-              }
-              $tiny = $this->getPImageFormat2($path, 'tiny');
-              if (file_exists($tiny)) {
-              unlink($tiny);
-              }
-              if (file_exists($path)) {
-              unlink($path);
-              }
-              }
-              }
-             */
-
-            $result = $this->system_model->editNewsInfo($data, $id);
-            $this->doIframe($result);
-        } else {
-            $id = post_get('id');
-            $this->verify($id);
-            $data['terms'] = $this->system_model->getTermByTaxonomy('newsInfo');
-            $data['data'] = $this->system_model->getNewsInfoById($id);
-            $this->view('admin/editNewsInfo', $data);
-        }
-    }
-
-    /**
-     * getPImageFormat
-     * 简介：根据产品图片路径读取tiny缩略图、small缩略图路径
-     * 参数：$path
-     * 返回：String
-     * 作者：Fzhao
-     * 时间：2013/3/26
-     */
-    function getPImageFormat2($path, $format = '') {
-        if ($path && file_exists($path)) {
-            $imagePath = explode('/', $path);
-            $fileName = explode('.', end($imagePath));
-            $imagePath[3] = $fileName[0] . '_thumb.' . $fileName[1];
-            if ($format) {
-                $imagePath[2] = $format;
-            }
-            return implode('/', $imagePath);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * addNews
-     * 简介：添加新闻资讯
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-12-10
-     */
-    function addNewsInfo() {
-        if (IS_POST) {
-            $post = $this->input->post(NULL, TRUE);
-            $data = array();
-            $data['term_id'] = intval($post['term_id']) ? intval($this->input->post('term_id', true)) : 0;
-            $data['is_commend'] = intval($post['is_commend']) ? intval($this->input->post('is_commend', true)) : 0;
-            $data['is_issue'] = intval($post['is_issue']) ? intval($this->input->post('is_issue', true)) : 0;
-            $data['views'] = intval($post['views']) ? intval($this->input->post('views', true)) : 0;
-            $data['from'] = addslashes($this->input->post('from', true));
-            $data['author'] = addslashes($this->input->post('author', true));
-            $data['title'] = trim($post['title']) ? $this->input->post('title', true) : '';
-            $data['ft_title'] = wordSegment($data['title']);
-            $data['summary'] = trim($post['summary']) ? htmlspecialchars($this->input->post('summary', true)) : '';
-            $data['content'] = str_replace(site_url(''), 'LWWEB_LWWEB_DEFAULT_URL', trim($post['content']) ? htmlspecialchars($this->input->post('content')) : '');
-            $data['SEOKeywords'] = trim($post['SEOKeywords']) ? htmlspecialchars($this->input->post('SEOKeywords', true)) : '';
-            $data['SEODescription'] = trim($post['SEODescription']) ? htmlspecialchars($this->input->post('SEODescription', true)) : '';
-            $data['owner'] = $this->userId;
-            $data['create_time'] = date('Y-m-d H:i:s');
-            $data['sort'] = intval($post['sort']) ? intval($this->input->post('sort', true)) : 0;
-            /*
-              $data['news_img'] = '';
-              if (isset($_FILES['news_img']) && $_FILES['news_img']['tmp_name']) {
-              $data['news_img'] = $news_img = $this->uploadPic($_FILES['news_img'], 'news', 'uploads/news/images');
-              $news_img && $this->zoomImage($news_img, 'news');
-              }
-             */
-            $tid = $data['term_id'];
-            $data['lang'] = _LANGUAGE_;
-            $result = $this->system_model->addNewsInfo($data);
-            if ($result) {
-                $this->system_model->iUpdate(array('table' => 'term', 'field' => 'count', 'val' => 'count+1', 'id' => $tid));
-            }
-            $this->doIframe($result);
-        } else {
-            $data['terms'] = $this->system_model->getTermByTaxonomy('newsInfo');
-            $this->view('admin/addNewsInfo', $data);
-        }
-    }
-
-    /**
-     * newsInfoRecycleList
-     * 简介：新闻资讯回收站
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012/12/10
-     */
-    function newsInfoRecycleList() {
-        if (IS_POST) {
-            $data['currPage'] = $this->input->post('currPage', true);
-            $data['rows'] = $this->input->post('rows', true);
-            $data['condition'] = $this->input->post('condition', true);
-            if (empty($data['condition']) || !is_array($data['condition'])) {
-                unset($data['condition']);
-            } else {
-                $data['condition'] = $data['condition'][0];
-            }
-            $result = $this->system_model->getNewsInfoRecycleList($data);
-            $this->doJson($result);
-        } else {
-            $data['terms'] = $this->system_model->getTermByTaxonomy('newsInfo');
-            $this->view('admin/newsInfoRecycleList', $data);
-        }
-    }
-
-    /**
-     * delNewsInfo
-     * 简介：删除(放入回收站)新闻资讯
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012/12/10
-     */
-    function delNewsInfo() {
-        if (IS_POST) {
-            $id = $this->input->post('id', true);
-            if (is_numeric($id) || is_array($id)) {
-                $result = $this->system_model->delNewsInfo($id);
-            } else {
-                $result = false;
-            }
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * dumpNewsInfo
-     * 简介：彻底删除新闻资讯信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012/12/10
-     */
-    function dumpNewsInfo() {
-        if (IS_POST) {
-            $id = $this->input->post('id', true);
-            $result = $this->system_model->dumpNewsInfo($id);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
-     * recoverNewsInfo
-     * 简介：还原新闻资讯信息
-     * 参数：NULL
-     * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012/12/10
-     */
-    function recoverNewsInfo() {
-        if (IS_POST) {
-            $id = $this->input->post('id', true);
-            $result = $this->system_model->recoverNewsInfo($id);
-            $this->doJson($result);
-        } else {
-            show_404();
-        }
-    }
-
-    /**
      * ipChart
      * 简介：读取、下载访问IP
      * 参数：NULL
@@ -2011,44 +1479,43 @@ EOM;
      * 时间：2012/12/10
      */
     function ipChart() {
-        if (IS_POST) {
-            $act = $this->input->post('act', true);
-            if ($act && $act == 'get' || $act == 'down') {
-                $time = intval($this->input->post('time', true));
-                $val = trim($this->input->post('val', true));
-                $downTtype = intval($this->input->post('downTtype', true));
-                if ($downTtype) {
-                    $type = $this->input->post('type', true);
-                    $time = array($downTtype, $type);
-                }
-                $order = 'acs';
-                if ($act == 'down') {
-                    $order = 'desc';
-                }
-                $result = $this->system_model->getIpList_S_D($time, $val, $order);
-                if ($act == 'down') {
-                    $newResult = array();
-                    if (!empty($result)) {
-                        foreach ($result as $item) {
-                            $item['create_time'] = $item['create_time'] . chr(1);
-                            $newResult[] = $item;
-                        }
-                    }
-                    $this->downLoad(date("YmdHis") . '.csv', array_merge(array(array('IP', 'Visit Time')), $newResult));
-                } else {
-                    $this->doJson($result);
-                }
-            } else {
-                $time = $this->input->post('time', true);
+        if (!IS_POST) {
+            show_404();
+        }
+        $act = $this->input->post('act', true);
+        if ($act && $act == 'get' || $act == 'down') {
+            $time = intval($this->input->post('time', true));
+            $val = trim($this->input->post('val', true));
+            $downTtype = intval($this->input->post('downTtype', true));
+            if ($downTtype) {
                 $type = $this->input->post('type', true);
-                if (!is_time(date("Y-m-d H:i:s", $time))) {
-                    $this->doJson('参数错误:时间格式不正确!');
+                $time = array($downTtype, $type);
+            }
+            $order = 'acs';
+            if ($act == 'down') {
+                $order = 'desc';
+            }
+            $result = $this->system_model->getIpList_S_D($time, $val, $order);
+            if ($act == 'down') {
+                $newResult = array();
+                if (!empty($result)) {
+                    foreach ($result as $item) {
+                        $item['create_time'] = $item['create_time'] . chr(1);
+                        $newResult[] = $item;
+                    }
                 }
-                $result = $this->system_model->getIpChart($time, $type);
+                $this->downLoad(date("YmdHis") . '.csv', array_merge(array(array('IP', 'Visit Time')), $newResult));
+            } else {
                 $this->doJson($result);
             }
         } else {
-            show_404();
+            $time = $this->input->post('time', true);
+            $type = $this->input->post('type', true);
+            if (!is_time(date("Y-m-d H:i:s", $time))) {
+                $this->doJson('参数错误:时间格式不正确!');
+            }
+            $result = $this->system_model->getIpChart($time, $type);
+            $this->doJson($result);
         }
     }
 

@@ -4,13 +4,13 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class My_Controller extends CI_Controller{
+class My_Controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('common/common_model','common');
+        $this->load->model('common/common_model', 'common');
     }
-    
+
     /**
      * getLogo
      * 简介：获取Logo路径 根据后缀名
@@ -185,17 +185,18 @@ class My_Controller extends CI_Controller{
             exit();
         }
     }
-    
-    public function verify($data,$message = "Data Can Not Be Null."){
-        if($data){
+
+    public function verify($data, $message = "Data Can Not Be Null.") {
+        if ($data) {
             return true;
         }
         IS_AJAX && errorOutput($message);
-        IS_POST && $this->_doIframe($message,0);
-        $this->load->view('errors/html/error_general',array('heading' => '错误提示','message'=>$message));
+        IS_POST && $this->_doIframe($message, 0);
+        $this->load->view('errors/html/error_general', array('heading' => '错误提示', 'message' => $message));
         $this->output->_display();
         exit();
     }
+
 }
 
 class Fzhao_Controller extends My_Controller {
@@ -212,7 +213,7 @@ class Fzhao_Controller extends My_Controller {
 //        session_start();
         $this->load->library('session');
         $this->authentical();
-        
+
         define('LOGO', $this->getLogo()); //logo 地址
         define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
 //        $this->checkClose(); //是否关闭网站
@@ -220,15 +221,14 @@ class Fzhao_Controller extends My_Controller {
 //        $this->visitIp(); //记录访问IP
         $this->userId = 0;
 
-
-        $this->memberId = 0;
-        $this->vip = false;
+        //记录操作日志
+        $this->_loging();
     }
 
     //Don't need to login
     protected function _rules() {
         return array(
-            'login' => array('index','logout','vCode','checkVCode'),
+            'login' => array('index', 'logout', 'vCode', 'checkVCode'),
 //            'index' => array('index'),
             'system' => array('index'),
             'noPower' => array('index'),
@@ -255,7 +255,7 @@ class Fzhao_Controller extends My_Controller {
         $curClass = $this->router->class;
         $_rules = $this->_rules(); //Don't need to login in
         $adminLoginInfo = $this->session->userdata('adminLoginInfo');
-        $this->userId = $adminLoginInfo?intval($adminLoginInfo['id']):0;
+        $this->userId = $adminLoginInfo ? intval($adminLoginInfo['id']) : 0;
         if (isset($_rules[$curClass]) && in_array($curMethod, $_rules[$curClass])) {
             //not need to do anything.
         } else {
@@ -337,10 +337,9 @@ class Fzhao_Controller extends My_Controller {
 
         //检查是否有权限[start]
         //当前URL
-        $curr_url = '/' . $this->router->directory . $this->router->class . '/' . ($this->router->method?$this->router->method:'index');
+        $curr_url = '/' . $this->router->directory . $this->router->class . '/' . ($this->router->method ? $this->router->method : 'index');
         //当前用户所拥有的权限
-        $authorized = !empty($_SESSION['authorized'])?$_SESSION['authorized']:array();//$adminLoginInfo['authorized'];
-
+        $authorized = !empty($_SESSION['authorized']) ? $_SESSION['authorized'] : array(); //$adminLoginInfo['authorized'];
         //无权限
         //www($curr_url);ww($authorized);
         if (!$authorized || !in_array($curr_url, $authorized)) {
@@ -466,26 +465,55 @@ class Fzhao_Controller extends My_Controller {
     public function view($path, $data = array(), $isLayout = 1) {
         if ($isLayout) {
             $this->load->model('admin/menu_model', 'menu');
-            $this->menu->get_left_nav_bar($data,$this->supervisor,$this->grade,$this->currMenuId);
+            $this->menu->get_left_nav_bar($data, $this->supervisor, $this->grade, $this->currMenuId);
         }
         $this->load->view($path, $data);
     }
-    
-    public function error($messgae , $url = ''){
+
+    public function error($messgae, $url = '') {
         redirect($url, 'refresh');
+    }
+
+    /**
+     * 记录操作日志
+     * @link All URLs
+     * @param NULL<p>
+     * 
+     * </p>
+     *
+     * @return  bool <b>TRUE</b> if <i>program</i> is successful.
+     * @author Parker <date>
+     */
+    private function _loging() {
+        $ignore = $this->input->post_get('_ignore_', TRUE);
+        if (!empty($ignore)) {
+            return true;
+        }
+        $HTTP_REFERER = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+        $method = IS_POST?'post':'get';
+        $log_info = get_curr_url() . ' --- from[' . $method . '] ----- ' . $HTTP_REFERER;
+        $data = format_data($this->input->POST(NULL, TRUE));
+        $log = array(
+            'uid' => ADMIN_ID,
+            'log_info' => $log_info,
+            'log_post' => $data,
+            'ip' => real_ip(),
+            'log_time' => _DATETIME_,
+        );
+        $this->common->dbInsert('admin_log', $log);
     }
 
 }
 
 class Client_Controller extends My_Controller {
-    
+
     public function __construct() {
         parent::__construct();
         session_start();
         //初始化语言
         $this->load->helper('language');
         $this->__initLanguage();
-        
+
         define('LOGO', $this->getLogo()); //logo 地址
         define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
         $this->checkClose(); //是否关闭网站
@@ -517,10 +545,10 @@ class Client_Controller extends My_Controller {
             'cases' => 'cases',
             'company' => 'company'
         );
-        $data['foot_terms'] = $this->client_model->getTermByTaxonomy(array('contactUs','products','sheji','cases','company'));//ww($data['foot_terms']);
+        $data['foot_terms'] = $this->client_model->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
         $this->load->view($path, $data);
     }
-    
+
 }
 
 // END Controller class

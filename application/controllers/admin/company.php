@@ -22,7 +22,7 @@ class Company extends Fzhao_Controller {
     function index() {
         if (IS_POST) {
             $post = $this->input->post();
-            $file = 'application/' . APPLICATION . '/views/default/' . _LANGUAGE_ . '_' . $post['term'] . '_htm_html.php';
+            $file = 'application/views/default/' . _LANGUAGE_ . '_' . $post['term'] . '_htm_html.php';
             if (isset($post['act']) && $post['act'] == 'get') {
                 if (file_exists($file)) {
                     $result = str_replace('LWWEB_LWWEB_DEFAULT_URL', site_url(''), html_entity_decode(file_get_contents($file)));
@@ -57,7 +57,7 @@ class Company extends Fzhao_Controller {
     function editFooter() {
         if (IS_POST) {
             $post = $this->input->post();
-            $file = 'application/' . APPLICATION . '/views/default/footer_detail.php';
+            $file = 'application/views/default/footer_detail.php';
             if (isset($post['act']) && $post['act'] == 'get') {
                 if (file_exists($file)) {
                     $result = file_get_contents($file);

@@ -1,10 +1,10 @@
 <div class="b_g">
 	<div class="n_center">	    
-		<img src="">	    
-		<span class="js-none"><i>×</i></span>	    
-		<div id="leftBtn" class="showImgBtn" style="display: none;"><</div>	    
-		<div id="rightBtn" class="showImgBtn" style="display: none;">></div>	    
-		<div class="prompt" style="display: none;"><span>没有下一张啦！</span></div>	  
+		<img src="">
+		<span class="js-none"><i>×</i></span>
+		<div id="leftBtn" class="showImgBtn" style="display: none;"><</div>
+		<div id="rightBtn" class="showImgBtn" style="display: none;">></div>
+		<div class="prompt" style="display: none;"><span>没有下一张啦！</span></div>
 	</div>
 </div>
 <style type="text/css">

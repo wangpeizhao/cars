@@ -28,9 +28,11 @@
             email: "This value should be a valid email."
           , url: "This value should be a valid url."
           , urlstrict: "This value should be a valid url."
-          , number: "This value should be a valid number."
-          , digits: "This value should be digits."
+          , number: "请输入一个有效的数字."
+          , digits: "请输入正整数."
+          , double_digit: "请输入正整数或两位小数."
           , dateIso: "This value should be a valid date (YYYY-MM-DD)."
+          , datetime: "This value should be a valid date (YYYY-MM-DD HH:II:SS)."
           , alphanum: "This value should be alphanumeric."
           , phone: "This value should be a valid phone number."
 		  , telephone:  "This value should be a valid telephone number."
@@ -39,7 +41,7 @@
         }
       , notnull: "This value should not be null."
       , notblank: "This value should not be blank."
-      , required: "This value is required."
+      , required: "必填项"
       , regexp: "This value seems to be invalid."
       , min: "This value should be greater than or equal to %s."
       , max: "This value should be lower than or equal to %s."
@@ -115,6 +117,9 @@
               case 'digits':
                 regExp = /^\d+$/;
                 break;
+              case 'double_digit':
+                regExp = /^[0-9]+(.[0-9]{1,2})?$/;
+                break;
               case 'alphanum':
                 regExp = /^\w+$/;
                 break;
@@ -129,6 +134,9 @@
                 break;
               case 'dateIso':
                 regExp = /^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])$/;
+                break;
+              case 'datetime':
+                regExp = /^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])\s*\d{2}[:]\s*\d{2}[:]\s*\d{2}$/;
                 break;
               case 'phone':
 				//regExp = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
@@ -1595,8 +1603,8 @@
     , errors: {
         classHandler: function ( elem, isRadioOrCheckbox ) {} // specify where parsley error-success classes are set
       , container: function ( elem, isRadioOrCheckbox ) {} // specify an elem where errors will be **apened**
-      , errorsWrapper: '<ul></ul>' // do not set an id for this elem, it would have an auto-generated id
-      , errorElem: '<li></li>' // each field constraint fail in an li
+      , errorsWrapper: '<div></div>' // do not set an id for this elem, it would have an auto-generated id
+      , errorElem: '<span></span>' // each field constraint fail in an li
       }
     , listeners: {
         onFieldValidate: function ( elem, ParsleyField ) { return false; } // Executed on validation. Return true to ignore field validation

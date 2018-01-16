@@ -54,7 +54,7 @@ class News extends Fzhao_Controller {
             $this->_doIframe('标题不能为空',0);
         }
         if($info){
-            $result = $this->admin->getRowByTitle($data['title'],array(array('title!='=>$data['title'])));
+            $result = $this->admin->getRowByTitle($data['title'],array(array('id!='=>$info['id'])));
         }else{
             $result = $this->admin->getRowByTitle($data['title']);
         }
@@ -118,10 +118,11 @@ class News extends Fzhao_Controller {
             $fields = $this->_verifyForm();
             $fields['update_time'] = _DATETIME_;
             $fields['create_time'] = _DATETIME_;
+            $fields['uid'] = ADMIN_ID;
             $fields['lang'] = _LANGUAGE_;
             
             $this->admin->trans_start();
-            $result = $this->admin->add($data);
+            $result = $this->admin->add($fields);
             if ($result) {
                 $this->admin->dbSet('term',array('count' => 'count+1', array('id' => $fields['term_id'])));
             }
@@ -146,9 +147,9 @@ class News extends Fzhao_Controller {
     function recycles() {
         $data = array();
         if (IS_POST) {
+            $data = $this->input->post(null, true);
             $data['currPage'] = getPages();
             $data['rows'] = getPageSize();
-            $data['condition'] = getConditions();
             $result = $this->admin->recycles($data);
             $this->doJson($result);
         } else {

@@ -430,6 +430,75 @@ if (!function_exists('successOutput')) {
 
 }
 
+if (!function_exists('safe_replace')) {
+
+    /**
+     * 安全过滤函数
+     *
+     * @param $string
+     * @return string
+     */
+    function safe_replace($string) {
+        $string = str_replace('%20', '', $string);
+        $string = str_replace('%27', '', $string);
+        $string = str_replace('%2527', '', $string);
+        $string = str_replace('*', '', $string);
+        $string = str_replace('"', '&quot;', $string);
+        $string = str_replace("'", '', $string);
+        $string = str_replace('"', '', $string);
+        $string = str_replace(';', '', $string);
+        $string = str_replace('<', '&lt;', $string);
+        $string = str_replace('>', '&gt;', $string);
+        $string = str_replace("{", '', $string);
+        $string = str_replace('}', '', $string);
+        return $string;
+    }
+
+}
+
+/**
+ * 获取当前页面完整URL地址
+ */
+if (!function_exists('get_curr_url')) {
+
+    function get_curr_url() {
+        $sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+        $php_self = $_SERVER['PHP_SELF'] ? safe_replace($_SERVER['PHP_SELF']) : safe_replace($_SERVER['SCRIPT_NAME']);
+        $path_info = isset($_SERVER['PATH_INFO']) ? safe_replace($_SERVER['PATH_INFO']) : '';
+        $relate_url = isset($_SERVER['REQUEST_URI']) ? safe_replace($_SERVER['REQUEST_URI']) : $php_self . (isset($_SERVER['QUERY_STRING']) ? '?' . safe_replace($_SERVER['QUERY_STRING']) : $path_info);
+        return $sys_protocal . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '') . $relate_url;
+    }
+
+}
+
+/**
+ * 格式化POST的数据
+ */
+if (!function_exists('format_data')) {
+
+    function format_data($data) {
+        if (!$data) {
+            return '';
+        }
+        $post = '{';
+
+        foreach ($data as $k => $v) {
+            if ($k === 'password' || $k === 'repassword') {
+                $v = 'I am very smart!';
+            }
+            if (is_array($v)) {
+                $post.='&post(' . $k . ')=>' . format_data($v);
+            } else {
+                $post.='&post(' . $k . ')=>[' . $v . ']';
+            }
+        }
+        if (!empty($post)) {
+            $post.='}';
+        }
+        return $post;
+    }
+
+}
 
 /**
  * 根据链接检查当前登录用户是否有权限访问该链接

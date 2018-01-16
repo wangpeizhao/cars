@@ -13,7 +13,7 @@ if (!defined('BASEPATH'))
  */
 class Cases_model extends Fzhao_Model {
 
-    private $table;
+    public $table;
 
     public function __construct() {
         parent::__construct();

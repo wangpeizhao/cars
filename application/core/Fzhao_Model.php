@@ -738,7 +738,7 @@ class Fzhao_Model extends CI_Model {
         $data = $this->getData(array(
             'fields' => 'id,name,parent,slug,taxonomy,count,subclass',
             'table' => 'term',
-            'conditions' => array('is_valid' => 1, 'lang' => _LANGUAGE_),
+            'conditions' => array('isHidden' => '0', 'lang' => _LANGUAGE_),
             'ins' => array(array('taxonomy' => $taxonomy)),
             'orders' => array('parent,sort', 'asc,desc'),
         ));
@@ -758,7 +758,7 @@ class Fzhao_Model extends CI_Model {
                 }
             }
         }
-        rsort($term);
+        $term && rsort($term);
         return $term;
     }
 

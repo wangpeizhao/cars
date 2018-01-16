@@ -708,9 +708,9 @@ class System_Model extends Fzhao_Model {
      */
     function getClassifyList() {
         $data = $this->getData(array(
-            'fields' => 't.*,a.username',
+            'fields' => 't.*',//,a.username
             'table' => 'term t',
-            'join' => array('admin a', 'a.id=t.owner'),
+//            'join' => array('admin a', 'a.id=t.owner'),
             'conditions' => array('t.subclass' => 0, 't.lang' => _LANGUAGE_),
             'orders' => array('t.parent,t.taxonomy,t.create_time', 'asc,asc,asc'),
         ));
@@ -721,9 +721,9 @@ class System_Model extends Fzhao_Model {
             } else {
                 if (isset($term[$item['parent']])) {
                     $gdata = $this->getData(array(
-                        'fields' => 't.*,a.username',
+                        'fields' => 't.*',//,a.username
                         'table' => 'term t',
-                        'join' => array('admin a', 'a.id=t.owner'),
+//                        'join' => array('admin a', 'a.id=t.owner'),
                         'conditions' => array('t.parent' => $item['id'], 't.lang' => _LANGUAGE_),
                         'orders' => array('t.create_time', 'asc'),
                     ));
@@ -1328,7 +1328,7 @@ class System_Model extends Fzhao_Model {
         return $data;
     }
 
-    public function _get_menu_tree_html($data, $plat, $cid = 1, $pId = 0, $deep = 0, $total = 0) {
+    public function _get_menu_tree_html($data, $pId = 0, $deep = 0, $total = 0) {
         $html = '';
         $deepClass = isset($this->menuTreesClass[$deep]) ? $this->menuTreesClass[$deep] : '';
         foreach ($data as $v) {
@@ -1345,7 +1345,7 @@ class System_Model extends Fzhao_Model {
                 $html .= '</tr>';
 
                 ++$total;
-                $html .= $this->_get_menu_tree_html($data, $plat, $cid, $v['id'], $deep + 1, $total);
+                $html .= $this->_get_menu_tree_html($data, $v['id'], $deep + 1, $total);
             }
         }
         return $html;

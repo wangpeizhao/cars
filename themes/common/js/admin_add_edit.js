@@ -6,40 +6,29 @@ function select_tab(curr_tab){
 } 
 
 function iResult(str){
-    if(str==1){
-        alert('修改成功!');
-        //event_link(baseUrl + lang +'/admin/system/newsInfo');
-        window.history.back('-1');
-    }else{
+    if(str==0){
         alert(str);
         return false;
     }
+    alert('操作成功!');
+    window.history.back('-1');
 }
 
-function checkForm(){
-    if(!$.trim($('input[name="title"]').val())){
-        alert('标题不能为空');
-        $('input[name="title"]').focus();
+function iResultAlter(str){
+    if(str==0){
+        alert(str);
         return false;
     }
-
-    if(!$.trim($('select[name="term_id"]').val())){
-        alert('所属分类不能为空');
-        $('select[name="term_id"]').focus();
-        return false;
-    }
-
-    if(!$.trim($('textarea[name="content"]').val())){
-        alert('详细内容不能为空');
-        return false;
-    }
+    alert('操作成功!');
+    window.history.back('-1');
 }
+
 
 $(function(){
     try{
         if(isIE()==6 || isIE()==7 || isIE()==8){
             alert('您的浏览器版本过低，无法兼容此操作，请选择版本更高的浏览器！');
-            //return false;
+            return false;
         }
         $('.chooseImage a.del').click(function(){
             // $('.chooseImage a.thumb').attr('href','');

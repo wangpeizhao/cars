@@ -4,7 +4,7 @@
 <title>后台管理 - <?=$title?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?=site_url('')?>/themes/admin/css/admin.css" />
-<script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.4.4.min.js"></script>
+<script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.7.2.min.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/common.js"></script>
 <script type="text/javascript">

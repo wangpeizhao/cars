@@ -45,15 +45,15 @@ class Login_model extends Fzhao_Model {
 
         $group = $this->getData(array(
             'fields' => '*',
-            'table' => 'group',
-            '_conditions' => array(array('groupid' => intval($userInfo['role_id'])), array('isHidden' => '0')),
+            'table' => 'admin_role',
+            '_conditions' => array(array('id' => intval($userInfo['role_id'])), array('isHidden' => '0')),
             'row' => true
         ));
         if (!$group) {
             return false;
         }
         $userInfo['supervisor'] = $group['supervisor'];
-        $userInfo['grouptitle'] = $group['grouptitle'];
+        $userInfo['role_name'] = $group['role_name'];
 
         $privs = $this->getData(array(
             'fields' => '*',
@@ -74,7 +74,13 @@ class Login_model extends Fzhao_Model {
             'last_login_time' => _DATETIME_,
             'last_login_ip' => real_ip()
         );
-        $this->db->update('admin', $updateData, array('id' => $userInfo['id']));
+        $this->trans_start();
+        $this->dbUpdate('admin', $updateData, array('id' => $userInfo['id']));
+        $logs_arr['uid'] = $userInfo['id'];
+        $logs_arr['ip'] = real_ip();
+        $logs_arr['log_time'] = _DATETIME_;
+        $this->dbInsert('admin_login_log', $logs_arr);
+        $this->trans_complete();
         return $userInfo;
     }
 

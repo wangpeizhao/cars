@@ -11,8 +11,8 @@ jQuery(function(){
 		$('#admin_right .content').height(h2);
 	}
 	//一级菜单切换
-	$("#menu ul li:first-child").addClass("first");
-	$("#menu ul li:last-child").addClass("last");
+	// $("#menu ul li:first-child").addClass("first");
+	// $("#menu ul li:last-child").addClass("last");
 	$("ul.menu_item li").click(function(){
 		$(this).siblings().removeClass("selected");
         $(this).addClass("selected");					   
@@ -51,6 +51,14 @@ jQuery(function(){
 			document.body.className = (document.body.className == "folden") ? "":"folden";
 		}
 	);
+
+	$('.list_table tbody tr').live('mouseover',function(){
+		$(this).addClass('over');
+	});
+
+	$('.list_table tbody tr').live('mouseout',function(){
+		$(this).removeClass('over');
+	});
 	
 	/*
 	//表格排序

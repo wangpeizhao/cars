@@ -6,6 +6,26 @@
   <!-- /引入二级菜单-->
   <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/ckeditor/ckeditor.js"></script>
   <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin_add_edit.js"></script>
+  <script type="text/javascript">
+    function checkForm(){
+      if(!$.trim($('input[name="title"]').val())){
+          alert('标题不能为空');
+          $('input[name="title"]').focus();
+          return false;
+      }
+
+      if(!$.trim($('select[name="term_id"]').val())){
+          alert('所属分类不能为空');
+          $('select[name="term_id"]').focus();
+          return false;
+      }
+
+      if(!$.trim($('textarea[name="content"]').val())){
+          alert('详细内容不能为空');
+          return false;
+      }
+  }
+  </script>
   <div id="admin_right">
     <div class="headbar">
       <div class="position"><span>系统</span><span>></span><span><?=$_title_?></span><span>></span><span>修改<?=$_title_?></span></div>
