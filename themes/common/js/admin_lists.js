@@ -80,7 +80,7 @@ $(function(){
 							_recover(id);
 						}
 						break;
-					case 'del':
+					case 'dump':
 						if(confirm('确定要彻底删除该'+(_TITLE_?_TITLE_:'信息')+'？不能回撤的哦！')){
 							_dump(id);
 						}
@@ -147,7 +147,7 @@ function _del(id){
 
 function _dump(id){
 	try{
-		$.post(baseUrl + lang + "/admin/'+_TYPE_+'/dump",{id:id}, function(data){
+		$.post(baseUrl + lang + '/admin/'+_TYPE_+'/dump',{id:id}, function(data){
 			if (data.done === true) {
 				alert('已彻底粉碎该'+(_TITLE_?_TITLE_:'信息'));
 				setData($('input[name="currentPage"]').val());

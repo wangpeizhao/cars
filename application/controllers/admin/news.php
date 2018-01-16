@@ -99,7 +99,7 @@ class News extends Fzhao_Controller {
 
         $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
         $data['data'] = $info;
-        $data['title'] = $this->title.'编辑 - '.$info['title'];
+        $data['title'] = '编辑'.$this->title.' - '.$info['title'];
         $data['_title_'] = $this->title;
         $this->view('admin/news_edit', $data);
     }
@@ -131,7 +131,7 @@ class News extends Fzhao_Controller {
             $this->doIframe($result);
         }
         $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
-        $data['title'] = $this->title.'添加';
+        $data['title'] = '添加'.$this->title;
         $data['_title_'] = $this->title;
         $this->view('admin/news_add', $data);
     }

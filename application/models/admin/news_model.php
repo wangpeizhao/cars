@@ -73,9 +73,9 @@ class News_model extends Fzhao_Model {
             'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
             'likes' => $like
         )); //ww($this->last_query());
-        $owners = array_column($data, 'owner');
+        $owners = array_filter(array_unique(array_column($data, 'owner')));
         if ($owners) {
-            $owners = array_filter(array_unique($owners));
+//            $owners = array_filter(array_unique($owners));
             $admin = $this->getData(array(
                 'fields' => 'id,nickname',
                 'table' => 'admin',

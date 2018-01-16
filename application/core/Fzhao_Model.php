@@ -864,7 +864,7 @@ class Fzhao_Model extends CI_Model {
         if (!is_array($id)) {
             $id = array($id);
         }
-        $this->dbDeleteIn($this->table, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
+        return $this->dbDeleteIn($this->table, array('lang' => _LANGUAGE_), array($this->primary_key => $id));
     }
 
 }

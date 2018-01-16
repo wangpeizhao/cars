@@ -122,11 +122,11 @@
 				<tr class="field">
 					<th width="20%" style="text-align: left;padding-left:10px">分类名称</th>
 					<th width="10%">URL别名</th>
-					<th width="10%">分类排序</th>
+					<th width="7%">分类排序</th>
 					<th width="20%">分类描述</th>
 					<th width="10%">文章数量</th>
 					<th width="10%">是否激活</th>
-					<th width="10%">创建时间</th>
+					<th width="13%">创建时间</th>
 					<th width="10%">操作</th>
 				</tr>
 			</thead>

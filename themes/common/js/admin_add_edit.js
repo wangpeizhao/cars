@@ -44,7 +44,7 @@ $(function(){
             var iTop = (window.screen.availHeight - 30 - iHeight) / 2; 
             //获得窗口的水平位置 
             var iLeft = (window.screen.availWidth - 10 - iWidth) / 2; 
-            window.open(baseUrl+"/admin/upload/uploadImage?act=specify", '', 'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width='+iWidth+'px,height='+iHeight+'px,top=' + iTop + ',left=' + iLeft);
+            window.open(baseUrl+"/admin/upload/index?act=specify", '', 'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width='+iWidth+'px,height='+iHeight+'px,top=' + iTop + ',left=' + iLeft);
         });
     }catch(e){
         alert(e.message);

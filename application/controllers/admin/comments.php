@@ -33,7 +33,7 @@ class Comments extends Fzhao_Controller {
             $data['title'] = $this->title;
             $data['_title_'] = $this->title;
             $data['terms'] = $this->admin->getTermByTaxonomy('comments');
-            $this->view('admin/comments', $data);
+            $this->view('admin/comments_copy', $data);
         }
     }
 
@@ -54,10 +54,10 @@ class Comments extends Fzhao_Controller {
             $result = $this->admin->recycles($data);
             $this->doJson($result);
         } else {
-            $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
+            $data['terms'] = $this->admin->getTermByTaxonomy('comments');
             $data['title'] = $this->title.'回收站';
             $data['_title_'] = $this->title;
-            $this->view('admin/news_recycles', $data);
+            $this->view('admin/comments_recycles', $data);
         }
     }
 
@@ -132,26 +132,41 @@ class Comments extends Fzhao_Controller {
             $this->verify($type,'操作类型不能为空');
             $ids = $this->input->post('ids', true);
             $this->verify($ids,'请至少选择一项');
-            $conditions = array('lang'=>_LANGUAGE_);
+            $conditions = array('lang'=>_LANGUAGE_,'isHidden'=>'0');
             $data = array();
             switch ($type){
-                case '1';//批量标记推荐
-                    $data = array('is_commend' => '1');
+                case '1';//批量标记公开
+                    $data = array('is_public' => '1');
                     break;
-                case '2';//批量取消推荐
-                    $data = array('is_commend' => '0');
+                case '2';//批量取消公开
+                    $data = array('is_public' => '0');
                     break;
-                case '3';//批量标记发布
-                    $data = array('is_issue' => '1');
+                case '3';//批量标记屏蔽
+                    $data = array('is_shield' => '1');
                     break;
-                case '4';//批量取消发布
-                    $data = array('is_issue' => '0');
+                case '4';//批量取消屏蔽
+                    $data = array('is_shield' => '0');
                     break;
             }
-            $result = $this->admin->dbUpdateIn('news',$data,$conditions,array('id'=>$ids));
+            $result = $this->admin->dbUpdateIn('comments',$data,$conditions,array('id'=>$ids));
             $this->doJson($result);
         } else {
             show_404();
+        }
+    }
+    
+    public function reply(){
+        if(!IS_POST){
+            show_404();
+        }
+        $id = post_get('id');
+        $this->verify($id);
+        $comment = $this->admin->getRowById($id);
+        $this->verify($comment);
+        $act = trim($this->input->post('act',true));
+        if($act == 'get'){
+            successOutput($comment);
+            return true;
         }
     }
 

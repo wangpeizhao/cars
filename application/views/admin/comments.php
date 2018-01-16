@@ -245,13 +245,13 @@
 			<select class="auto" name="type">
 				<option value="">选择类型</option>
 				<option value="message" >留言管理</option>
-				<!-- <option value="comment" >评论管理</option> -->
+				<option value="comment" >评论管理</option>
 			</select>
-			<!-- <select class="auto" name="is_public">
+			<select class="auto" name="is_public">
 				<option value="">选择公开</option>
 				<option value="0" >未公开</option>
 				<option value="1" >已公开</option>
-			</select> -->
+			</select>
 			<select class="auto" name="is_shield">
 				<option value="">选择屏蔽</option>
 				<option value="0" >未屏蔽</option>
@@ -279,7 +279,7 @@
 			<th width="12%">用户Email</th>
 			<th width="8%">用户IP</th>
 			<th width="20%">留言内容</th>
-			<!-- <th width="3%">公开</th> -->
+			<th width="3%">公开</th>
 			<th width="3%">屏蔽</th>
 			<th width="13%">管理员回复</th>
 			<th width="10%">留言日期时间</th>
