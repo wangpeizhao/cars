@@ -1,28 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>后台管理-联系我们</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="<?=site_url('')?>/themes/admin/css/admin.css" />
-<script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.4.4.min.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/common.js"></script>
+<?php include('header.php');?>
+<!-- /引入头部-->
+<!-- 引入二级菜单-->
+<?php include('submenu.php');?>
+<!-- /引入二级菜单-->
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 <!--
-	var baseUrl = '<?=WEB_DOMAIN?>';
 	var index =0;
+	var _index = 0;
+	var _id = '<?=$id?>';
+	var _title = document.title;
 	$(function(){
 		try{
 			if(isIE()==6 || isIE()==7 || isIE()==8){
 				alert('您的浏览器版本过低，无法兼容此操作，请选择版本更高的浏览器！');
 				//return false;
 			}
-			var firstA = $('ul.tab li').eq(0).find('a');
-			$(".position #term").html(firstA.text());
-			document.title='后台管理-关于公司-'+firstA.text();
-			$('input[name="term"]').val(firstA.attr('term'));
-			getContent(firstA.attr('term'),0);
+			// var firstA = $('ul.tab li').eq(_id).find('a');
+			// $(".position #term").html(firstA.text());
+			// document.title=_title+' - '+firstA.text();
+			// $('input[name="term"]').val(firstA.attr('term'));
+			// getContent(firstA.attr('term'),_id);
 
 			$("a").live('click',function(){
 				 this.blur();
@@ -34,7 +32,7 @@
 					return false;
 				}
 				$(".position #term").html($(this).text());
-				document.title='后台管理-关于公司-'+$(this).text();
+				document.title=_title+' - '+$(this).text();
 				$(this).addClass('selected').siblings().removeClass('selected');
 				$('input[name="term"]').val($(this).find('a').attr('term'));
 				index = $(this).index();
@@ -44,19 +42,11 @@
 				$(".div_box").find("div.div #editor .editor").eq(index).siblings().hide();
 				$(".div_box").find("div.div #editor .editor").eq(index).fadeIn();
 			});
+			$('ul.tab li').eq(_id).click();
 		}catch(e){
 			alert(e.message);
 		}
 	});
-	function iResult(str){
-		if(!isNaN(str)){
-			alert('修改成功!');
-			//event_link(baseUrl + lang +'/admin/system/compay/');
-		}else{
-			alert('修改失败？检查下读写权限！');
-			return false;
-		}
-	}
 
 	function checkForm(){
 		if(!$.trim($('textarea[name="content_'+index+'"]').val())){
@@ -67,6 +57,7 @@
 
 	function getContent(term,index){
 		try{
+			_index = index;
 			$.post(baseUrl + lang + "/admin/contact",{term:term,act:'get'}, function(data){
 				if(data.done===true){
 					$('textarea[name="content_'+index+'"]').val('');
@@ -86,17 +77,16 @@
 			alert(e.message);
 		}
 	}
+
+	function iResultAlter(str,status){
+		alert(str);
+	    if(status==0){
+	        return false;
+	    }
+	    window.location.href = '/admin/contact/index/'+_index;
+	}
 //-->
 </script>
-</head>
-<body>
-<div class="container">
-  <!-- 引入头部-->
-  <?php include('header.php');?>
-  <!-- /引入头部-->
-  <!-- 引入二级菜单-->
-  <?php include('submenu.php');?>
-  <!-- /引入二级菜单-->
   <div id="admin_right">
     <div class="headbar">
 	<?php if(!empty($terms)){
@@ -104,12 +94,9 @@
       <div class="position"><span>系统</span><span>></span><span><?=$item['name']?></span><span>></span><span id="term"></span></div>
       <ul class="tab" style="margin-top:0px;">
 		<?php if(!empty($item['sunTerm'])){$sunTerm=$item['sunTerm'];
-			foreach($item['sunTerm'] as $key=>$term){
-				if($key==0){?>
-					<li class="selected"><a href="javascript:;" term="<?=$term['slug']?>"><?=$term['name']?></a></li>
-				<?php }else{?>
-					<li><a href="javascript:;" term="<?=$term['slug']?>"><?=$term['name']?></a></li>
-			<?php }}}?>
+			foreach($item['sunTerm'] as $key=>$term){?>
+				<li><a href="javascript:;" term="<?=$term['taxonomy'].'_'.$term['slug']?>"><?=$term['name']?></a></li>
+			<?php }}?>
 	  </ul>
 	  <?php break;}}?>
     </div>
@@ -151,10 +138,10 @@
 				</form>
 			</div>
 		</div>
-          <iframe name="ajaxifr" style="display:none;"></iframe>
+        <iframe name="ajaxifr" style="display:none;"></iframe>
         </div>
       </div>
-      <!--/container-->
-      <!-- 引入底部-->
-      <?php include('footer.php');?>
-	  <!-- /引入底部-->
+<!--/container-->
+<!-- 引入底部-->
+<?php include('footer.php');?>
+<!-- /引入底部-->

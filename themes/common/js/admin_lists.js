@@ -63,6 +63,10 @@ $(function(){
 
 		//操作
 		$("#list_table a").live('click',function(){
+			if(typeof(click_list_table_a)=='function'){
+				click_list_table_a($(this));
+				return true;
+			}
 			try{
 				var act = $(this).attr('act');
 				var id = $(this).parent().attr('id');
@@ -106,8 +110,11 @@ $(function(){
 
 function iResult(str){
 	if(str==1){
-		alert('修改成功!');
+		alert('提交成功!');
 		window.history.back('-1');
+	}else if(str=='2'){
+		alert('提交成功!');
+		window.location.reload();
 	}else{
 		alert(str);
 		return false;

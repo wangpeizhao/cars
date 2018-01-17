@@ -24,27 +24,15 @@ class Index extends Fzhao_Controller {
             'conditions' => array('isHidden' => '0'),
             'count' => true,
         ));
-        $data['data']['services'] = $this->system_model->getData(array(
-            'table' => 'cases',
-            'conditions' => array('is_valid' => 1),
-            'count' => true,
-        ));
+        $data['data']['services'] = 0;
         $data['data']['admin'] = $this->system_model->getData(array(
             'table' => 'admin',
-            'conditions' => array('is_valid' => 1),
+            'conditions' => array('isHidden' => '0'),
             'count' => true,
         ));
         //$data['link'] = $this->system_model->getLinkCount();
         //$data['comment'] = $this->system_model->getCommentCount();
         $this->view('admin/setting', $data);
-    }
-
-    function server() {
-        $this->load->view('admin/server');
-    }
-
-    function phpinfo() {
-        $this->load->view('admin/phpinfo');
     }
 
 }

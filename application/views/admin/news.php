@@ -56,6 +56,8 @@
 					<select class="auto" name="type">
 						<option value="id"><?=$_title_?>ID</option>
 						<option value="title"><?=$_title_?>名称</option>
+						<option value="from"><?=$_title_?>来源</option>
+						<option value="author"><?=$_title_?>作者</option>
 						<option value="summary"><?=$_title_?>摘要</option>
 						<option value="content"><?=$_title_?>内容</option>
 					</select> 
@@ -102,11 +104,12 @@
 					<option value="0" >未发布</option>
 					<option value="1" >已发布</option>
 				</select>
-				<input class="small" name="startTime" id="startTime" style="width:150px;" type="text" value=""/>
-				<input class="small" name="endTime" id="endTime" style="width:150px;" type="text" value="<?=_DATETIME_?>"/>
+				<input class="small" name="startTime" id="startTime" style="width:150px;" type="text" value="" placeholder="更新时间(开始)"/>
+				<input class="small" name="endTime" id="endTime" style="width:150px;" type="text" value="<?=_DATETIME_?>" placeholder="更新时间(结束)"/>
 				<button class="btn" type="button" onclick="doSearch();">
 					<span class="sel">筛 选</span>
 				</button>
+				<input type="reset" vaule="重置" class="reset btn">
 				<input type="hidden" name="currentPage" value="1">
 				<input type="hidden" name="rows" value="10">
 			</div>
@@ -114,20 +117,18 @@
 		<iframe name="_MrParker_" style="display:none;"></iframe>
 	</div>
 	<div class="content">
-		<table id="list_table" class="list_table settingList" border="0"
-			align="center" cellpadding="0" cellspacing="1" bgcolor="#e1e5ee"
-			style="line-height: 25px;">
+		<table id="list_table" class="list_table settingList" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#e1e5ee" style="line-height: 25px;">
 			<tr class="field">
 				<th width="3%">选择</th>
 				<th width="5%">ID</th>
 				<th width="8%">分类</th>
 				<th width="20%">标题</th>
 				<th width="15%">摘要</th>
-				<th width="12%">管理员</th>
 				<th width="5%">来源</th>
 				<th width="5%">作者</th>
 				<th width="5%">推荐</th>
 				<th width="5%">发布</th>
+				<th width="10%">管理员</th>
 				<th width="12%">创建时间</th>
 				<th width="5%">操作</th>
 			</tr>

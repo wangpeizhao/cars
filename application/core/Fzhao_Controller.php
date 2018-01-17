@@ -9,6 +9,7 @@ class My_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('common/common_model', 'common');
+        defined('_URL_')  OR define('_URL_', site_url(''));
     }
 
     /**
@@ -155,7 +156,7 @@ class My_Controller extends CI_Controller {
             if (is_array($result)) {
                 echo '<script type="text/javascript">var data = \'' . str_replace("'", "\'", str_replace('\\', '\\\\', json_encode($result))) . '\';window.top.window.iResult(data,"' . $callback . '");</script>';
             } else {
-                echo '<script type="text/javascript">window.top.window.iResultAlter(\'' . $result . '\',' . $status . ');</script>';
+                echo '<script type="text/javascript">window.top.window.iResultAlter(\'' . strip_tags(addslashes($result)) . '\',' . $status . ');</script>';
             }
             $exit && exit();
         } else {
@@ -341,7 +342,7 @@ class Fzhao_Controller extends My_Controller {
         //当前用户所拥有的权限
         $authorized = !empty($_SESSION['authorized']) ? $_SESSION['authorized'] : array(); //$adminLoginInfo['authorized'];
         //无权限
-        //www($curr_url);ww($authorized);
+//        www($curr_url);ww($authorized);
         if (!$authorized || !in_array($curr_url, $authorized)) {
             is_ajax() && errorOutput('你没有权限访问');
             IS_POST && $this->_doIframe('Access Denied:You have no permission to access.', 0);
@@ -501,6 +502,35 @@ class Fzhao_Controller extends My_Controller {
             'log_time' => _DATETIME_,
         );
         $this->common->dbInsert('admin_log', $log);
+    }
+    
+    //获取操作人真实姓名
+    protected function set_administrator_real_name(&$lists,$assoc = 'uid',$assocName='administrator'){
+        if(!$lists){
+            return false;
+        }
+        $_uids = array_column($lists, $assoc);
+        if($_uids){
+            $_uids = array_filter(array_unique($_uids));
+        }
+        if(!$_uids){
+            foreach($lists as &$item){
+                $item[$assocName] = '系统管理员';
+            }
+            return false;
+        }
+        $conditions = array();
+        $conditions[] = array('isHidden' => '0');
+
+        $_users = $this->common->getData(array(
+            'fields' => 'id,nickname',
+            'table' => 'admin',
+            '_conditions' => $conditions,
+            'ins' => array(array('uid'=>$_uids)),
+        ));
+        foreach($lists as &$item){
+            $item[$assocName] = isset($_users[$item[$assoc]])?$_users[$item[$assoc]]:'系统管理员';
+        }
     }
 
 }

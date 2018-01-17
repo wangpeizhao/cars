@@ -33,7 +33,7 @@ class Comments extends Fzhao_Controller {
             $data['title'] = $this->title;
             $data['_title_'] = $this->title;
             $data['terms'] = $this->admin->getTermByTaxonomy('comments');
-            $this->view('admin/comments_copy', $data);
+            $this->view('admin/comments', $data);
         }
     }
 
@@ -165,10 +165,36 @@ class Comments extends Fzhao_Controller {
         $this->verify($comment);
         $act = trim($this->input->post('act',true));
         if($act == 'get'){
-            $comment['create_time'] = date('Y-m-d H:i:s',$comment['iTime']);
             successOutput($comment);
             return true;
+        }else if($act == 'reply'){
+            $updateData = array();
+            $updateData['is_shield'] = (string)intval($this->input->post('is_shield',true));
+            $updateData['replyContent'] = trim($this->input->post('replyContent',true));
+            $this->admin->dbUpdate('comments',$updateData,array('id' => $id));
+            successOutput('success');
         }
+    }
+    
+    private function _send_email($result,$replyContent){
+        $config = $this->config->item('email_config');
+        $from = array('email' => $this->config->item('from_mail'), 'title' => $this->config->item('from_title'));
+        $list = array($result['email']);
+        $subject = '回复留言-来自国际人才圈';
+        $str = '<p><a href="http://www.italentedu.com/" target="_blank"><img title="国际人才圈" border="0" src="http://italentedu.com/themes/common/images/logo.gif"></a></p>';
+        if ($result['username']) {
+            $str .= '<p style="margin:5px 0;">尊敬的国际人才圈用户 <strong>：' . $result['username'] . '</strong></p>';
+        } else {
+            $str .= '<p style="margin:5px 0;">尊敬的国际人才圈用户 <strong>：<a href="mailto:' . $result['email'] . '">' . $result['email'] . '</a></strong></p>';
+        }
+        $str .= '<p style="margin:5px 0;text-indent:2em;">您好！</p>';
+        $str .= '<p style="margin:5px 0;text-indent:2em;">' . $replyContent . '</p>';
+        $str .= '<p style="margin:15px 0;text-indent:2em;">----------回复在线留言----------</p>';
+        $str .= '<p style="margin:5px 0;text-indent:2em;">留言时间：<font color="#666666">' . $result['create_time'] . '</font></p>';
+        $str .= '<p style="margin:5px 0;text-indent:2em;">留言内容：<font color="#666666">' . $result['declare'] . '</font></p>';
+        $str .= '<p style="margin:15px 0;">此为系统消息，请勿回复。</p>';
+        $content = $str;
+        return $this->myMail($config, $list, $subject, $content, $from);
     }
 
 }

@@ -6,16 +6,12 @@ function select_tab(curr_tab){
 } 
 
 function iResult(str){
-    if(str==0){
-        alert(str);
-        return false;
-    }
-    alert('操作成功!');
+    alert(str==1?'操作成功':str);
     window.history.back('-1');
 }
 
-function iResultAlter(str){
-    if(str==0){
+function iResultAlter(str,status){
+    if(status==0){
         alert(str);
         return false;
     }

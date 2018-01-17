@@ -315,7 +315,9 @@ textarea[disabled], textarea[readonly], fieldset[disabled]{
 	cursor:pointer;
 	vertical-align:bottom\9;
 	overflow:hidden;
-	background:url(../images/admin_bg.gif) 0 -228px repeat-x
+	background:url(../images/admin_bg.gif) 0 -228px repeat-x;
+    border-radius: 4px;
+    padding-left: 5px;
 }
 .submit {
 	margin:10px 10px 10px 0;
@@ -342,6 +344,12 @@ button span {
 	padding:0 15px;
 	white-space:nowrap;
 	background:url(../images/icon.gif) 0 -1000px no-repeat
+}
+input.reset {
+	background:url(../images/icon.gif) 5px -682px no-repeat;
+	height:22px;
+	padding:0 10px 0 20px;
+	margin-top:-2px;
 }
 button.submit span {
 	height:27px;

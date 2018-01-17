@@ -30,7 +30,7 @@
 		$('.n_center .js-none,.b_g').click(function(){
 			$('.b_g').fadeOut();
 		});
-		<?php if(!empty($data['news_img'])){?>
+		<?php if(!empty($data['thumb'])){?>
           $('.chooseImage a.del').fadeIn();
         <?php }?>
         $('img.popover').click(function(){

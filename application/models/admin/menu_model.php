@@ -15,9 +15,12 @@ class Menu_model extends Fzhao_Model {
     
     protected $currMenuId = 0;
     protected $currMenuIdArr = array();
+    private $menuTreesClass;
 
     public function __construct() {
         parent::__construct();
+        $this->table = 'menus';
+        $this->primary_key = $this->dbPrimary($this->table);
         $this->menuTreesClass = array('mFirst', 'mSecond', 'mThird', 'mFourth', 'mFifth', 'mSixth', 'mSeventh', 'mEighth', 'mNinth', 'mTenth');
     }
 
@@ -150,6 +153,29 @@ class Menu_model extends Fzhao_Model {
             unset($item);
         }
         return $recordChilds;
+    }
+
+    public function _get_menu_tree_html($data, $pId = 0, $deep = 0, $total = 0) {
+        $html = '';
+        $deepClass = isset($this->menuTreesClass[$deep]) ? $this->menuTreesClass[$deep] : '';
+        foreach ($data as $v) {
+            if ($v['pid'] == $pId) {//父亲找到儿子
+                $link = (!$v['link'] || $v['link'] == '#') ? '#' : base_url($v['link']);
+                $html .= '<tr' . ($total % 2 == 0 ? ' class="even"' : '') . ' _pid="' . $v['pid'] . '" _title="' . $v['title'] . '" _show="' . $v['show'] . '" _sort="' . $v['sort'] . '" _link="' . $v['link'] . '" _link_target="' . $v['link_target'] . '" _parameter="' . $v['parameter'] . '">';
+                $html .= '  <td class="' . $deepClass . '" valign="left"><font>' . $v['title'] . '</font></td>';
+                $html .= '  <td>' . ($v['show'] ? $v['sort'] : '0') . '</td>';
+                $html .= '  <td>' . ($v['show'] ? '显示' : '隐藏') . '</td>';
+                $html .= '  <td>' . ($v['link_target'] ? $v['link_target'] : '默认') . '</td>';
+                $html .= '  <td><a href="' . $link . '" target="_blank" style="color:#339900;">' . $link . '</a></td>';
+                $html .= '  <td>' . ($v['parameter'] ? $v['parameter'] : '-') . '</td>';
+                $html .= '  <td class="menu_action" id="' . $v['id'] . '"><a href="javascript:;" class="menu_add" act="add" title="添加子菜单"></a><a href="javascript:;" class="menu_edit" act="edit" title="编辑菜单"></a><a href="javascript:;" class="menu_del" act="del" title="删除菜单"></a></td>';
+                $html .= '</tr>';
+
+                ++$total;
+                $html .= $this->_get_menu_tree_html($data, $v['id'], $deep + 1, $total);
+            }
+        }
+        return $html;
     }
 
 }

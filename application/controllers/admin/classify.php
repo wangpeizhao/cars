@@ -143,7 +143,7 @@ class Classify extends Fzhao_Controller {
         if (!$field['slug']) {
             $this->_doIframe('URL别名不能为空',0);
         }
-        $_conditions = array(array('slug'=>$field['slug']));
+        $_conditions = array(array('slug'=>$field['slug']),array('parent'=>$field['parent']));
         if($term){
             $_conditions[] = array('id!=' =>$term['id']);
         }

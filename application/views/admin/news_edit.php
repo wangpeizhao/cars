@@ -103,13 +103,13 @@
                       <div class="thumbImage">
             						<a style="margin:0 0 3px 1px;" target="_blank" class="thumb" href="javascript:;">
                           <img class="popover" 
-                          _src="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.$data['news_img']:'/themes/admin/images/tv-expandable.gif'?>" 
-                          src="<?=isset($data['news_img'])?WEB_DOMAIN.'/'.str_replace(array('images','.'),array('tiny','_thumb.'),$data['news_img']):'/themes/admin/images/tv-expandable.gif'?>">
+                          _src="<?=isset($data['thumb'])?WEB_DOMAIN.'/'.$data['thumb']:'/themes/admin/images/tv-expandable.gif'?>" 
+                          src="<?=!empty($data['thumb_tiny'])?WEB_DOMAIN.'/'.$data['thumb_tiny']:'/themes/admin/images/tv-expandable.gif'?>">
                         </a>
                         <a href="javascript:;" class="del" title="删除"></a>
                       </div>
           						<div class="clear"></div>
-          						<input type="hidden" name="thumb" value="<?=isset($data['news_img'])?$data['news_img']:''?>">
+          						<input type="hidden" name="thumb" value="<?=isset($data['thumb'])?$data['thumb']:''?>">
           						<a href="javascript:;" class="choose">选择缩略图</a> <span>仅支持格式：jpg、jpeg、gif和png！</span>
                       <!-- 引入图片弹出层-->
                       <?php include('popover.php');?>

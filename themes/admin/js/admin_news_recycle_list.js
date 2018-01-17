@@ -38,12 +38,12 @@ function fillData(data, currPage) {
 			html += '	<td><a href="' + baseUrl + lang + '/news/sort/' + data[i]['slug'] + '" target="_blank">' + data[i]['term_name'] + '</a></td>';
 			html += '	<td><a href="' + baseUrl + lang + '/news/info/' + data[i]['id'] + '.html' + '" target="_blank" title="' + data[i]['title'] + '">' + data[i]['title'] + '</a>' + '</td>';
 			html += '	<td title="' + data[i]['summary'] + '">' + data[i]['summary'] + '</td>';
-			html += '	<td title="' + data[i]['username'] + '">' + data[i]['username'] + '</td>';
 			html += '	<td>' + (data[i]['from']?data[i]['from']:'') + '</td>';
 			html += '	<td>' + (data[i]['author']?data[i]['author']:'') + '</td>';
             html += '	<td>' + (parseInt(data[i]['is_commend']) == 1 ? '<font color="#339900">是</font>': '<font color="#ff0000">否</font>') + '</td>';
             html += '	<td>' + (parseInt(data[i]['is_issue']) == 1 ? '<font color="#339900">是</font>': '<font color="#ff0000">否</font>') + '</td>';
-            html += '	<td>' + data[i]['create_time'] + '</td>';
+            html += '   <td>' + data[i]['administrator'] + '</td>';
+            html += '	<td>' + data[i]['update_time'] + '</td>';
             html += '	<td id="' + data[i]['id'] + '"><a href="javascript:;" act="recover"><img class="operator" src="' + site_url + '/themes/admin/images/icon_recover.gif" alt="还原" title="还原" /></a><a act="dump" href="javascript:;"><img class="operator" src="' + site_url + '/themes/admin/images/icon_del.gif" alt="彻底删除" title="彻底删除" /></a></td>';
             html += '</tr>'
         }

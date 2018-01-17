@@ -31,65 +31,54 @@ class News_model extends Fzhao_Model {
     function lists($cond, $isHidden = '0') {
         $conditions = array(array('p.isHidden' => $isHidden), array('p.lang' => _LANGUAGE_));
         $like = array();
-        if (!empty($cond['type']) && trim($cond['keywords'])) {
-            switch ($cond['type']) {
-                case 'title':
-                    $like[] = array('title' => $cond['keywords']);
-                    break;
-                case 'summary':
-                    $like[] = array('summary' => $cond['keywords']);
-                    break;
-                case 'content':
-                    $like[] = array('content' => $cond['keywords']);
-                    break;
-                case 'id':
-                    $conditions[] = array('p.id' => $cond['keywords']);
-                    break;
+        if (!empty($cond['search']) && trim($cond['keywords'])) {
+            if(in_array($cond['search'],array('title','summary','from','author','content'))){
+                $like[] = array('p.'.$cond['search'] => $cond['keywords']);
             }
-        } else {
-            if (isset($cond['term_id']) && $cond['term_id'] !== '') {
-                $conditions[] = array('p.term_id' => $cond['term_id']);
+            if(in_array($cond['search'],array('id'))){
+                $conditions[] = array('p.'.$cond['search'] => $cond['keywords']);
             }
-            if (isset($cond['is_commend']) && $cond['is_commend'] !== '') {
-                $conditions[] = array('p.is_commend' => $cond['is_commend']);
-            }
-            if (isset($cond['is_issue']) && $cond['is_issue'] !== '') {
-                $conditions[] = array('p.is_issue' => $cond['is_issue']);
-            }
-            if (!empty($cond['startTime'])) {
-                $conditions[] = array('p.create_time >=' => $cond['startTime']);
-            }
-            if (!empty($cond['endTime'])) {
-                $conditions[] = array('p.create_time <=' => $cond['endTime']);
+        }
+        $fields = array('term_id','is_commend','is_issue');
+        foreach($fields as $item){
+            if (isset($cond[$item]) && $cond[$item] !== '') {
+                $conditions[] = array('p.'.$item => $cond[$item]);
             }
         }
 
+        if (!empty($cond['startTime'])) {
+            $conditions[] = array('p.update_time >=' => $cond['startTime']);
+        }
+        if (!empty($cond['endTime'])) {
+            $conditions[] = array('p.update_time <=' => $cond['endTime']);
+        }
+
         $data = $this->getData(array(
-            'fields' => 'p.id,p.term_id,p.title,p.summary,p.isHidden,p.owner,p.views,p.from,p.author,p.is_commend,p.is_issue,p.create_time,t.name term_name,t.slug',
-            'table' => 'news p',
-            'join' => array('term t', 't.id=p.term_id'),
+            'fields' => 'p.id,p.term_id,p.title,p.summary,p.isHidden,p.uid,p.views,p.from,p.author,p.is_commend,p.is_issue,p.update_time',//,t.name term_name,t.slug
+            'table' => $this->table.' p',
             '_conditions' => $conditions,
-            'order' => array('p.create_time', 'desc'),
+            'order' => array('p.'.$this->primary_key, 'desc'),
             'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
             'likes' => $like
-        )); //ww($this->last_query());
-        $owners = array_filter(array_unique(array_column($data, 'owner')));
-        if ($owners) {
-//            $owners = array_filter(array_unique($owners));
-            $admin = $this->getData(array(
-                'fields' => 'id,nickname',
-                'table' => 'admin',
+        ));
+        $term_ids = array_filter(array_unique(array_column($data, 'term_id')));
+        if ($term_ids) {
+            $terms = $this->getData(array(
+                'fields' => 'id,name,slug',
+                'table' => 'term',
                 '_conditions' => array(array('isHidden' => '0')),
-                'ins' => array(array('id' => $owners)),
+                'ins' => array(array('id' => $term_ids)),
             ));
-            $admins = array_column($admin, 'nickname', 'id');
+            $_terms = array_column($terms, 'name', 'id');
+            $_slugs = array_column($terms, 'slug', 'id');
             foreach ($data as &$item) {
-                $item['username'] = !empty($admins[$item['owner']]) ? $admins[$item['owner']] : '';
+                $term_id = $item['term_id'];
+                $item['term_name'] = !empty($_terms[$term_id]) ? $_terms[$term_id] : '';
+                $item['slug'] = !empty($_slugs[$term_id]) ? $_slugs[$term_id] : '';
             }
         }
         $count = $this->getData(array(
-            'table' => 'news p',
-            'join' => array('term t', 't.id=p.term_id'),
+            'table' => $this->table.' p',
             '_conditions' => $conditions,
             'count' => true,
             'likes' => $like

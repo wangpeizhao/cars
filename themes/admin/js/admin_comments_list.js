@@ -43,7 +43,7 @@ function fillData(data, currPage) {
             html += '	<td>' + (data[i]['is_public'] == 0 ? '<font color="#ff6600">否</font>': '<font color="#339900">是</font>') + '</td>';
             html += '	<td>' + (data[i]['is_shield'] == 0 ? '<font color="#ff6600">否</font>': '<font color="#339900">是</font>') + '</td>';
             html += '	<td>' + (data[i]['replyContent'] ? data[i]['replyContent'] : '') + '</td>';
-            html += '	<td>' + data[i]['create_time'] + '</td>';
+            html += '	<td>' + data[i]['update_time'] + '</td>';
             html += '	<td id="' + data[i]['id'] + '"><a class="_edit" href="javascript:;" act="_edit"><img class="operator" src="' + site_url + '/themes/admin/images/icon_edit.gif" alt="回复" title="回复" /></a><a act="del" href="javascript:;"><img class="operator" src="' + site_url + '/themes/admin/images/icon_del.gif" alt="删除" title="删除" /></a></td>';
             html += '</tr>'
         }

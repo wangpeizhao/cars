@@ -52,6 +52,7 @@
 				<button class="btn" type="button" onclick="doSearch();">
 					<span class="sel">筛 选</span>
 				</button>
+				<input type="reset" vaule="重置" class="reset btn">
 				<input type="hidden" name="currentPage" value="1">
 				<input type="hidden" name="rows" value="10">
 			</div>

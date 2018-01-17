@@ -31,63 +31,45 @@ class Comments_model extends Fzhao_Model {
     function lists($cond, $isHidden = '0') {
         $conditions = array(array('p.isHidden' => $isHidden));
         $like = array();
-        if (!empty($cond['type']) && trim($cond['keywords'])) {
-            switch ($cond['type']) {
-                case 'username':
-                    $like[] = array('username' => $cond['keywords']);
-                    break;
-                case 'phone':
-                    $like[] = array('phone' => $cond['keywords']);
-                    break;
-                case 'email':
-                    $like[] = array('email' => $cond['keywords']);
-                    break;
-                case 'user_ip':
-                    $conditions[] = array('user_ip' => $cond['keywords']);
-                    break;
-                case 'declare':
-                    $conditions[] = array('declare' => $cond['keywords']);
-                    break;
+        if (!empty($cond['search']) && trim($cond['keywords'])) {
+            if(in_array($cond['search'],array('username','phone','email','user_ip','declare'))){
+                $like[] = array($cond['search'] => $cond['keywords']);
             }
-        } else {
-            if (isset($cond['type']) && $cond['type'] !== '') {
-                $conditions[] = array('p.type' => $cond['type']);
+            if(in_array($cond['search'],array('id'))){
+                $conditions[] = array($cond['search'] => $cond['keywords']);
             }
-            if (isset($cond['is_public']) && $cond['is_public'] !== '') {
-                $conditions[] = array('p.is_public' => $cond['is_public']);
+        } 
+        
+        $fields = array('type','is_public','is_shield');
+        foreach($fields as $item){
+            if (isset($cond[$item]) && $cond[$item] !== '') {
+                $conditions[] = array('p.'.$item => $cond[$item]);
             }
-            if (isset($cond['is_shield']) && $cond['is_shield'] !== '') {
-                $conditions[] = array('p.is_shield' => $cond['is_shield']);
-            }
-            if (isset($cond['replyContent']) && $cond['replyContent'] === '0') {
-                $conditions[] = array('p.replyContent' => null);
-            }else
-            if (isset($cond['replyContent']) && $cond['replyContent'] === '1') {
-                $conditions[] = array('p.replyContent!=' => '');
-            }
-            if (!empty($cond['startTime'])) {
-                $conditions[] = array('p.iTime >=' => strtotime($cond['startTime']));
-            }
-            if (!empty($cond['endTime'])) {
-                $conditions[] = array('p.iTime <=' => strtotime($cond['endTime']));
-            }
+        }
+
+        if (isset($cond['replyContent']) && $cond['replyContent'] === '0') {
+            $conditions[] = array('p.replyContent' => null);
+        }else
+        if (isset($cond['replyContent']) && $cond['replyContent'] === '1') {
+            $conditions[] = array('p.replyContent!=' => '');
+        }
+        if (!empty($cond['startTime'])) {
+            $conditions[] = array('p.update_time >=' => $cond['startTime']);
+        }
+        if (!empty($cond['endTime'])) {
+            $conditions[] = array('p.update_time <=' => $cond['endTime']);
         }
 
         $data = $this->getData(array(
             'fields' => 'p.*',
-            'table' => 'comments p',
+            'table' => $this->table.' p',
             '_conditions' => $conditions,
-            'order' => array('p.iTime', 'desc'),
+            'order' => array('p.'.$this->primary_key, 'desc'),
             'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
             'likes' => $like
         ));
-        if($data){
-            foreach($data as &$item){
-                $item['create_time'] = date('Y-m-d H:i:s',$item['iTime']);
-            }
-        }
         $count = $this->getData(array(
-            'table' => 'comments p',
+            'table' => $this->table.' p',
             '_conditions' => $conditions,
             'count' => true,
             'likes' => $like

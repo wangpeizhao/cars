@@ -28,6 +28,7 @@ class News extends Fzhao_Controller {
             $data['currPage'] = getPages();
             $data['rows'] = getPageSize();
             $result = $this->admin->lists($data);
+            $this->set_administrator_real_name($result['data']);
             $this->doJson($result);
         } else {
             $data['title'] = $this->title;
@@ -72,7 +73,7 @@ class News extends Fzhao_Controller {
         $data['SEODescription'] = htmlspecialchars($this->input->post('SEODescription', true));
         $data['sort'] = intval($this->input->post('sort', true));
         
-        $data['thumb'] = trim($this->input->post('thumb', true));
+        $data['thumb'] = str_replace(site_url(''), '',trim($this->input->post('thumb', true)));
 
         return $data;
     }
@@ -98,7 +99,7 @@ class News extends Fzhao_Controller {
             $result = $this->admin->edit($fields, $id);
             $this->doIframe($result);
         }
-
+        $info['thumb_tiny'] = changeImagePath($info['thumb'],'tiny');
         $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
         $data['data'] = $info;
         $data['title'] = '编辑'.$this->title.' - '.$info['title'];
@@ -153,6 +154,7 @@ class News extends Fzhao_Controller {
             $data['currPage'] = getPages();
             $data['rows'] = getPageSize();
             $result = $this->admin->recycles($data);
+            $this->set_administrator_real_name($result['data']);
             $this->doJson($result);
         } else {
             $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');

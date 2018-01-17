@@ -63,10 +63,12 @@ function pregpic($html) {
  */
 function writeFile($content, $file) {
     $fp = fopen($file, "w");
+    flock($fp, LOCK_EX);
     ob_start();
     print_r($content);
     $result = fwrite($fp, ob_get_contents());
     ob_end_clean();
+    flock($fp, LOCK_UN);
     fclose($fp);
     return $result;
 }
@@ -86,6 +88,9 @@ function delSpace($str) {
 }
 
 function changeImagePath($path,$type='tiny'){
+    if(!$path){
+        return false;
+    }
     $ext = pathinfo($path,PATHINFO_EXTENSION);
     $search = array('/images/','.'.$ext);
     $replace = array('/'.$type.'/','_thumb.'.$ext);
@@ -416,7 +421,11 @@ if (!function_exists('successOutput')) {
      * @param  boolean $isDie  [是否终止]
      * @author  linjianyong
      */
-    function successOutput($result = array(), $msg = '', $isDie = true) {
+    function successOutput($result, $msg = '', $isDie = true) {
+        if(!is_array($result) && is_string($result) && !$msg){
+            $msg = $result;
+            $result = null;
+        }
         $jsonArr = array(
             'code' => 1,
             'msg' => $msg,
@@ -567,7 +576,8 @@ if (!function_exists('post_get')) {
         $CI = & get_instance();
         if (IS_POST) {
             $data = $CI->input->post($index, true);
-        } else {
+        } 
+        if(!$data) {
             $n = $offset ? $offset : (in_array($CI->uri->segment(1), array('cn', 'en')) ? 5 : 4);
             $data = $CI->uri->segment($n);
         }
