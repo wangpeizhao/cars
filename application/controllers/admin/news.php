@@ -71,6 +71,8 @@ class News extends Fzhao_Controller {
         $data['SEOKeywords'] = htmlspecialchars($this->input->post('SEOKeywords', true));
         $data['SEODescription'] = htmlspecialchars($this->input->post('SEODescription', true));
         $data['sort'] = intval($this->input->post('sort', true));
+        
+        $data['thumb'] = trim($this->input->post('thumb', true));
 
         return $data;
     }

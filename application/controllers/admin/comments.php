@@ -165,6 +165,7 @@ class Comments extends Fzhao_Controller {
         $this->verify($comment);
         $act = trim($this->input->post('act',true));
         if($act == 'get'){
+            $comment['create_time'] = date('Y-m-d H:i:s',$comment['iTime']);
             successOutput($comment);
             return true;
         }
