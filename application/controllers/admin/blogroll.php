@@ -67,8 +67,9 @@ class Blogroll extends Fzhao_Controller {
     private function _verifyForm($info = array()) {
         $data = array();
 
+        $data['link_type'] = trim($this->input->post('link_type', true));
         $data['link_term'] = intval($this->input->post('link_term', true));
-        if (!$data['link_term']) {
+        if (!$data['link_term'] && $data['link_type'] == 'link') {
             $this->_doIframe('所属分类不能为空', 0);
         }
         $data['link_name'] = trim($this->input->post('link_name', true));
@@ -79,10 +80,12 @@ class Blogroll extends Fzhao_Controller {
         if (!$data['link_url']) {
             $this->_doIframe('链接url不能为空', 0);
         }
-        if ($info) {
-            $result = $this->admin->getRowByTitle(array(array('link_url' => $data['link_url']), array('id!=' => $info['id'])));
-        } else {
-            $result = $this->admin->getRowByTitle(array(array('link_url' => $data['link_url'])));
+        if($data['link_type'] == 'link'){
+            if ($info) {
+                $result = $this->admin->getRowByTitle(array(array('link_url' => $data['link_url']), array('id!=' => $info['id'])));
+            } else {
+                $result = $this->admin->getRowByTitle(array(array('link_url' => $data['link_url'])));
+            }
         }
         if ($result) {
             $this->_doIframe('链接url已存在', 0);
@@ -127,7 +130,7 @@ class Blogroll extends Fzhao_Controller {
         $fields['update_time'] = _DATETIME_;
 
         $this->admin->edit($fields, $id);
-        $this->_doIframe('修改成功');
+        $this->_doIframe('修改成功','async');
     }
 
     /**
@@ -147,10 +150,10 @@ class Blogroll extends Fzhao_Controller {
         $fields['create_time'] = _DATETIME_;
         $fields['uid'] = ADMIN_ID;
         $fields['lang'] = _LANGUAGE_;
-        $fields['link_type'] ='link';
+//        $fields['link_type'] ='link';
 
         $this->admin->add($fields);
-        $this->_doIframe('添加成功');
+        $this->_doIframe('添加成功','async');
     }
 
     /**
@@ -167,7 +170,7 @@ class Blogroll extends Fzhao_Controller {
         }
         $id = post_get('id');
         $this->verify($id);
-        $result = $this->admin->del($id, 'term_id');
+        $result = $this->admin->del($id, 'link_term');
         $this->doJson($result);
     }
 
@@ -203,7 +206,7 @@ class Blogroll extends Fzhao_Controller {
         }
         $id = post_get('id');
         $this->verify($id);
-        $result = $this->admin->recover($id, 'term_id');
+        $result = $this->admin->recover($id, 'link_term');
         $this->doJson($result);
     }
 

@@ -117,32 +117,6 @@
 			<label><input type="checkbox" name="plat" value="admin">后台菜单</label>
 		</td>
 	</tr>
-	<tr class="hide addNavTxt">
-		<td colspan="2">
-			<select name="link_parent">
-				<option value="0" selected>-请先选择菜单-</option>
-			</select>
-		</td>
-		<td><input class="normal" type="text" name="link_name" maxlength="20" title="请填写菜单名称" placeholder="请填写菜单名称" value=""/></td>
-		<td><input class="normal" type="text" name="link_url" maxlength="255" title="请填写菜单URL地址" placeholder="请填写菜单URL地址" value="http://www."/></td>
-		<td>
-			<select name="link_target">
-				<option value="" selected>-请选择-</option>
-				<option value="_self"> 当前窗口中打开</option>
-				<option value="_parent"> 父类窗口集中打开</option>
-				<option value="_top"> 整个窗口中打开</option>
-				<option value="_blank"> 新的窗口中打开</option>
-			</select>
-		</td>
-		<td><input class="small" type="text" name="link_rating" title="请填写菜单排序" maxlength="2" value="99"/></td>
-		<td>-</td>
-	</tr>
-	<tr class="hide even addNavBtn">	
-		<td align="left" class="Btn" colspan="7"><input type="hidden" name="link_id">
-			<input type="button" style="padding:0 10px;margin-bottom:10px;border:0px;height: 29px;" onfocus="this.blur();" value=" 添加菜单信息 " class="submit cursor l doAddNav">
-			<span style="color:#999;display:block;float:left;text-align:left;">设置排序等级，越大越靠前.<font color="#ff3300">只能是数字</font><br>_blank：新窗口或新标签。_top：不包含框架的当前窗口或标签。_parent：同一窗口或标签。</span>
-		</td>
-	</tr>
 </table>
 <div class="clear"></div>
 <!-- </form> -->

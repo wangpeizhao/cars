@@ -143,6 +143,10 @@ function iResultAlter(str, status) {//#5cb85c;
       $('span.validatePrompt').fadeOut();
     }, 2000);
     alert(str);
+    if(status == 'async' && typeof(setDataAsync) != 'undefined'){
+    	setDataAsync();
+    	return true;
+    }
     window.location.reload();
     return true;
 }

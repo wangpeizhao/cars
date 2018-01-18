@@ -355,11 +355,50 @@ class System extends Fzhao_Controller {
         if (!IS_POST) {
             show_404();
         }
-        $data['currPage'] = $this->input->post('currPage', true);
-        $data['rows'] = $this->input->post('rows', true);
-        $data['link_type'] = $this->input->post('link_type', true);
-        $result = $this->system_model->getLinksList($data);
+        $data = $this->input->post(null, true);
+        $data['currPage'] = getPages();
+        $data['rows'] = getPageSize();
+        $result = $this->system_model->adFlexSliders($data);
+        $this->set_administrator_real_name($result['data']);
         $this->doJson($result);
+    }
+
+    private function _verifyForm($info = array()) {
+        $data = array();
+
+        $data['link_term'] = intval($this->input->post('link_term', true));
+        if (!$data['link_term']) {
+            $this->_doIframe('所属分类不能为空', 0);
+        }
+        $data['link_name'] = trim($this->input->post('link_name', true));
+        if (!$data['link_name']) {
+            $this->_doIframe('链接名称不能为空', 0);
+        }
+        $data['link_url'] = trim($this->input->post('link_url', true));
+        if (!$data['link_url']) {
+            $this->_doIframe('链接url不能为空', 0);
+        }
+        if ($info) {
+            $result = $this->admin->getRowByTitle(array(array('link_url' => $data['link_url']), array('id!=' => $info['id'])));
+        } else {
+            $result = $this->admin->getRowByTitle(array(array('link_url' => $data['link_url'])));
+        }
+        if ($result) {
+            $this->_doIframe('链接url已存在', 0);
+        }
+        if (!empty($_FILES['link_image']['tmp_name'])) {
+            $link_image = $this->_uploadPic();
+            $data['link_image'] = $link_image;
+            if($link_image!=$info['link_image'] && $info['link_image'] && file_exists($info['link_image'])){
+                unlink($info['link_image']);
+            }
+        }
+        $data['link_target'] = trim($this->input->post('link_target', true));
+        $data['isHidden'] = (string) intval($this->input->post('isHidden', true));
+        $data['link_sort'] = intval($this->input->post('link_sort', true));
+        $data['link_description'] = trim($this->input->post('link_description', true));
+
+        return $data;
     }
 
     public function addAdFlexSlider() {

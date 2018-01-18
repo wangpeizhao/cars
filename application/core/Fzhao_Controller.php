@@ -156,7 +156,7 @@ class My_Controller extends CI_Controller {
             if (is_array($result)) {
                 echo '<script type="text/javascript">var data = \'' . str_replace("'", "\'", str_replace('\\', '\\\\', json_encode($result))) . '\';window.top.window.iResult(data,"' . $callback . '");</script>';
             } else {
-                echo '<script type="text/javascript">window.top.window.iResultAlter(\'' . strip_tags(addslashes($result)) . '\',' . $status . ');</script>';
+                echo '<script type="text/javascript">window.top.window.iResultAlter(\'' . strip_tags(addslashes($result)) . '\',' . (is_string($status)?"'".$status."'":$status) . ');</script>';
             }
             $exit && exit();
         } else {

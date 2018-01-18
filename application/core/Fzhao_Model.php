@@ -861,7 +861,7 @@ class Fzhao_Model extends CI_Model {
         $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $ids));
         if($trems){
             foreach($trems as $term_id) {
-                $this->dbSet('term', array('count' => 'count-1', array('id' => $term_id)));
+                $this->dbSet('term', array('count' => 'count-1'), array('id' => $term_id));
             }
         }
         $this->trans_complete();
@@ -904,7 +904,7 @@ class Fzhao_Model extends CI_Model {
         $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $ids));
         if($trems){
             foreach($trems as $term_id) {
-                $this->dbSet('term', array('count' => 'count+1', array('id' => $term_id)));
+                $this->dbSet('term', array('count' => 'count+1'), array('id' => $term_id));
             }
         }
         $this->trans_complete();

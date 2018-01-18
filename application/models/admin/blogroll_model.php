@@ -29,7 +29,7 @@ class Blogroll_model extends Fzhao_Model {
      * 时间：2018-01-13
      */
     function lists($cond, $isHidden = '0') {
-        $conditions = array(array('p.link_type' => 'link'),array('p.isHidden' => $isHidden));
+        $conditions = array(array('p.isHidden' => $isHidden));
         $like = array();
         if (!empty($cond['search']) && trim($cond['keywords'])) {
             if(in_array($cond['search'],array('link_name','link_url','link_description'))){
@@ -40,11 +40,14 @@ class Blogroll_model extends Fzhao_Model {
             }
         } 
         
-        $fields = array('link_target','link_term');
+        $fields = array('link_target','link_term','link_type');
         foreach($fields as $item){
             if (isset($cond[$item]) && $cond[$item] !== '') {
                 $conditions[] = array('p.'.$item => $cond[$item]);
             }
+        }
+        if(!$cond['link_type']){
+            $conditions[] = array('p.link_type!=' => 'link');
         }
         
         if (!empty($cond['startTime'])) {

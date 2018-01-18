@@ -8,7 +8,8 @@
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin_lists.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/admin/js/admin_blogroll_list.js"></script>
 <style type="text/css">
-	
+	.seeimg{max-height:50px;overflow: hidden;}
+	.seeimg img{width:72px;cursor: pointer;}
 </style>
 <script type="text/javascript">
 <!--
@@ -23,7 +24,7 @@
 						$(".content").scrollTop($("#list_table").height());
 						document.getElementById("link_image").outerHTML = document.getElementById("link_image").outerHTML;
 						$('input[name="link_name"]').val('');
-						$('input[name="link_url"]').val('http://www.');
+						$('input[name="link_url"]').val('');
 						$('input[name="link_rating"]').val('99');
 						$('input[name="link_description"]').val('');
 						$("input:radio[name='link_target']").each(function(){
@@ -36,7 +37,7 @@
 								$(this).attr("checked",true);
 							}
 						});
-						$(".seeimg").html('');
+						$(".seeimg img").html('src','');
 					});
 					$(".addLinkBtn span").html('[-]添加友情链接');
 					$(".addLinks form").attr('action',baseUrl + lang +'/admin/blogroll/add');
@@ -53,13 +54,13 @@
 					link_rating = $('input[name="link_rating"]');
 				if(!$.trim(link_name.val())){
 					link_name.css('border','1px #ff0000 solid;');
-					alert('客户名称不能为空!');
+					alert('名称不能为空!');
 					link_name.focus();
 					return false;
 				}
 				if(!validate(link_url.val(),'url')){
 					link_url.css('border','1px #ff0000 solid;');
-					alert('Web 地址格式不正确!');
+					alert('URL地址格式不正确!');
 					link_url.focus();
 					return false;
 				}
@@ -67,26 +68,6 @@
 					alert('排序等级只能为两位整数!');
 					link_rating.focus();
 					return false;
-				}
-			});
-
-			$(".seeimg a#delImg").live('click',function(){
-				if(confirm('确定要删除该友情链接图片！')){
-					var imgPath = $(this).attr('src');
-					var link_id = $(this).attr('link_id');
-					$.post(baseUrl + lang + "/admin/blogroll/edit",{imgPath:imgPath,id:link_id,act:'delLinkImage'}, function(data){
-						if (data.done === true) {
-							alert('删除成功');
-							$(".seeimg").html('');
-							$("#"+link_id).find('td').eq(4).html('<font color="#0099ff">无</font>');
-						}else if(data.msg){
-							alert(data.msg);
-							return false;
-						}else{
-							alert('提交失败，请重试');
-							return false;
-						}
-					},"json");
 				}
 			});
 		}catch(e){
@@ -121,9 +102,11 @@
 					
 					$(".addLinks form").attr('action',baseUrl + lang +"/admin/"+_TYPE_+"/edit/"+_data.id);
 					if(_data.link_image){
-						$(".seeimg").html('<br><a href="'+(site_url+_data.link_image)+'" target="_blank" title="点击浏览原图"><img src="'+(site_url+_data.link_image)+'" width="100"/></a>&nbsp;<a href="javascript:;" link_id="'+_data.id+'" src="'+_data.link_image+'" style="color:#339900;" title="点击【删除】可直接删除该友情链接图片" id="delImg" class="dn">删除</a>');
+						$(".addLinks form .seeimg img").attr('src',site_url+_data.link_image);
+						$(".addLinks form .seeimg img").attr('_src',site_url+_data.link_image);
+						// $(".seeimg").html('<br><a href="'+(site_url+_data.link_image)+'" target="_blank" title="点击浏览原图"><img src="'+(site_url+_data.link_image)+'" width="100"/></a>&nbsp;<a href="javascript:;" link_id="'+_data.id+'" src="'+_data.link_image+'" style="color:#339900;" title="点击【删除】可直接删除该友情链接图片" id="delImg" class="dn">删除</a>');
 					}else{
-						$(".seeimg").html('');
+						$(".seeimg img").attr('src','');
 					}
 				}else if(data.msg){
 					alert(data.msg);
@@ -162,7 +145,7 @@
 		if(str==1 || str==2){
 			document.getElementById("link_image").outerHTML = document.getElementById("link_image").outerHTML;
 			$('input[name="link_name"]').val('');
-			$('input[name="link_url"]').val('http://www.');
+			$('input[name="link_url"]').val('');
 			$('input[name="link_rating"]').val('99');
 			$('input[name="link_description"]').val('');
 			$('input[name="link_target"]').attr("checked",'_blank');
@@ -183,12 +166,20 @@
 	}
 
 	function _check(){
-		var link_url = $('input[name="link_url"]');
-		if(!IsURL($.trim(link_url.val()))){
-			alert('跳转URL地址格式不正确!');
-			link_url.focus();
-			return false;
-		}
+		// var link_url = $('input[name="link_url"]');
+		// if(!IsURL($.trim(link_url.val()))){
+		// 	alert('跳转URL地址格式不正确!');
+		// 	link_url.focus();
+		// 	return false;
+		// }
+	}
+
+	function setDataAsync(){
+		$('select[name="link_term"]').val('');
+		setData($('input[name="currentPage"]').val());
+		$(".content").scrollTop(0);
+		$(".addLinks").slideUp("slow");
+		$(".addLinkBtn span").html('[+]添加友情链接');
 	}
 //-->
 </script>
@@ -245,13 +236,14 @@
 					<option value="_self" >当前窗口(_self)</option>
 				</select>
 				<input class="small" name="startTime" id="startTime" style="width:150px;" type="text" value="" placeholder="更新时间(开始)"/>
-				<input class="small" name="endTime" id="endTime" style="width:150px;" type="text" value="<?=_DATETIME_?>" placeholder="更新时间(结束)"/>
+				<input class="small" name="endTime" id="endTime" style="width:150px;" type="text" value="" placeholder="更新时间(结束)"/>
 				<button class="btn" type="button" onclick="doSearch();">
 					<span class="sel">筛 选</span>
 				</button>
 				<input type="reset" vaule="重置" class="reset btn">
 				<input type="hidden" name="currentPage" value="1">
 				<input type="hidden" name="rows" value="10">
+				<input type="hidden" name="link_type" value="link">
 			</div>
 		</form>
 		<iframe name="_MrParker_" style="display:none;"></iframe>
@@ -264,7 +256,7 @@
 				<!-- <th width="10%">友情链接分类</th> -->
 				<th width="10%">友情链接名称</th>
 				<th width="15%">Web地址</th>
-				<th width="5%">图片？</th>
+				<th width="5%">图片</th>
 				<th width="5%">打开方式</th>
 				<!-- <th width="5%">是否激活</th> -->
 				<th width="5%">排序等级</th>
@@ -299,45 +291,63 @@
 						</tr>
 						<tr>
 							<td style="text-align:right;"><span>*</span>链接名称：</td>
-							<td align="left"><input type="text" class="normal" name="link_name"></td>
+							<td align="left"><input type="text" class="normal" name="link_name" placeholder="链接名称"></td>
 							<td align="left" style="text-align:left;"><span style="color:#999;">例如：四叶草工作室。鼠标滑过时显示</span></td>
 						</tr>
 						<tr>
-							<td style="text-align:right;"><span>*</span>Web地址：</td><td align="left"><input type="text" class="normal" name="link_url" value="http://www." ></td><td align="left" ><span style="color:#999;">例如：<a href="<?=site_url('')?>"><?=site_url('')?></a> —— 不要忘了 http://</span></td>
+							<td style="text-align:right;"><span>*</span>URL地址：</td>
+							<td align="left"><input type="text" class="normal" name="link_url" value=""  placeholder="http://www.***.com"></td>
+							<td align="left" ><span style="color:#999;">例如：<a href="<?=site_url('')?>"><?=site_url('')?></a> —— 不要忘了 http://</span></td>
 						</tr>
 						<tr>
-							<td style="text-align:right;">选择图片：</td><td align="left"><input type="file" name="link_image" id="link_image" class="normal"><span class="seeimg"></span></td><td align="left"><span style="color:#999;">上传友情链接图片.建议图片为客户网站Logo;</span></td>
+							<td style="text-align:right;">选择图片：</td>
+							<td align="left">
+								<div class="seeimg"><img src="" class="popover"></div>
+								<input type="file" name="link_image" id="link_image" class="normal">
+							</td>
+							<td align="left">
+								<span style="color:#999;">上传友情链接图片.建议图片为客户网站Logo;</span>
+							</td>
 						</tr>
 						<tr>
 							<td style="text-align:right;">打开方式：</td>
 							<td align="left" class="link_target">
 								<ul>
 									<li><label><input type="radio" name="link_target" value="_blank" checked> _blank — 新窗口或新标签。</label></li>
-									<!-- <li><label><input type="radio" name="link_target" value="_top"> _top — 不包含框架的当前窗口或标签。</label></li> -->
 									<li><label><input type="radio" name="link_target" value="_self"> _self — 同一窗口或标签。</label></li>
 								</ul>
 							</td>
 							<td align="left"><span style="color:#999;">为您的链接选择目标框架(打开方式)。</span></td>
 						</tr>
 						<tr>
-							<td style="text-align:right;">是否激活：</td><td align="left"><label><input type="radio" name="isHidden" value="0" checked>是</label>&nbsp;&nbsp;<label><input type="radio" name="isHidden" value="1">否</label></td><td align="left"><span style="color:#999;">选择“是”才会显示在页面</span></td>
+							<td style="text-align:right;">是否激活：</td>
+							<td align="left"><label><input type="radio" name="isHidden" value="0" checked>是</label>&nbsp;&nbsp;<label><input type="radio" name="isHidden" value="1">否</label></td>
+							<td align="left"><span style="color:#999;">选择“是”才会显示在页面</span></td>
 						</tr>
 						<tr>
-							<td style="text-align:right;">排序等级：</td><td align="left"><input type="text" class="normal" name="link_sort" maxlength="2" value="99" pattern='^\d{1,2}$'></td><td align="left" ><span style="color:#999;">设置排序等级，越大越靠前.<font color="#ff3300">只能是数字</font></span></td>
+							<td style="text-align:right;">排序等级：</td>
+							<td align="left"><input type="text" class="normal" name="link_sort" maxlength="2" value="99" pattern='^\d{1,2}$' placeholder="设置排序等级，越大越靠前"></td>
+							<td align="left" ><span style="color:#999;">设置排序等级，越大越靠前.<font color="#ff3300">只能是数字</font></span></td>
 						</tr>
 						<tr>
-							<td style="text-align:right;">更多描述：</td><td align="left"><textarea name="link_description" style="width:256px;height:50px;" class="normal"></textarea></td><td align="left"><span style="color:#999;">对客户的更多描述。</span></td>
+							<td style="text-align:right;">更多描述：</td>
+							<td align="left"><textarea name="link_description" style="width:256px;height:50px;" class="normal" placeholder="更多描述"></textarea></td>
+							<td align="left"><span style="color:#999;">对客户的更多描述。</span></td>
 						</tr>
 						<tr>
 							<td>&nbsp;</td>
-							<td align="left" colspan="2"><input type="submit" class="submit cursor" value="提交" onfocus="this.blur();"/></td>
+							<td align="left" colspan="2">
+								<input type="hidden" name="link_type" value="link">
+								<input type="submit" class="submit cursor" value="提交" onfocus="this.blur();"/>
+							</td>
 						</tr>
 					</table>
 				</form>
 				<iframe name="ajaxifr" style="display:none;"></iframe>
 			</div>
 		</div>
-	<input type="hidden" name="currentPage" value="1">
+		<?php include('popover.php');?>
+		<input type="hidden" name="currentPage" value="1">
 	<!--/container-->
 <!-- 引入底部-->
 	<?php include('footer.php');?>
