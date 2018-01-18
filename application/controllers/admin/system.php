@@ -64,6 +64,7 @@ class System extends Fzhao_Controller {
             $data['options'] = $this->system_model->getOptions('admin');
             //$data['indexB'] = $this->system_model->getTermByTaxonomy('newsInfo');
             //$data['indexM'] = $this->system_model->getTermByTaxonomy('company');
+            $data['title'] = '网站设置';
             $this->view('admin/options', $data);
             return true;
         }

@@ -777,7 +777,7 @@ class Fzhao_Model extends CI_Model {
         $result = $this->getData(array(
             'fields' => '*',
             'table' => $this->table,
-            'conditions' => array($this->primary_key => $id),//, 'lang' => _LANGUAGE_
+            'conditions' => array($this->primary_key => $id), //, 'lang' => _LANGUAGE_
             'row' => true
         ));
         return $result;
@@ -804,7 +804,7 @@ class Fzhao_Model extends CI_Model {
      * 时间：2018-01-13
      */
     function edit($data, $id) {
-        return $this->dbUpdate($this->table, $data, array($this->primary_key => $id));//, 'lang' => _LANGUAGE_
+        return $this->dbUpdate($this->table, $data, array($this->primary_key => $id)); //, 'lang' => _LANGUAGE_
     }
 
     /**
@@ -815,7 +815,7 @@ class Fzhao_Model extends CI_Model {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function del($id) {
+    function del($id, $term_id = 0) {
         if (!$id) {
             return false;
         }
@@ -825,7 +825,14 @@ class Fzhao_Model extends CI_Model {
         if (!is_array($id)) {
             $id = array($id);
         }
-        return $this->dbUpdateIn($this->table, $data, array($this->primary_key.'!=' => ''), array($this->primary_key => $id));
+        $this->trans_start();
+        $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $id));
+        $term_id && $this->dbSet('term', array('count' => 'count-1', array('id' => $term_id)));
+        $this->trans_complete();
+        if ($this->trans_status() === FALSE) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -836,7 +843,7 @@ class Fzhao_Model extends CI_Model {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function recover($id) {
+    function recover($id, $term_id = 0) {
         if (!$id) {
             return false;
         }
@@ -846,7 +853,14 @@ class Fzhao_Model extends CI_Model {
         if (!is_array($id)) {
             $id = array($id);
         }
-        return $this->dbUpdateIn($this->table, $data, array($this->primary_key.'!=' => ''), array($this->primary_key => $id));
+        $this->trans_start();
+        $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $id));
+        $term_id && $this->dbSet('term', array('count' => 'count+1', array('id' => $term_id)));
+        $this->trans_complete();
+        if ($this->trans_status() === FALSE) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -864,7 +878,7 @@ class Fzhao_Model extends CI_Model {
         if (!is_array($id)) {
             $id = array($id);
         }
-        return $this->dbDeleteIn($this->table, array($this->primary_key.'!=' => ''), array($this->primary_key => $id));
+        return $this->dbDeleteIn($this->table, array($this->primary_key . '!=' => ''), array($this->primary_key => $id));
     }
 
 }

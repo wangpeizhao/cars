@@ -243,9 +243,7 @@ class Fzhao_Controller extends My_Controller {
     public function rules() {
         return array(
             'array' => array(//增加Controller验证,但为了兼容已重写的rules,就保留了原有的格式
-                'upload' => array(
-                    'uploadImage',
-                ),
+                'upload' => array('index','del','uploading'),
             )
         );
     }
@@ -526,10 +524,11 @@ class Fzhao_Controller extends My_Controller {
             'fields' => 'id,nickname',
             'table' => 'admin',
             '_conditions' => $conditions,
-            'ins' => array(array('uid'=>$_uids)),
+            'ins' => array(array('id'=>$_uids)),
         ));
+        $users = array_column($_users, 'nickname','id');
         foreach($lists as &$item){
-            $item[$assocName] = isset($_users[$item[$assoc]])?$_users[$item[$assoc]]:'系统管理员';
+            $item[$assocName] = isset($users[$item[$assoc]])?$users[$item[$assoc]]:'系统管理员';
         }
     }
 

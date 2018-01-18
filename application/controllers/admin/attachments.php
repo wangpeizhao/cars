@@ -4,14 +4,14 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Blogroll extends Fzhao_Controller {
+class Attachments extends Fzhao_Controller {
 
     private $title = '';
 
     function __construct() {
         parent::__construct();
-        $this->load->model('admin/blogroll_model', 'admin');
-        $this->title = '友情链接';
+        $this->load->model('admin/attachments_model', 'admin');
+        $this->title = '附件';
     }
 
     /**
@@ -35,7 +35,7 @@ class Blogroll extends Fzhao_Controller {
             $data['title'] = $this->title;
             $data['_title_'] = $this->title;
             $data['terms'] = $this->admin->getTermByTaxonomy('links');
-            $this->view('admin/blogroll', $data);
+            $this->view('admin/attachments', $data);
         }
     }
 
@@ -60,7 +60,7 @@ class Blogroll extends Fzhao_Controller {
             $data['terms'] = $this->admin->getTermByTaxonomy('links');
             $data['title'] = $this->title . '回收站';
             $data['_title_'] = $this->title;
-            $this->view('admin/blogroll_recycles', $data);
+            $this->view('admin/attachments_recycles', $data);
         }
     }
 

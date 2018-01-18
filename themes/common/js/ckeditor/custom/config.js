@@ -29,7 +29,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Remove some buttons, provided by the standard plugins, which we don't
 	// need to have in the Standard(s) toolbar.
 	config.removeButtons = 'Underline,Subscript,Superscript';
-	config.width = 900;
+	config.width = 800;
 	config.height = 500;
 	//config.height = 600;
 	config.toolbarCanCollapse = true;

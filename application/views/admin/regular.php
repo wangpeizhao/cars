@@ -232,7 +232,7 @@
 			text-align: center;font-weight: bold;border-radius: 14px;top: 17px;right: 5px;
 		}
 		.btn_perm{
-			background: #fff;padding:4px 5px;border: 1px solid #ccc;outline:none;color: #333;margin:10px 0px 5px 10px;cursor: pointer;width:90px;overflow: hidden;
+			background: #fff;padding:4px 5px;border: 1px solid #ccc;outline:none;color: #333;margin:10px 0px 5px 10px;cursor: pointer;width:80px;overflow: hidden;
 			text-overflow: ellipsis;white-space: nowrap;border-radius: 4px;padding-right: 20px;
 		}
 		.toggle{display: inline-block;color: #20a3fe;text-align: center;cursor: pointer; vertical-align: middle;max-width:100px;}

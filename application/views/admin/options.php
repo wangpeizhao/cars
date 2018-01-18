@@ -130,7 +130,7 @@
 	    window.history.back('-1');
 	}
 //-->
-</script>头部-->
+</script>
   
   <div id="admin_right">
     <div class="headbar">
