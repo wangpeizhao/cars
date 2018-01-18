@@ -15,7 +15,9 @@ function setData(currPage) {
                     fillData(data.data.data, currPage);
                     page_html(Math.ceil(data.data.count / rows), currPage);
                     if (Math.ceil(data.data.count / rows) > 1) $('#pageLists').fadeIn();
-                    else $('#pageLists').html('')
+                    else $('#pageLists').html('');
+                    $('.headbar .searchbar span.total').remove();
+                    $('.headbar .searchbar').append('<span style="color:#666;" class="total">总('+data.data.count+')行</span>');
                 } else if (data.msg) {
                     alert(data.msg);
                     return false
@@ -41,7 +43,7 @@ function fillData(data, currPage) {
             html += '   <td>' + data[i]['file_ext'] + '</td>';
             html += '   <td>' + data[i]['file_type'] + '</td>';
             html += '   <td>' + data[i]['file_size'] + 'kb</td>';
-            html += '   <td>' + data[i]['file_path'] + '</td>';
+            html += '   <td><a href="javascript:;" class="imgPopover"><img src="/' + data[i]['file_path_tiny'] + '" _src="/' + data[i]['file_path'] + '" class="popover"></a></td>';
             html += '   <td>' + (data[i]['is_image'] == '1' ? '<font color="#339900">是</font><span>('+data[i]['image_width']+'*'+data[i]['image_height']+')</span>': '<font color="red">否</font>') + '</td>';
             html += '   <td>' + data[i]['administrator'] + '</td>';
             html += '   <td>' + data[i]['update_time'] + '</td>';

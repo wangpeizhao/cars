@@ -15,7 +15,9 @@ function setData(currPage) {
                     fillData(data.data.data, currPage);
                     page_html(Math.ceil(data.data.count / rows), currPage);
                     if (Math.ceil(data.data.count / rows) > 1) $('#pageLists').fadeIn();
-                    else $('#pageLists').html('')
+                    else $('#pageLists').html('');
+                    $('.headbar .searchbar span.total').remove();
+                    $('.headbar .searchbar').append('<span style="color:#666;" class="total">总('+data.data.count+')行</span>');
                 } else if (data.msg) {
                     alert(data.msg);
                     return false
@@ -41,11 +43,11 @@ function fillData(data, currPage) {
             html += '   <td>' + data[i]['file_ext'] + '</td>';
             html += '   <td>' + data[i]['file_type'] + '</td>';
             html += '   <td>' + data[i]['file_size'] + 'kb</td>';
-            html += '	<td>' + data[i]['file_path'] + '</td>';
+            html += '	<td><a href="javascript:;" class="imgPopover"><img src="/' + data[i]['file_path_tiny'] + '" _src="/' + data[i]['file_path'] + '" class="popover"></a></td>';
             html += '	<td>' + (data[i]['is_image'] == '1' ? '<font color="#339900">是</font><span>('+data[i]['image_width']+'*'+data[i]['image_height']+')</span>': '<font color="red">否</font>') + '</td>';
             html += '	<td>' + data[i]['administrator'] + '</td>';
             html += '	<td>' + data[i]['update_time'] + '</td>';
-            html += '	<td id="' + data[i]['id'] + '"><a href="javascript:;" act="edit"><img class="operator" src="' + site_url + '/themes/admin/images/icon_edit.gif" alt="编辑" title="编辑" /></a><a act="del" href="javascript:;"><img class="operator" src="' + site_url + '/themes/admin/images/icon_del.gif" alt="删除" title="删除" /></a></td>';
+            html += '	<td id="' + data[i]['id'] + '" class="_' + data[i]['id'] + '" tid="' + data[i]['tid'] + '"><a href="javascript:;" act="edit"><img class="operator" src="' + site_url + '/themes/admin/images/icon_edit.gif" alt="编辑" title="编辑" /></a><a act="del" href="javascript:;"><img class="operator" src="' + site_url + '/themes/admin/images/icon_del.gif" alt="删除" title="删除" /></a></td>';
             html += '</tr>'
         }
         var first_html = $("#list_table").find('tr').eq(0).html();

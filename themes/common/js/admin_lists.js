@@ -63,18 +63,22 @@ $(function(){
 
 		//操作
 		$("#list_table a").live('click',function(){
-			if(typeof(click_list_table_a)=='function'){
-				click_list_table_a($(this));
-				return true;
-			}
 			try{
 				var act = $(this).attr('act');
 				var id = $(this).parent().attr('id');
 				switch(act){
 					case 'edit':
-                      event_link(baseUrl + lang +'/admin/'+_TYPE_+'/edit/'+id+'.html');
+						if(typeof(click_list_table_a_edit)=='function'){
+							click_list_table_a_edit(id);
+							return true;
+						}
+                      	event_link(baseUrl + lang +'/admin/'+_TYPE_+'/edit/'+id+'.html');
 						break;
 					case 'del':
+						if(typeof(click_list_table_a_del)=='function'){
+							click_list_table_a_del(id);
+							return true;
+						}
 						if(confirm('确定要把'+(_TITLE_?_TITLE_:'信息')+'放到回收站内？')){
 							_del(id);
 						}
@@ -101,6 +105,12 @@ $(function(){
 
 		$('#endTime').click(function(){
 			WdatePicker({minDate:'#F{$dp.$D(\'startTime\')}',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:_DATETIME_});
+		});
+
+		$('.searchbar input:reset').click(function(){
+			setTimeout(function(){
+				setData($('input[name="currentPage"]').val());
+			},100);
 		});
 
 	}catch(e){

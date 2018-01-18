@@ -53,7 +53,7 @@
 			</div>
 			<div class="operating">
 				<div class="search f_r">
-					<select class="auto" name="type">
+					<select class="auto" name="search">
 						<option value="id"><?=$_title_?>ID</option>
 						<option value="title"><?=$_title_?>名称</option>
 						<option value="from"><?=$_title_?>来源</option>

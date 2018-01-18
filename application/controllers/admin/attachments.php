@@ -8,7 +8,7 @@ class Attachments extends Fzhao_Controller {
 
     private $title = '';
 
-    function __construct() {
+    public function __construct() {
         parent::__construct();
         $this->load->model('admin/attachments_model', 'admin');
         $this->title = '附件';
@@ -22,7 +22,7 @@ class Attachments extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function index() {
+    public function index() {
         $data = array();
         if (IS_POST) {
             $data = $this->input->post(null, true);
@@ -34,7 +34,7 @@ class Attachments extends Fzhao_Controller {
         } else {
             $data['title'] = $this->title;
             $data['_title_'] = $this->title;
-            $data['terms'] = $this->admin->getTermByTaxonomy('links');
+            $data['terms'] = $this->admin->getTermByTaxonomy('attachments');
             $this->view('admin/attachments', $data);
         }
     }
@@ -47,7 +47,7 @@ class Attachments extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function recycles() {
+    public function recycles() {
         $data = array();
         if (IS_POST) {
             $data = $this->input->post(null, true);
@@ -57,7 +57,7 @@ class Attachments extends Fzhao_Controller {
             $this->set_administrator_real_name($result['data']);
             $this->doJson($result);
         } else {
-            $data['terms'] = $this->admin->getTermByTaxonomy('links');
+            $data['terms'] = $this->admin->getTermByTaxonomy('attachments');
             $data['title'] = $this->title . '回收站';
             $data['_title_'] = $this->title;
             $this->view('admin/attachments_recycles', $data);
@@ -90,7 +90,7 @@ class Attachments extends Fzhao_Controller {
         if (!empty($_FILES['link_image']['tmp_name'])) {
             $link_image = $this->_uploadPic();
             $data['link_image'] = $link_image;
-            if($link_image!=$info['link_image'] && $info['link_image'] && file_exists($info['link_image'])){
+            if ($link_image != $info['link_image'] && $info['link_image'] && file_exists($info['link_image'])) {
                 unlink($info['link_image']);
             }
         }
@@ -110,7 +110,7 @@ class Attachments extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function edit() {
+    public function edit() {
         if (!IS_POST) {
             show_404();
         }
@@ -119,14 +119,25 @@ class Attachments extends Fzhao_Controller {
         $info = $this->admin->getRowById($id);
         $this->verify($info);
 
-        $act = trim($this->input->post('act', true));
-        if ($act == 'get') {
-            successOutput($info);
+        $this->verify($_FILES['attachments']);
+        $FILES = $_FILES['attachments'];
+        $tid = post_get('tid');
+        $attachments = $this->_uploading($FILES, $tid, true);
+        if ($attachments) {
+            $this->admin->dbUpdate('attachments', $attachments[0], array('id' => $id));
         }
-        $fields = $this->_verifyForm($info);
-        $fields['update_time'] = _DATETIME_;
-
-        $this->admin->edit($fields, $id);
+        $file_path = $info['file_path'];
+        if ($attachments && $file_path && file_exists($file_path)) {
+            unlink($file_path);
+            $small = changeImagePath($file_path, 'small');
+            if (file_exists($small)) {
+                unlink($small);
+            }
+            $tiny = changeImagePath($file_path, 'tiny');
+            if (file_exists($tiny)) {
+                unlink($tiny);
+            }
+        }
         $this->_doIframe('修改成功');
     }
 
@@ -138,18 +149,18 @@ class Attachments extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function add() {
+    public function add() {
         if (!IS_POST) {
             show_404();
         }
-        $fields = $this->_verifyForm();
-        $fields['update_time'] = _DATETIME_;
-        $fields['create_time'] = _DATETIME_;
-        $fields['uid'] = ADMIN_ID;
-        $fields['lang'] = _LANGUAGE_;
-        $fields['link_type'] ='link';
+        $this->verify($_FILES['attachments']);
+        $FILES = $_FILES['attachments'];
+        $tid = post_get('tid');
+        $attachments = $this->_uploading($FILES, $tid);
 
-        $this->admin->add($fields);
+        if ($attachments) {
+            $this->admin->dbInsertBatch('attachments', $attachments);
+        }
         $this->_doIframe('添加成功');
     }
 
@@ -161,15 +172,13 @@ class Attachments extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function del() {
+    public function del() {
         if (!IS_POST) {
             show_404();
         }
         $id = post_get('id');
         $this->verify($id);
-        $info = $this->admin->getRowById($id);
-        $this->verify($info);
-        $result = $this->admin->del($id, $info['term_id']);
+        $result = $this->admin->del($id, 'tid');
         $this->doJson($result);
     }
 
@@ -181,14 +190,12 @@ class Attachments extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function dump() {
+    public function dump() {
         if (!IS_POST) {
             show_404();
         }
         $id = post_get('id');
         $this->verify($id);
-        $info = $this->admin->getRowById($id);
-        $this->verify($info);
         $result = $this->admin->dump($id);
         $this->doJson($result);
     }
@@ -201,40 +208,108 @@ class Attachments extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function recover() {
+    public function recover() {
         if (!IS_POST) {
             show_404();
         }
         $id = post_get('id');
         $this->verify($id);
-        $info = $this->admin->getRowById($id);
-        $this->verify($info);
-        $result = $this->admin->recover($id, $info['term_id']);
+        $result = $this->admin->recover($id, 'tid');
         $this->doJson($result);
     }
 
     /**
-     * uploadPic
+     * uploading
      * 简介：上传图片
-     * 参数：Array
+     * 参数：NULL
      * 返回：Array
-     * 作者：Fzhao
-     * 时间：2012-11-22
+     * 作者：Parker
+     * 时间：2018-01-15
      */
-    private function _uploadPic($name = 'link_image') {
-        $config['upload_path'] = './uploads/links';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = 1024;
-        $config['encrypt_name'] = true;
-        $config['file_ext_tolower'] = true;
-
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->do_upload($name)) {
-            $err = $this->upload->display_errors();
-            $this->_doIframe($err,'0');
+    private function _uploading($FILES, $tid, $edit = false) {
+        if (!IS_POST) {
+            show_404();
         }
-        return 'uploads/links/'.$this->upload->data('file_name');
+        $directory = implode("/", array(date('Y'), date('m'), date('d')));
+        $config['upload_path'] = 'uploads/' . $directory . '/images';
+        //上传图片
+        createFolder('uploads/' . $directory . '/images');
+        createFolder('uploads/' . $directory . '/small');
+        createFolder('uploads/' . $directory . '/tiny');
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size'] = '1024';
+        $config['encrypt_name'] = true; //是否重命名文件。如果该参数为TRUE，上传的文件将被重命名为随机的加密字符串。
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+        $_files = array();
+        foreach ($FILES as $key => $items) {
+            foreach ($items as $k => $item) {
+                $_files['_' . $k][$key] = $item;
+            }
+        }
+        $_FILES = $_files;
+        $attachments = array();
+        $attachment = array('update_time' => _DATETIME_, 'uid' => ADMIN_ID, 'tid' => $tid);
+        if (!$edit) {
+            $attachment['create_time'] = _DATETIME_;
+        }
+        foreach ($_files as $key => $item) {
+            if (!$this->upload->do_upload($key)) {
+                $error = $this->upload->display_errors();
+                $this->_doIframe($error, 0);
+            } else {
+                $success = $this->upload->data();
+                $_path = $config['upload_path'] . '/' . $success['file_name'];
+                $this->_zoomImage($_path, $directory);
+                $attachment['file_orig'] = $success['orig_name'];
+                $attachment['file_name'] = $success['file_name'];
+                $attachment['file_ext'] = $success['file_ext'];
+                $attachment['file_type'] = $success['file_type'];
+                $attachment['file_size'] = $success['file_size'];
+                $attachment['file_path'] = $_path;
+                $attachment['is_image'] = '1';
+                $attachment['image_width'] = $success['image_width'];
+                $attachment['image_height'] = $success['image_height'];
+                $attachment['image_type'] = $success['image_type'];
+                $attachments[] = $attachment;
+            }
+        }
+        return $attachments;
+    }
+
+    private function _zoomImage($path, $folder = 'dishes') {
+        $imageInfo = getimagesize($path);
+        $pPath = pathinfo($path);
+        //生成small缩略图
+        $this->load->library('image_lib');
+        $img_config['create_thumb'] = TRUE;
+        $img_config['maintain_ratio'] = TRUE;
+        $img_config['master_dim'] = 'height';
+        $img_config['source_image'] = $path;
+        $img_config['new_image'] = 'uploads/' . $folder . '/small/' . $pPath["basename"]; //指定生成图片的路径
+        $img_config['height'] = 200;
+        $img_config['width'] = 200 * $imageInfo[0] / $imageInfo[1];
+//        $this->createFolder('uploads/' . $folder . '/small');
+        $this->image_lib->initialize($img_config);
+        if (!$this->image_lib->resize()) {
+            $this->doIframe(-4);
+        }
+        $this->image_lib->clear();
+
+        //生成tiny缩略图
+        $img_config['create_thumb'] = TRUE;
+        $img_config['source_image'] = $path;
+        $img_config['maintain_ratio'] = TRUE;
+        $img_config['master_dim'] = 'auto';
+        $img_config['new_image'] = 'uploads/' . $folder . '/tiny/' . $pPath["basename"]; //指定生成图片的路径
+        $img_config['width'] = 125;
+        $img_config['height'] = 125 * $imageInfo[1] / $imageInfo[0];
+//        $this->createFolder('uploads/' . $folder . '/tiny');
+        $this->image_lib->initialize($img_config);
+        if (!$this->image_lib->resize()) {
+            $this->doIframe(-5);
+        }
+        $this->image_lib->clear();
     }
 
 }

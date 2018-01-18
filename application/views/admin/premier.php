@@ -21,7 +21,7 @@
 			</div>
 			<div class="operating">
 				<div class="search f_r">
-					<select class="auto" name="type">
+					<select class="auto" name="search">
 						<option value="id"><?=$_title_?>ID</option>
 						<option value="username"><?=$_title_?>登录名</option>
 						<option value="nickname"><?=$_title_?>真实姓名</option>

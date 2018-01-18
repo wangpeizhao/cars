@@ -15,7 +15,9 @@ function setData(currPage) {
                     fillData(data.data.data, currPage);
                     page_html(Math.ceil(data.data.count / rows), currPage);
                     if (Math.ceil(data.data.count / rows) > 1) $('#pageLists').fadeIn();
-                    else $('#pageLists').html('')
+                    else $('#pageLists').html('');
+                    $('.headbar .searchbar span.total').remove();
+                    $('.headbar .searchbar').append('<span style="color:#666;" class="total">总('+data.data.count+')行</span>');
                 } else if (data.msg) {
                     alert(data.msg);
                     return false

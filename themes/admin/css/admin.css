@@ -2186,5 +2186,13 @@ a.choose{
 	width:16px;
 	background: url("../images/del_b_16x16.png") no-repeat 0px 0px transparent;
 }
+a.imgPopover {
+	height: 35px;
+	overflow: hidden;
+	display: block;
+}
+a.imgPopover img.popover{
+	width: 72px;
+}
 span.yes{color: green;}
 span.no{color: red;}

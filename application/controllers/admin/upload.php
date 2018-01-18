@@ -82,12 +82,11 @@ class Upload extends Fzhao_Controller {
         }
         $_FILES = $_files;
         $attachments = array();
-        $attachment = array('create_time' => _DATETIME_, 'uid' => ADMIN_ID);
+        $attachment = array('create_time' => _DATETIME_, 'create_time' => _DATETIME_, 'uid' => ADMIN_ID);
         foreach ($_files as $key => $item) {
             if (!$this->upload->do_upload($key)) {
-                $error = array('error' => $this->upload->display_errors());
-                echo '<script type="text/javascript">window.top.window.fileResult("' . dumpHtml($error['error']) . '","");</script>';
-                exit();
+                $error = $this->upload->display_errors();
+                $this->_doIframe($error, 0);
             } else {
                 $success = $this->upload->data();
                 $_path = $config['upload_path'] . '/' . $success['file_name'];
@@ -106,8 +105,42 @@ class Upload extends Fzhao_Controller {
             }
         }
         $attachments && $this->upload_model->dbInsertBatch('attachments', $attachments);
-        echo '<script type="text/javascript">window.top.window.fileResult(1,"' . site_url() . $config['upload_path'] . '/' . $success['file_name'] . '");</script>';
-        exit();
+        $this->_doIframe(_URL_ . $config['upload_path'] . '/' . $success['file_name']);
+    }
+
+    private function zoomImage($path, $folder = 'dishes') {
+        $imageInfo = getimagesize($path);
+        $pPath = pathinfo($path);
+        //生成small缩略图
+        $this->load->library('image_lib');
+        $img_config['create_thumb'] = TRUE;
+        $img_config['maintain_ratio'] = TRUE;
+        $img_config['master_dim'] = 'height';
+        $img_config['source_image'] = $path;
+        $img_config['new_image'] = 'uploads/' . $folder . '/small/' . $pPath["basename"]; //指定生成图片的路径
+        $img_config['height'] = 200;
+        $img_config['width'] = 200 * $imageInfo[0] / $imageInfo[1];
+//        $this->createFolder('uploads/' . $folder . '/small');
+        $this->image_lib->initialize($img_config);
+        if (!$this->image_lib->resize()) {
+            $this->doIframe(-4);
+        }
+        $this->image_lib->clear();
+
+        //生成tiny缩略图
+        $img_config['create_thumb'] = TRUE;
+        $img_config['source_image'] = $path;
+        $img_config['maintain_ratio'] = TRUE;
+        $img_config['master_dim'] = 'auto';
+        $img_config['new_image'] = 'uploads/' . $folder . '/tiny/' . $pPath["basename"]; //指定生成图片的路径
+        $img_config['width'] = 125;
+        $img_config['height'] = 125 * $imageInfo[1] / $imageInfo[0];
+//        $this->createFolder('uploads/' . $folder . '/tiny');
+        $this->image_lib->initialize($img_config);
+        if (!$this->image_lib->resize()) {
+            $this->doIframe(-5);
+        }
+        $this->image_lib->clear();
     }
 
     /**
@@ -118,14 +151,14 @@ class Upload extends Fzhao_Controller {
      * 作者：Fzhao
      * 时间：2012-12-9
      */
-    public function _zoomImage($path) {
+    private function _zoomImage($path) {
         $this->load->library('image_lib');
         $config['image_library'] = 'GD';
         $config['source_image'] = $path;
         $config['width'] = 150;
         $config['height'] = 150;
         $config['create_thumb'] = TRUE; //是否生成缩略图
-//$config['new_image'] = '';//新生图片路径及名称
+        //$config['new_image'] = '';//新生图片路径及名称
         $this->image_lib->initialize($config);
         return $this->image_lib->resize();
     }
@@ -140,9 +173,9 @@ class Upload extends Fzhao_Controller {
      */
     function del() {
         if (IS_POST) {
-            $id = intval($this->input->post('id',true));
-            $this->verify($id,'图片ID不能为空');
-            $result = $this->upload_model->dbUpdate('attachments',array('isHidden'=>'1'),array('is_image'=>'1','id'=>$id));
+            $id = intval($this->input->post('id', true));
+            $this->verify($id, '图片ID不能为空');
+            $result = $this->upload_model->dbUpdate('attachments', array('isHidden' => '1'), array('is_image' => '1', 'id' => $id));
             $this->doJson($result);
         } else {
             show_404();

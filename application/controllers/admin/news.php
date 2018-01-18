@@ -179,9 +179,7 @@ class News extends Fzhao_Controller {
         }
         $id = post_get('id');
         $this->verify($id);
-        $info = $this->admin->getRowById($id);
-        $this->verify($info);
-        $result = $this->admin->del($id, $info['term_id']);
+        $result = $this->admin->del($id, 'term_id');
         $this->doJson($result);
     }
 
@@ -199,8 +197,6 @@ class News extends Fzhao_Controller {
         }
         $id = post_get('id');
         $this->verify($id);
-        $info = $this->admin->getRowById($id);
-        $this->verify($info);
         $result = $this->admin->dump($id);
         $this->doJson($result);
     }
@@ -219,9 +215,7 @@ class News extends Fzhao_Controller {
         }
         $id = post_get('id');
         $this->verify($id);
-        $info = $this->admin->getRowById($id);
-        $this->verify($info);
-        $result = $this->admin->recover($id, $info['term_id']);
+        $result = $this->admin->recover($id, 'term_id');
         $this->doJson($result);
     }
 

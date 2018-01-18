@@ -1,6 +1,8 @@
 <div class="b_g">
-	<div class="n_center">	    
-		<img src="">
+	<div class="n_center">
+		<div class="img"> 
+			<img src="">
+		</div>
 		<span class="js-none"><i>×</i></span>
 		<div id="leftBtn" class="showImgBtn" style="display: none;"><</div>
 		<div id="rightBtn" class="showImgBtn" style="display: none;">></div>
@@ -14,8 +16,10 @@
 		border-radius: 6px;padding: 10px;margin: auto;position: absolute;background: #ddd;text-align: center;    
 		-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
 	    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-	    max-width: 900px; max-height: 800px; /*left: 399.5px; top: 136.5px;*/
+	    max-width: 900px; max-height: 1200px; /*left: 399.5px; top: 136.5px;*/
+	    
 	}
+	.n_center .img{overflow: hidden;max-height: 1180px;}
 	.n_center .js-none{position: absolute;right: 0;top: 0;background: #ccc;color: #fff;width: 25px;border-radius: 12.5px;margin-top: -10px;margin-right: -7px;cursor: pointer;height:25px;line-height: 25px;}
 	.n_center .js-none i{font-size: 15px}
 	.n_center img{overflow: hidden;-webkit-transform-origin: center center;transform-origin: center center;max-width: 880px;}
@@ -30,22 +34,25 @@
 		$('.n_center .js-none,.b_g').click(function(){
 			$('.b_g').fadeOut();
 		});
-		<?php if(!empty($data['thumb'])){?>
-          $('.chooseImage a.del').fadeIn();
-        <?php }?>
-        $('img.popover').click(function(){
+        $('img.popover').live('click',function(){
         	var src = $(this).attr('_src');
         	$('.n_center img').attr('src',src).load(function() {
         		var width = $(window).width();
         		var height = $(window).height();
         		var _width = this.width+20;
         		var _height = this.height+20;
+        		if(_height>820){
+        			// _height = 820;
+        		}
         		var left = _width>width?0:((width-_width)/2);
         		var top = _height>height?0:((height-_height)/2);
         		$('.n_center').css({'left':left,'top':top});
         	});
         	$('.b_g').fadeIn();
         });
+		<?php if(!empty($data['thumb'])){?>
+          $('.chooseImage a.del').fadeIn();
+        <?php }?>
 	});
 	function chooseImage(image,thumb){
         $('.chooseImage a img').attr('_src',image);

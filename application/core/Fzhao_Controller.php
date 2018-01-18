@@ -413,41 +413,6 @@ class Fzhao_Controller extends My_Controller {
         }
     }
 
-    function zoomImage($path, $folder = 'dishes') {
-        $imageInfo = getimagesize($path);
-        $pPath = pathinfo($path);
-        //生成small缩略图
-        $this->load->library('image_lib');
-        $img_config['create_thumb'] = TRUE;
-        $img_config['maintain_ratio'] = TRUE;
-        $img_config['master_dim'] = 'height';
-        $img_config['source_image'] = $path;
-        $img_config['new_image'] = 'uploads/' . $folder . '/small/' . $pPath["basename"]; //指定生成图片的路径
-        $img_config['height'] = 200;
-        $img_config['width'] = 200 * $imageInfo[0] / $imageInfo[1];
-//        $this->createFolder('uploads/' . $folder . '/small');
-        $this->image_lib->initialize($img_config);
-        if (!$this->image_lib->resize()) {
-            $this->doIframe(-4);
-        }
-        $this->image_lib->clear();
-
-        //生成tiny缩略图
-        $img_config['create_thumb'] = TRUE;
-        $img_config['source_image'] = $path;
-        $img_config['maintain_ratio'] = TRUE;
-        $img_config['master_dim'] = 'auto';
-        $img_config['new_image'] = 'uploads/' . $folder . '/tiny/' . $pPath["basename"]; //指定生成图片的路径
-        $img_config['width'] = 125;
-        $img_config['height'] = 125 * $imageInfo[1] / $imageInfo[0];
-//        $this->createFolder('uploads/' . $folder . '/tiny');
-        $this->image_lib->initialize($img_config);
-        if (!$this->image_lib->resize()) {
-            $this->doIframe(-5);
-        }
-        $this->image_lib->clear();
-    }
-
     //发邮件
     function myMail($config, $TO, $SUBJECT, $CONTENT, $FROM) {
         $this->load->library('email');

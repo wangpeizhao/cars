@@ -94,65 +94,65 @@
 		}
 	});
 
-	function click_list_table_a(obj){
+	function click_list_table_a_edit(id){
 		try{
-			var act = obj.attr('act');
-			var id = obj.parent().attr('id');
-			switch(act){
-				case 'edit':
-					$.post(baseUrl + lang + "/admin/blogroll/edit",{id:id,act:'get'}, function(data){
-						if(data.code=='1'){
-							var _data = data.result;
-							$('input[name="link_name"]').val(_data.link_name);
-							$('input[name="link_url"]').val(_data.link_url);
-							$('input[name="link_rating"]').val(_data.link_sort);
-							$('input[name="link_description"]').val(_data.link_description);
-							$('select[name="link_term"]').val(_data.link_term);
-							$("input:radio[name='link_target']").each(function(){
-								if($(this).val()==_data.link_target){
-									$(this).attr("checked",true);
-								}
-							});
-							$("input:radio[name='isHidden']").each(function(){
-								if($(this).val()==_data.link_visible){
-									$(this).attr("checked",true);
-								}
-							});
-							$(".addLinks").slideDown("slow",function(){
-								$(".content").scrollTop($("#list_table").height());
-							});
-							$(".addLinkBtn span").html('[-]添加友情链接');
-							
-							$(".addLinks form").attr('action',baseUrl + lang +'/admin/blogroll/edit/'+_data.id);
-							if(_data.link_image){
-								$(".seeimg").html('<br><a href="'+(site_url+_data.link_image)+'" target="_blank" title="点击浏览原图"><img src="'+(site_url+_data.link_image)+'" width="100"/></a>&nbsp;<a href="javascript:;" link_id="'+_data.id+'" src="'+_data.link_image+'" style="color:#339900;" title="点击【删除】可直接删除该友情链接图片" id="delImg">删除</a>');
-							}else{
-								$(".seeimg").html('');
-							}
-						}else if(data.msg){
-							alert(data.msg);
-							return false;
+			$.post(baseUrl + lang + "/admin/"+_TYPE_+"/edit",{id:id,act:'get'}, function(data){
+				if(data.code=='1'){
+					var _data = data.result;
+					$('input[name="link_name"]').val(_data.link_name);
+					$('input[name="link_url"]').val(_data.link_url);
+					$('input[name="link_rating"]').val(_data.link_sort);
+					$('input[name="link_description"]').val(_data.link_description);
+					$('select[name="link_term"]').val(_data.link_term);
+					$("input:radio[name='link_target']").each(function(){
+						if($(this).val()==_data.link_target){
+							$(this).attr("checked",true);
 						}
-					},"json");
-					break;
-				case 'del':
-					if(confirm('确定要把'+(_TITLE_?_TITLE_:'信息')+'放到回收站内？')){
-						$.post(baseUrl + lang + "/admin/blogroll/del",{id:id}, function(data){
-							if (data.done === true) {
-								alert('删除成功');
-								setData($('input[name="currentPage"]').val());
-								$(".addLinks").slideUp("slow");
-							}else if(data.msg){
-								alert(data.msg);
-								return false;
-							}else{
-								alert('提删除失败，请重试');
-								return false;
-							}
-						},"json");
+					});
+					$("input:radio[name='isHidden']").each(function(){
+						if($(this).val()==_data.link_visible){
+							$(this).attr("checked",true);
+						}
+					});
+					$(".addLinks").slideDown("slow",function(){
+						$(".content").scrollTop($("#list_table").height());
+					});
+					$(".addLinkBtn span").html('[-]添加友情链接');
+					
+					$(".addLinks form").attr('action',baseUrl + lang +"/admin/"+_TYPE_+"/edit/"+_data.id);
+					if(_data.link_image){
+						$(".seeimg").html('<br><a href="'+(site_url+_data.link_image)+'" target="_blank" title="点击浏览原图"><img src="'+(site_url+_data.link_image)+'" width="100"/></a>&nbsp;<a href="javascript:;" link_id="'+_data.id+'" src="'+_data.link_image+'" style="color:#339900;" title="点击【删除】可直接删除该友情链接图片" id="delImg" class="dn">删除</a>');
+					}else{
+						$(".seeimg").html('');
 					}
-					break;
+				}else if(data.msg){
+					alert(data.msg);
+					return false;
+				}
+			},"json");
+		}catch(e){
+			alert(e.message);
+		}
+	}
+
+	function click_list_table_a_del(id){
+		try{
+			if(!confirm('确定要把'+(_TITLE_?_TITLE_:'信息')+'放到回收站内？')){
+				return false;
 			}
+			$.post(baseUrl + lang + "/admin/"+_TYPE_+"/del",{id:id}, function(data){
+				if (data.done === true) {
+					alert('删除成功');
+					setData($('input[name="currentPage"]').val());
+					$(".addLinks").slideUp("slow");
+				}else if(data.msg){
+					alert(data.msg);
+					return false;
+				}else{
+					alert('提删除失败，请重试');
+					return false;
+				}
+			},"json");
 		}catch(e){
 			alert(e.message);
 		}
@@ -200,7 +200,7 @@
 			</div>
 			<div class="operating">
 				<div class="search f_r">
-					<select class="auto" name="type">
+					<select class="auto" name="search">
 						<option value="id"><?=$_title_?>ID</option>
 						<option value="link_name"><?=$_title_?>链接名称</option>
 						<option value="link_url"><?=$_title_?>链接地址</option>

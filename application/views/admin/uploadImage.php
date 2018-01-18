@@ -117,7 +117,7 @@
 		}
 	}
 
-	function fileResult(status,path){
+	function fileResult(str,status){
 		try{
 			if(status==1){
 				if(confirm('上传成功,是否继续上传')){
@@ -131,7 +131,7 @@
 					//window.close();
 				}
 			}else{
-				alert(status);
+				alert(str);
 				return false;
 			}
 		}catch(e){

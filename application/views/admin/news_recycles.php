@@ -20,6 +20,8 @@
 				<select class="auto" name="search">
 					<option value="id"><?=$_title_?>ID</option>
 					<option value="title"><?=$_title_?>名称</option>
+					<option value="from"><?=$_title_?>来源</option>
+					<option value="author"><?=$_title_?>作者</option>
 					<option value="summary"><?=$_title_?>摘要</option>
 					<option value="content"><?=$_title_?>内容</option>
 				</select> 

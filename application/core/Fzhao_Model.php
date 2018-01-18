@@ -784,6 +784,27 @@ class Fzhao_Model extends CI_Model {
     }
 
     /**
+     * getRowsByIds
+     * 简介：根据IDs读取信息
+     * 参数：$id int
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function getRowsByIds($ids, $fields = 'id', $conditions = array()) {
+        if (!$ids || !is_array($ids)) {
+            return null;
+        }
+        $result = $this->getData(array(
+            'fields' => $fields,
+            'table' => $this->table,
+            'ins' => array(array($this->primary_key => $ids)),
+            '_conditions' => $conditions,
+        ));
+        return $result;
+    }
+
+    /**
      * add
      * 简介：添加
      * 参数：$data array
@@ -815,7 +836,7 @@ class Fzhao_Model extends CI_Model {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function del($id, $term_id = 0) {
+    function del($id, $termIdName = '') {
         if (!$id) {
             return false;
         }
@@ -825,9 +846,24 @@ class Fzhao_Model extends CI_Model {
         if (!is_array($id)) {
             $id = array($id);
         }
+        $trems = array();
+        $fields = 'id'.($termIdName?','.$termIdName:'');
+        $rows = $this->getRowsByIds($id,$fields);
+        if(!$rows){
+            return false;
+        }
+        $ids = array_column($rows, 'id');
+        if ($termIdName) {
+            $trems = array_filter(array_unique(array_column($rows, $termIdName)));
+        }
+
         $this->trans_start();
-        $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $id));
-        $term_id && $this->dbSet('term', array('count' => 'count-1', array('id' => $term_id)));
+        $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $ids));
+        if($trems){
+            foreach($trems as $term_id) {
+                $this->dbSet('term', array('count' => 'count-1', array('id' => $term_id)));
+            }
+        }
         $this->trans_complete();
         if ($this->trans_status() === FALSE) {
             return false;
@@ -843,7 +879,7 @@ class Fzhao_Model extends CI_Model {
      * 作者：Parker
      * 时间：2018-01-13
      */
-    function recover($id, $term_id = 0) {
+    function recover($id, $termIdName = '') {
         if (!$id) {
             return false;
         }
@@ -853,9 +889,24 @@ class Fzhao_Model extends CI_Model {
         if (!is_array($id)) {
             $id = array($id);
         }
+        $trems = array();
+        $fields = 'id'.($termIdName?','.$termIdName:'');
+        $rows = $this->getRowsByIds($id,$fields);
+        if(!$rows){
+            return false;
+        }
+        $ids = array_column($rows, 'id');
+        if ($termIdName) {
+            $trems = array_filter(array_unique(array_column($rows, $termIdName)));
+        }
+
         $this->trans_start();
-        $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $id));
-        $term_id && $this->dbSet('term', array('count' => 'count+1', array('id' => $term_id)));
+        $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $ids));
+        if($trems){
+            foreach($trems as $term_id) {
+                $this->dbSet('term', array('count' => 'count+1', array('id' => $term_id)));
+            }
+        }
         $this->trans_complete();
         if ($this->trans_status() === FALSE) {
             return false;
@@ -878,7 +929,12 @@ class Fzhao_Model extends CI_Model {
         if (!is_array($id)) {
             $id = array($id);
         }
-        return $this->dbDeleteIn($this->table, array($this->primary_key . '!=' => ''), array($this->primary_key => $id));
+        $rows = $this->getRowsByIds($id);
+        if (!$rows) {
+            return false;
+        }
+        $ids = array_column($rows, 'id');
+        return $this->dbDeleteIn($this->table, array($this->primary_key . '!=' => ''), array($this->primary_key => $ids));
     }
 
 }

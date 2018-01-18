@@ -23,7 +23,7 @@
 			</div>
 			<div class="operating">
 				<div class="search f_r">
-					<select class="auto" name="type">
+					<select class="auto" name="search">
 						<option value="id"><?=$_title_?>ID</option>
 						<option value="link_name"><?=$_title_?>链接名称</option>
 						<option value="link_url"><?=$_title_?>链接地址</option>

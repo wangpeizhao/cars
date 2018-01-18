@@ -40,7 +40,7 @@ class Attachments_model extends Fzhao_Model {
             }
         } 
         
-        $fields = array('file_ext','file_type','is_image');
+        $fields = array('file_ext','file_type','is_image','tid');
         foreach($fields as $item){
             if (isset($cond[$item]) && $cond[$item] !== '') {
                 $conditions[] = array('p.'.$item => $cond[$item]);
@@ -62,6 +62,25 @@ class Attachments_model extends Fzhao_Model {
             'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
             'likes' => $like
         ));
+//        ww($this->last_query());
+        $term_ids = array_filter(array_unique(array_column($data, 'tid')));
+        $_terms = array();
+        if ($term_ids) {
+            $terms = $this->getData(array(
+                'fields' => 'id,name,slug',
+                'table' => 'term',
+                '_conditions' => array(array('isHidden' => '0')),
+                'ins' => array(array('id' => $term_ids)),
+            ));
+            $_terms = array_column($terms, 'name', 'id');
+        }
+        if($data){
+            foreach($data as &$item){
+                $term_id = $item['tid'];
+                $item['file_path_tiny'] = changeImagePath($item['file_path'],'tiny');
+                $item['term_name'] = !empty($_terms[$term_id]) ? $_terms[$term_id] : '无';
+            }
+        }
 //        ww($this->last_query());
         $count = $this->getData(array(
             'table' => $this->table.' p',

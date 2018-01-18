@@ -31,28 +31,27 @@ class Premier_model extends Fzhao_Model {
     function lists($cond, $isHidden = '0') {
         $conditions = array(array('a.isHidden' => $isHidden));
         $like = array();
-        if (!empty($cond['type']) && trim($cond['keywords'])) {
-            switch ($cond['type']) {
-                case 'username':
-                    $like[] = array('username' => $cond['keywords']);
-                    break;
-                case 'nickname':
-                    $like[] = array('nickname' => $cond['keywords']);
-                    break;
-                case 'id':
-                    $conditions[] = array('a.id' => $cond['keywords']);
-                    break;
+        if (!empty($cond['search']) && trim($cond['keywords'])) {
+            if(in_array($cond['search'],array('username','nickname'))){
+                $like[] = array($cond['search'] => $cond['keywords']);
             }
-        } else {
-            if (isset($cond['role_id']) && $cond['role_id'] !== '') {
-                $conditions[] = array('a.role_id' => $cond['role_id']);
+            if(in_array($cond['search'],array('id'))){
+                $conditions[] = array($cond['search'] => $cond['keywords']);
             }
-            if (!empty($cond['startTime'])) {
-                $conditions[] = array('a.create_time >=' => $cond['startTime']);
+        } 
+        
+        $fields = array('role_id');
+        foreach($fields as $item){
+            if (isset($cond[$item]) && $cond[$item] !== '') {
+                $conditions[] = array('a.'.$item => $cond[$item]);
             }
-            if (!empty($cond['endTime'])) {
-                $conditions[] = array('a.create_time <=' => $cond['endTime']);
-            }
+        }
+        
+        if (!empty($cond['startTime'])) {
+            $conditions[] = array('a.update_time >=' => $cond['startTime']);
+        }
+        if (!empty($cond['endTime'])) {
+            $conditions[] = array('a.update_time <=' => $cond['endTime']);
         }
         $data = $this->getData(array(
             'fields' => 'a.*,g.role_name,g.supervisor',
