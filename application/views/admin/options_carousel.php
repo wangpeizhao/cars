@@ -19,8 +19,8 @@
 						document.getElementById("link_image").outerHTML = document.getElementById("link_image").outerHTML;
 						$('input[name="link_name"]').val('');
 						$('input[name="link_url"]').val('');
-						$('input[name="link_rating"]').val('99');
-						$('input[name="link_description"]').val('');
+						$('input[name="link_sort"]').val('99');
+						$('textarea[name="link_description"]').val('');
 						$("input:radio[name='link_target']").each(function(){
 							if($(this).val()=='_blank'){
 								$(this).attr("checked",true);
@@ -45,7 +45,7 @@
 			$(".submitBtn").click(function(){
 				var link_name = $('input[name="link_name"]'),
 					link_url = $('input[name="link_url"]'),
-					link_rating = $('input[name="link_rating"]');
+					link_sort = $('input[name="link_sort"]');
 				if(!$.trim(link_name.val())){
 					link_name.css('border','1px #ff0000 solid;');
 					alert('名称不能为空!');
@@ -58,9 +58,9 @@
 				// 	link_url.focus();
 				// 	return false;
 				// }
-				if(link_rating.val() && isNaN(link_rating.val())){
+				if(link_sort.val() && isNaN(link_sort.val())){
 					alert('排序等级只能为两位整数!');
-					link_rating.focus();
+					link_sort.focus();
 					return false;
 				}
 			});
@@ -76,8 +76,8 @@
 					var _data = data.result;
 					$('input[name="link_name"]').val(_data.link_name);
 					$('input[name="link_url"]').val(_data.link_url);
-					$('input[name="link_rating"]').val(_data.link_sort);
-					$('input[name="link_description"]').val(_data.link_description);
+					$('input[name="link_sort"]').val(_data.link_sort);
+					$('textarea[name="link_description"]').val(_data.link_description);
 					$('select[name="link_term"]').val(_data.link_term);
 					$("input:radio[name='link_target']").each(function(){
 						if($(this).val()==_data.link_target){
@@ -141,8 +141,8 @@
 			document.getElementById("link_image").outerHTML = document.getElementById("link_image").outerHTML;
 			$('input[name="link_name"]').val('');
 			$('input[name="link_url"]').val('');
-			$('input[name="link_rating"]').val('99');
-			$('input[name="link_description"]').val('');
+			$('input[name="link_sort"]').val('99');
+			$('textarea[name="link_description"]').val('');
 			$('input[name="link_target"]').attr("checked",'_blank');
 			$('input[name="link_visible"]').attr("checked",'1');
 			if(str==1){
@@ -239,7 +239,7 @@
 					<tr>
 						<td style="text-align:right;" width="10%"><span>*</span>请选择分类：</td>
 						<td align="left" width="25%">
-							<select name="link_term" class="normal" style="width:264px;">
+							<select name="link_type" class="normal" style="width:264px;">
 								<option value="">-选择分类-</option>
 								<option value="indexPic">站点首页广告</option>
 								<option value="productPic">产品中心广告</option>

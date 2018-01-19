@@ -1,0 +1,149 @@
+header.common-header {
+    font-family: 'PingFang SC', 'Lantinghei SC', 'Helvetica Neue', 'Helvetica', 'Arial', 'Microsoft YaHei', '微软雅黑', 'STHeitiSC-Light', 'simsun', '宋体', 'WenQuanYi Zen Hei', 'WenQuanYi Micro Hei', 'sans-serif';
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    height: 62px;
+    z-index: 999;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    border-bottom: solid 1px #f2f2f2;
+    box-sizing: content-box;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+header.common-header * {
+    font-size: 15px;
+    -webkit-transition: none;
+    transition: none;
+}
+header.common-header .container {
+    max-width: 1120px;
+    padding: 0;
+    margin: 0 auto;
+    position: relative;
+}
+header.common-header .logo {
+    display: block;
+    width: 61.5px;
+    height: 34.5px;
+    position: absolute;
+    top: 15px;
+    left: 0;
+}
+header.common-header .logo img {
+    width: 100%;
+}
+
+header.common-header nav {
+    opacity: 1;
+    -webkit-transition: opacity .4s linear 0s;
+    transition: opacity .4s linear 0s;
+    padding-left: 86px;
+    float: left;
+}
+header.common-header nav ul li {
+    float: left;
+    position: relative;
+    top: -2px;
+}
+header.common-header nav ul li.active {
+    border-bottom: solid 2px #4285f4;
+}
+header.common-header nav ul li a {
+    display: block;
+    position: relative;
+    top: 8px;
+    padding: 0 15px;
+    line-height: 54px;
+    height: 62px;
+    overflow: hidden;
+    box-sizing: border-box;
+    color: #333333;
+    text-decoration: none;
+}
+header.common-header nav ul li.active a {
+    color: #000000;
+    font-weight: 600;
+}
+
+header.common-header .right-col {
+    float: right;
+}
+header.common-header .sub-nav {
+    height: 62px;
+    width: 100%;
+    position: relative;
+    white-space: nowrap;
+}
+header.common-header .sub-nav > li {
+    height: 72px;
+    line-height: 62px;
+    display: inline-block;
+    vertical-align: middle;
+}
+header.common-header .sub-nav > li a{
+    display: block;
+    color: #333333;
+}
+#app{
+    margin-top:20px;
+}
+.pagewrap{
+    min-height: 400px;
+    max-width: 1180px;
+    padding: 0 30px;
+    margin: 0 auto;
+}
+.pagewrap .mainlib{
+    width: 800px;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 20px;
+}
+.pagewrap .mainlib .carousels {
+    background-color: #fff;
+    min-height: 5rem;
+    vertical-align: top;
+    width: 100%;
+}
+.pagewrap .mainlib .carousels ul li{
+    display: none;
+    height: 250px;
+}
+.pagewrap .mainlib .carousels ul li.slick-active{
+    display: block!important;
+}
+.pagewrap .mainlib .carousels ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    border-radius: 4px;
+}
+
+.pagewrap .rightlib {
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
+    -webkit-box-ordinal-group: 3;
+    -ms-flex-order: 2;
+    order: 2;
+    box-sizing: border-box;
+}
+
+.pagewrap .rightlib .ads{
+    width: 100%;
+    height: 180px;
+}
+
+.pagewrap .rightlib .ads a{
+    display: block;
+    width: 100%;
+    height: 9rem;
+    margin: 0 auto;
+    background-size: cover;
+    overflow: hidden;
+    border-radius: 4px;
+}

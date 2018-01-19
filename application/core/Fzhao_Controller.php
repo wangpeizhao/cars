@@ -495,20 +495,19 @@ class Client_Controller extends My_Controller {
 
     public function __construct() {
         parent::__construct();
-        session_start();
         //初始化语言
-        $this->load->helper('language');
-        $this->__initLanguage();
-
-        define('LOGO', $this->getLogo()); //logo 地址
-        define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
-        $this->checkClose(); //是否关闭网站
-        $this->prohibitIPs(); //是否禁止IP访问
-        $this->visitIp(); //记录访问IP
+//        $this->load->helper('language');
+//        $this->_initLanguage();
+//
+//        define('LOGO', $this->getLogo()); //logo 地址
+//        define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
+//        $this->checkClose(); //是否关闭网站
+//        $this->prohibitIPs(); //是否禁止IP访问
+//        $this->visitIp(); //记录访问IP
     }
 
     //初始化语言
-    private function __initLanguage() {
+    private function _initLanguage() {
         $lang_support = config_item('support_language');
         $lang_url = $this->uri->segment(1);
         $lang_default = config_item('language');
@@ -521,18 +520,18 @@ class Client_Controller extends My_Controller {
     }
 
     public function view($path, $data = array()) {
-        $this->load->model('default/client_model');
-        $data['options'] = $this->client_model->getOptionsByOption_name('company');
-        $data['links'] = $this->client_model->get_links_lists();
-        $data['foot_mappings'] = array(
-            'contactUs' => 'contact',
-            'products' => 'products',
-            'sheji' => 'sheji',
-            'cases' => 'cases',
-            'company' => 'company'
-        );
-        $data['foot_terms'] = $this->client_model->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
-        $this->load->view($path, $data);
+//        $this->load->model('default/client_model');
+//        $data['options'] = $this->client_model->getOptionsByOption_name('company');
+//        $data['links'] = $this->client_model->get_links_lists();
+//        $data['foot_mappings'] = array(
+//            'contactUs' => 'contact',
+//            'products' => 'products',
+//            'sheji' => 'sheji',
+//            'cases' => 'cases',
+//            'company' => 'company'
+//        );
+//        $data['foot_terms'] = $this->client_model->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
+        $this->load->view('default/'.$path, $data);
     }
 
 }

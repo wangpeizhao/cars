@@ -1,0 +1,41 @@
+html,body,div,span,h1,h2,p,a,font,img,strong,b,u,i,dl,dt,dd,ol,ul,li{
+	border: 0 none;
+    font-size: 100%;
+    margin: 0 auto;
+    outline: 0 none;
+    padding: 0;
+    text-decoration: none;
+	vertical-align:baseline;
+	background:transparent;
+}
+body{
+	margin: 0;
+    min-height: 100%;
+    position: relative!important;
+	font-weight: 400;
+    line-height: 1.6;
+    color: #333;
+    /*font-size: 1.6rem;*/
+	font-family: 'PingFang SC', 'Lantinghei SC', 'Helvetica Neue', 'Helvetica', 'Arial', 'Microsoft YaHei', '微软雅黑', 'STHeitiSC-Light', 'simsun', '宋体', 'WenQuanYi Zen Hei', 'WenQuanYi Micro Hei', 'sans-serif';
+	z-index: 1;
+}
+ol,ul,li{
+	list-style:none;
+}
+a {
+    color: #366df0;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover {
+    color: #3da9f7!important;
+}
+
+a:focus {
+    outline: none;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}

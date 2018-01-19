@@ -338,12 +338,43 @@ function myMail() {
  * @param string
  * @return	string
  */
+if (!function_exists('_css_url')) {
+
+    function _css_url($uri = '', $folder = 'default') {
+        if(!$uri){
+            return '';
+        }
+        $CI = & get_instance();
+        return $CI->config->base_url("/themes/" . $folder . "/css/" . $uri);
+    }
+
+}
+
+if (!function_exists('_js_url')) {
+
+    function _js_url($uri = '', $folder = 'default') {
+        if(!$uri){
+            return '';
+        }
+        $CI = & get_instance();
+        return $CI->config->base_url("/themes/" . $folder . "/js/" . $uri);
+    }
+
+}
 if (!function_exists('css_url')) {
 
     function css_url($uri = '', $folder = 'default') {
+        if(!$uri){
+            return '';
+        }
+        $uris = explode(",",$uri);
         $CI = & get_instance();
-        $css_string = "<link rel='stylesheet' type='text/css' href='" . $CI->config->base_url("/themes/" . $folder . "/css/" . $uri) . "'>";
-        return $css_string;
+        $_string = '';
+        foreach($uris as $uri){
+            $_string .= "<link rel='stylesheet' type='text/css' href='" . $CI->config->base_url("/themes/" . $folder . "/css/" . $uri.'?'._TIME_) . "'>";
+        }
+        
+        return $_string;
     }
 
 }
@@ -351,9 +382,16 @@ if (!function_exists('css_url')) {
 if (!function_exists('js_url')) {
 
     function js_url($uri = '', $folder = 'default') {
+        if(!$uri){
+            return '';
+        }
+        $uris = explode(",",$uri);
         $CI = & get_instance();
-        $css_string = "<script type=\"text/javascript\" src=\"" . $CI->config->base_url("/themes/" . $folder . "/js/" . $uri) . "\"></script>";
-        return $css_string;
+        $_string = '';
+        foreach($uris as $uri){
+            $_string .= "<script type=\"text/javascript\" src=\"" . $CI->config->base_url("/themes/" . $folder . "/js/" . $uri) . "\"></script>";
+        }
+        return $_string;
     }
 
 }
@@ -361,9 +399,12 @@ if (!function_exists('js_url')) {
 if (!function_exists('img_url')) {
 
     function img_url($uri = '', $folder = 'default') {
+        if(!$uri){
+            return '';
+        }
         $CI = & get_instance();
-        $css_string = $CI->config->base_url("/themes/" . $folder . "/images/" . $uri);
-        return $css_string;
+        $_string = $CI->config->base_url("/themes/" . $folder . "/images/" . $uri);
+        return $_string;
     }
 
 }

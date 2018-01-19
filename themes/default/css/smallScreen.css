@@ -1,0 +1,132 @@
+html,body,div,span,h1,h2,p,a,font,img,strong,b,u,i,dl,dt,dd,ol,ul,li{
+	border: 0 none;
+    font-size: 100%;
+    /*font-style: normal;*/
+    margin: 0 auto;
+    outline: 0 none;
+    padding: 0;
+    text-decoration: none;
+	vertical-align:baseline;
+	background:transparent;
+}
+body{
+	color: #353535;
+	font-size: 12px;
+	background: none no-repeat fixed center center #CCCCCC;
+    margin: 0 auto;
+    padding: 0;
+	font-family: "微软雅黑","Microsoft Yahei",tahoma,arial,"Hiragino Sans GB";
+	font-weight: normal;
+	height: 100%;
+}
+ol,ul,li{
+	list-style:none
+}
+blockquote,q{
+	quotes:none
+}
+blockquote:before,blockquote:after,q:before,q:after{
+	content:'';
+	content:none
+}
+:focus{
+	outline:0
+}
+a {
+	color: #666;
+	text-decoration: none;
+}
+a:hover {
+	color: #107dc7;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    transition-property: text-shadow;
+    transition-timing-function: linear;
+	Transition:all 0.2s ease-in 0.1s;
+	text-decoration: none;
+}
+img {
+	border: medium none;
+}
+hr {
+	border: 0px solid #ddd;
+	border-top-width: 1px;
+	clear: both;
+	height: 0;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.clear {
+	clear:both;
+	display:block;
+	overflow:hidden;
+	visibility:hidden;
+	width:0;
+	height:0
+}
+.clearfix:before, .clearfix:after {
+	content:'\0020';
+	display:block;
+	overflow:hidden;
+	visibility:hidden;
+	width:0;
+	height:0
+}
+.clearfix:after {
+	clear:both
+}
+.clearfix {
+	zoom:1
+}
+.p_r{
+	position:relative;
+}
+.p_a{
+	position:absolute;
+}
+.line{
+	border:1px red solid;
+}
+.button{
+	background: url("../images/loginbox_bg.gif") no-repeat scroll 0 0 #FFFFFF;
+	background-position: 0 -37px;
+	height: 29px;
+    margin: 0px 14px 0 0;
+    width: 82px;
+	border: 1px solid #E35C00;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+}
+.button:hover{
+	filter:alpha(opacity=80);opacity:0.8;
+}
+.cursor{
+	cursor:pointer;
+}
+.default{
+	cursor:default;
+}
+.hide{
+	display:none;
+}
+.center {
+	margin: 0 auto;
+	width: 988px;
+}
+.h10{
+	height:10px;
+}
+.h20{
+	height:20px;
+}
+.h30{
+	height:30px;
+}
+.blue {
+	color:#7F181C !important;
+	font-weight:bold;
+}

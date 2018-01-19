@@ -4,7 +4,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Index extends Fzhao_Controller {
+class Home extends Fzhao_Controller {
 
     function __construct() {
         parent::__construct();
