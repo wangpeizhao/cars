@@ -35,9 +35,9 @@
 						return false;
 					}
 					if($.trim($('textarea[name="content"]').val())==''){
-						$.post(baseUrl+lang+ "/admin/company/editFooter",{act:'get'}, function(data){
-							if(data.done===true){
-								$('textarea[name="content"]').val(data.data);
+						$.post(baseUrl+lang+ "/admin/system/editFooter",{act:'get'}, function(data){
+							if(data.code===1){
+								$('textarea[name="content"]').val(data.result.data);
 								CKEDITOR.replace('content');
 							}else if(data.msg){
 								alert(data.msg);

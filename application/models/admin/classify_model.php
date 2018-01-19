@@ -29,7 +29,7 @@ class Classify_model extends Fzhao_Model {
         $deepClass = isset($this->menuTreesClass[$deep]) ? $this->menuTreesClass[$deep] : '';
         foreach ($data as $v) {
             if ($v['pid'] == $pId) {//父亲找到儿子
-                $html .= '<tr' . ($this->total % 2 == 0 ? ' class="even"' : '') . ' id="_' . $v['id'] . '" _pid="' . $v['pid'] . '" _name="' . $v['name'] . '" _desc="' . $v['description'] . '" _slug="' . $v['slug'] . '" _sort="' . $v['sort'] . '" _isHidden="' . $v['isHidden'] . '">';
+                $html .= '<tr' . ($this->total % 2 == 0 ? ' class="even"' : '') . ' id="_' . $v['id'] . '" _parent="' . $v['parent'] . '" _pid="' . $v['pid'] . '" _name="' . $v['name'] . '" _desc="' . $v['description'] . '" _slug="' . $v['slug'] . '" _sort="' . $v['sort'] . '" _isHidden="' . $v['isHidden'] . '">';
                 $html .= '  <td class="' . $deepClass . '" valign="left"><font>' . $v['title'] . '</font></td>';
                 $html .= '  <td>' . $v['slug'] . '</td>';
                 $html .= '  <td>' . $v['sort'] . '</td>';

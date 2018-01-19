@@ -232,11 +232,19 @@
 		        	var slug = tr.attr('_slug');
 		        	var sort = tr.attr('_sort');
 		        	var isHidden = tr.attr('_isHidden');
+		        	var parent = tr.attr('_parent');
 		        	var id = $(this).attr('_id');
 		        	$('.n_center select[name="pid"]').val(pid);
 		        	$('.n_center input[name="name"]').val(name);
 		        	$('.n_center input[name="description"]').val(desc);
+
 		        	$('.n_center input[name="slug"]').val(slug);
+		        	if(!parseInt(parent)){
+		        		$('.n_center input[name="slug"]').attr('disabled',true);
+		        	}else{
+		        		$('.n_center input[name="slug"]').removeAttr('disabled',false);
+		        	}
+
 		        	$('.n_center input[name="sort"]').val(sort);
 		        	$('.n_center input[name="id"]').val(id);
 		        	setRadio($('.radioIsHidden input:radio'),isHidden);

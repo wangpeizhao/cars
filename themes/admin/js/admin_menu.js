@@ -94,6 +94,9 @@ function _refresh_menus(){
             var menus_lists = data.result.menus_lists;
             $('#list_table_indexNav tbody tr').remove();
             $('#list_table_indexNav tbody').append(menus_lists);
+        }else{
+            alert(data.msg);
+            return false;
         }
     },"json");
 }
