@@ -232,7 +232,7 @@ class Fzhao_Controller extends My_Controller {
             'login' => array('index', 'logout', 'vCode', 'checkVCode'),
 //            'index' => array('index'),
             'system' => array('index'),
-            'noPower' => array('index'),
+            'denied' => array('index'),
         );
     }
 
@@ -300,9 +300,9 @@ class Fzhao_Controller extends My_Controller {
             is_ajax() && errorOutput('你没有权限访问');
             IS_POST && $this->_doIframe('Access Denied:You have no permission to access.', 0);
             if (!isset($_SERVER['HTTP_REFERER']) || !$_SERVER['HTTP_REFERER'] || "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] == $_SERVER['HTTP_REFERER']) {
-                $this->error('你没有权限访问', '/admin/login/index');
+                $this->error('没权限访问,请联系系统管理员', '/admin/login/index');
             } else {
-                $this->error('你没有权限访问');
+                $this->error('没权限访问,请联系系统管理员');
             }
         }
         $_p_ = trim($this->input->get('_p_', true));
@@ -348,7 +348,7 @@ class Fzhao_Controller extends My_Controller {
             if ("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] == $referer || strpos($referer, $_SERVER['REQUEST_URI']) !== false) {
                 $referer = '/admin/login/logout';
             }
-            $this->error('你没有权限访问', $referer ? $referer : '/admin/login/logout');
+            $this->error('没权限访问,请联系系统管理员.', $referer ? $referer : '/admin/login/logout');
         }
         //检查是否有权限[end]
     }
@@ -377,7 +377,7 @@ class Fzhao_Controller extends My_Controller {
         }
         if (!$this->hasPower) {//没权限
             if (!IS_POST) {
-                redirect(WEB_DOMAIN . '/admin/noPower', 'refresh');
+                $this->error('没权限访问,请联系系统管理员.');
             }
         }
     }
@@ -405,25 +405,8 @@ class Fzhao_Controller extends My_Controller {
             header("Content-Length:" . filesize($fileName));
             header("Content-Disposition: attachment; filename=" . $fileName);
             header("Content-Transfer-Encoding: binary");
-            if (readfile($fileName)) {
-                if (file_exists($fileName)) {
-                    unlink($fileName);
-                }
-            }
+            (readfile($fileName) && file_exists($fileName)) && unlink($fileName);
         }
-    }
-
-    //发邮件
-    function myMail($config, $TO, $SUBJECT, $CONTENT, $FROM) {
-        $this->load->library('email');
-        $this->email->initialize($config);
-        $this->email->from($FROM['email'], $FROM['title']);
-        $this->email->to($TO);
-        $this->email->subject($SUBJECT);
-        $this->email->message($CONTENT);
-        $result = $this->email->send();
-        //www($this->email->print_debugger());
-        return $result;
     }
 
     public function view($path, $data = array(), $isLayout = 1) {
@@ -434,8 +417,17 @@ class Fzhao_Controller extends My_Controller {
         $this->load->view($path, $data);
     }
 
-    public function error($messgae, $url = '') {
-        redirect($url, 'refresh');
+    public function error($message, $url = '') {
+        if(!$url){
+            $url = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
+            if("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']==$url){
+                $url = '/admin/login/logout';
+            }
+        }
+        $data = array('heading' => '异常提示', 'message' => $message,'url' => $url);
+        $this->load->view('errors/html/error_access_denied', $data);
+        $this->output->_display();
+        exit();
     }
 
     /**

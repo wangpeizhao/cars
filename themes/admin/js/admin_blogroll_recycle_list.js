@@ -41,7 +41,7 @@ function fillData(data, currPage) {
             html += '   <td>' + data[i]['link_name'] + '</td>';
             html += '   <td><a href="' + data[i]['link_url'] + '" title="' + data[i]['link_url'] + '" target="_blank">' + data[i]['link_url'] + '</a></td>';
             // html += '   <td>' + (data[i]['link_image'] ? '<a href="' + site_url + data[i]['link_image'] + '" target="_blank" style="color:#339900;">【图】</a>': '<font color="#0099ff">无</font>') + '</td>';
-            html += '   <td><div class="seeimg"><img class="popover" src="' + (site_url+data[i]['link_image']) + '" _src="' + (site_url+data[i]['link_image']) + '"></div></td>';
+            html += '   <td><div class="seeimg">'+(data[i]['link_image']?'<img class="popover" src="' + (site_url+data[i]['link_image']) + '" _src="' + (site_url+data[i]['link_image']) + '">':'无')+'</div></td>';
             html += '   <td>' + data[i]['link_target'] + '</td>';
             // html += '    <td>' + (data[i]['isHidden'] == '0' ? '<font color="#339900">是</font>': '<font color="red">否</font>') + '</td>';
             html += '   <td>' + data[i]['link_sort'] + '</td>';

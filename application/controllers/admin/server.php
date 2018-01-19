@@ -11,7 +11,7 @@ class Server extends Fzhao_Controller {
     }
 
     public function index() {
-        $this->view('admin/server');
+        $this->view('admin/database_server',array('title'=>'查看服务器配置'));
     }
 
     public function phpinfo() {

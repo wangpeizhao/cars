@@ -9,11 +9,12 @@
 	var link_type = 'indexPic',
 		rows = 10,
 		rowsNav = 50,
-		email_type = 1;
-	var menu_options = '';
+		email_type = 1,
+		menu_options = '',
+		editFooter = false;
 	$(function(){
 		
-		$("a").live('click',function(){
+		$("a,.submit").live('click',function(){
 			 this.blur();
 		});
 
@@ -34,14 +35,15 @@
 						alert('您的浏览器版本过低，无法兼容此操作，请选择版本更高的浏览器！');
 						return false;
 					}
-					if($.trim($('textarea[name="content"]').val())==''){
+					if(!editFooter){
 						$.post(baseUrl+lang+ "/admin/system/editFooter",{act:'get'}, function(data){
 							if(data.code===1){
+								editFooter = true;
 								$('textarea[name="content"]').val(data.result.data);
 								CKEDITOR.replace('content');
 							}else if(data.msg){
 								alert(data.msg);
-								$(".div_box_setting").find("div.div").eq(index).fadeOut();
+								// $(".div_box_setting").find("div.div").eq(index).fadeOut();
 								return false;
 							}else{
 								alert('提交失败');
@@ -57,9 +59,10 @@
 				try{
 					if($.trim($('textarea[name="IPs"]').text())=='请输入需要禁止访问的IP,多个请用";"隔开'){
 						$.post(baseUrl+lang+ "/admin/system/prohibitIp",{act:'get'}, function(data){
-							if(data.done===true){
-								$('textarea[name="IPs"]').val(data.data.IPs?data.data.IPs:'');
-								if(data.data.isOpen==1){
+							if(data.code===1){
+								var _data = data.result;
+								$('textarea[name="IPs"]').val(_data.IPs?_data.IPs:'');
+								if(_data.isOpen==1){
 									$("#isOpen").attr("checked",true);//打勾
 									$('textarea[name="IPs"]').removeAttr("disabled");
 								}else{
@@ -69,7 +72,7 @@
 								$("#IPtxt,#ipBtn").slideDown();
 							}else if(data.msg){
 								alert(data.msg);
-								$(".div_box_setting").find("div.div").eq(index).fadeOut();
+								// $(".div_box_setting").find("div.div").eq(index).fadeOut();
 								return false;
 							}else{
 								alert('提交失败');
@@ -83,9 +86,10 @@
 			}
 			if(index == 6){
 				$.post(baseUrl+lang+ "/admin/system/cacheTime",{act:'get'}, function(data){
-					if (data.done === true) {
+					if (data.code === 1) {
+						var _data = data.result;
 						$('select[name="cache"] option').each(function(){
-							if($(this).val()==data.data.cacheTime){
+							if($(this).val()==_data.cacheTime){
 								$(this).attr("selected",true);
 							}
 						});

@@ -1,16 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>后台管理-数据库管理-还原数据库</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="<?=site_url('')?>/themes/admin/css/admin.css" />
-<script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.4.4.min.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/common.js"></script>
+<?php include('header.php');?>
+<!-- /引入头部-->
+<!-- 引入二级菜单-->
+<?php include('submenu.php');?>
+<!-- /引入二级菜单-->
 <script type="text/javascript">
 <!--
-	var baseUrl = '<?=WEB_DOMAIN?>',
-		site_url = '<?=site_url('')?>';
 	$(function(){
 		try{
 			$("a").click(function(){
@@ -35,19 +29,6 @@
 						//	$('input[name="zip"]').val('');
 						//}
                         $("#downLoadDatabase").submit();
-                        /*
-						$.post(baseUrl + lang + "/admin/upload/downloadsql",{act:'checkLP'}, function(data){
-							if (data.done === true) {
-								$("#downLoadDatabase").submit();
-							}else if(data.msg){
-								alert(data.msg);
-								return false;
-							}else{
-								alert('提交失败，请重试');
-								return false;
-							}
-						},"json");
-                        */
 						break;
 					case 'del':
 						if(confirm('确定要彻底删除该备份文档？不再回收的哦！')){
@@ -159,20 +140,6 @@
 				if(confirm('已备份成功，是否需要马上下载到本地？')){
                   $('input[name="filePath"]').val(data.data);
                   $("#downLoadDatabase").submit();
-                  /*
-					$.post(baseUrl + lang + "/admin/upload/downloadsql",{act:'checkLP'}, function(data){
-						if (data.done === true) {
-							$('input[name="filePath"]').val(data.data);
-							$("#downLoadDatabase").submit();
-						}else if(data.msg){
-							alert(data.msg);
-							return false;
-						}else{
-							alert('提交失败，请重试');
-							return false;
-						}
-					},"json");
-                    */
 				}else{
 					return false;
 				}
@@ -209,19 +176,6 @@
 			return false;
 		}
 		$("#progress_bar").fadeIn();
-        /*
-		$.post(baseUrl + lang + "/admin/upload/import",{act:'checkLP'}, function(data){
-			if (data.done === true) {
-				result=true;
-			}else if(data.msg){
-				alert(data.msg);
-				result=false;
-			}else{
-				result=false;
-			}
-			return result;
-		},"json");
-        */
 	}
 	function iResultAlter(str,status){
 		if(status){
@@ -233,15 +187,6 @@
 	}
 //-->
 </script>
-</head>
-<body>
-<div class="container">
-  <!-- 引入头部-->
-	<?php include('header.php');?>
-  <!-- /引入头部-->
-  <!-- 引入二级菜单-->
-	<?php include('submenu.php');?>
-  <!-- /引入二级菜单-->
   <div id="admin_right">
     <div class="headbar">
       <div class="position"><span>系统</span><span>></span><span>数据库管理</span><span>></span><span>还原数据库</span></div>
@@ -298,5 +243,5 @@
 	</div>
 	<!--/container-->
 <!-- 引入底部-->
-	<?php include('footer.php');?>
+<?php include('footer.php');?>
 <!-- /引入底部-->

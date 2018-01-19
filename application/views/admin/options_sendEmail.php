@@ -39,7 +39,7 @@
 		}
 	}
 </script>
-<form id="cache_form" method="post" action="<?=WEB_DOMAIN.'/'._LANGUAGE_?>/admin/system/sendemail" target="ajaxifr" onsubmit="return _checkEmail();">
+<form id="cache_form" method="post" action="<?=WEB_DOMAIN?>/admin/system/sendemail" target="ajaxifr" onsubmit="return _checkEmail();">
 	<table class="form_table">
 		<colgroup>
 			<col width="138px"><col>

@@ -37,7 +37,7 @@
 		}
 	}
 </script>
-<form method="post" action="<?=WEB_DOMAIN.'/'._LANGUAGE_?>/admin/system/prohibitIp" target="ajaxifr" onsubmit="return _checkIPs();">
+<form method="post" action="<?=WEB_DOMAIN?>/admin/system/prohibitIp" target="ajaxifr" onsubmit="return _checkIPs();">
 	<table class="form_table">
 		<colgroup>
 			<col width="138px"><col>

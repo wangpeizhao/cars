@@ -147,7 +147,9 @@ function iResultAlter(str, status) {//#5cb85c;
     	setDataAsync();
     	return true;
     }
-    window.location.reload();
+    if (status == 1) {
+	    window.location.reload();
+	}
     return true;
 }
 

@@ -11,7 +11,7 @@
 		}
 	}
 </script>
-<form id="cache_form" method="post" action="<?=WEB_DOMAIN.'/'._LANGUAGE_?>/admin/system/cacheTime" target="ajaxifr" onsubmit="return _checkCache();">
+<form id="cache_form" method="post" action="<?=WEB_DOMAIN?>/admin/system/cacheTime" target="ajaxifr" onsubmit="return _checkCache();">
 	<table class="form_table">
 		<colgroup>
 			<col width="138px"><col>

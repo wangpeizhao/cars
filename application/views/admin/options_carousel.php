@@ -179,7 +179,7 @@
 //-->
 </script>
 <div class="headbar">
-	<form action="" method="POST" name="_Form_" target="_MrParker_">
+	<form action="" method="POST" name="_Form_" target="ajaxifr">
 		<div class="searchbar" style="margin-top:5px;padding-left: 0px;">
 			<select class="auto" name="link_type" style="margin-left:0;">
 				<option value="">- 选择分类 -</option>
@@ -206,7 +206,6 @@
 			<input type="hidden" name="rows" value="10">
 		</div>
 	</form>
-	<iframe name="_MrParker_" style="display:none;"></iframe>
 </div>
 <div class="content link_target" align="left">
 	<table id="list_table" class="list_table settingList" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#e1e5ee" style="line-height: 25px;">
@@ -307,8 +306,8 @@
 					</tr>
 				</table>
 			</form>
-			<iframe name="ajaxifr" style="display:none;"></iframe>
 		</div>
 	</div>
-	<?php include('popover.php');?>
-	<input type="hidden" name="currentPage" value="1">
+</div>
+<?php include('popover.php');?>
+<input type="hidden" name="currentPage" value="1">

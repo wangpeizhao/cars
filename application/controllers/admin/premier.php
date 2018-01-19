@@ -250,6 +250,8 @@ class Premier extends Fzhao_Controller {
             ));
             $data['roleId'] = $roleId;
 
+            $data['title'] = '权限分配';
+            $data['_title_'] = '权限分配';
             $this->view('admin/regular', $data);
             return true;
         }

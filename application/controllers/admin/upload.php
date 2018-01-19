@@ -275,7 +275,8 @@ class Upload extends Fzhao_Controller {
             $this->doJson($result);
         } else {
             $data['tableInfo'] = $this->upload_model->getTablesInfo();
-            $this->view('admin/backup', $data);
+            $data['title'] = '数据库管理-备份数据库';
+            $this->view('admin/database_backup', $data);
         }
     }
 
@@ -307,7 +308,8 @@ class Upload extends Fzhao_Controller {
             $this->doJson($result);
         } else {
             $data['files'] = $this->upload_model->getBackup('uploads/backup');
-            $this->view('admin/restore', $data);
+            $data['title'] = '数据库管理-还原数据库';
+            $this->view('admin/database_restore', $data);
         }
     }
 
@@ -456,7 +458,8 @@ class Upload extends Fzhao_Controller {
             $this->doJson($result);
         } else {
             $data['tableInfo'] = $this->upload_model->getTablesInfo();
-            $this->view('admin/optimizetable', $data);
+            $data['title'] = '数据库管理-优化数据库';
+            $this->view('admin/database_optimizetable', $data);
         }
     }
 

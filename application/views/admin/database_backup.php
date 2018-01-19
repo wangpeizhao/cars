@@ -1,16 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>后台管理-数据库管理-备份数据库</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="<?=site_url('')?>/themes/admin/css/admin.css" />
-<script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.4.4.min.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/common.js"></script>
+<?php include('header.php');?>
+<!-- /引入头部-->
+<!-- 引入二级菜单-->
+<?php include('submenu.php');?>
+<!-- /引入二级菜单-->
 <script type="text/javascript">
 <!--
-	var baseUrl = '<?=WEB_DOMAIN?>',
-		site_url = '<?=site_url('')?>';
 	$(function(){
 		try{
 			//全选/全否选
@@ -91,15 +85,6 @@
 	}
 //-->
 </script>
-</head>
-<body>
-<div class="container">
-  <!-- 引入头部-->
-	<?php include('header.php');?>
-  <!-- /引入头部-->
-  <!-- 引入二级菜单-->
-	<?php include('submenu.php');?>
-  <!-- /引入二级菜单-->
   <div id="admin_right">
     <div class="headbar">
       <div class="position"><span>系统</span><span>></span><span>数据库管理</span><span>></span><span>备份数据库</span></div>
@@ -143,5 +128,5 @@
 	</form>
 	<!--/container-->
 <!-- 引入底部-->
-	<?php include('footer.php');?>
+<?php include('footer.php');?>
 <!-- /引入底部-->

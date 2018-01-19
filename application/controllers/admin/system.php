@@ -143,7 +143,11 @@ class System extends Fzhao_Controller {
             
         }
         if ($this->input->post('act', true) == 'get') {
-            $this->doJson(array('IPs' => $this->getOptionValue('prohibitIPs'), 'isOpen' => $this->getOptionValue('isOpen')));
+            $result = array(
+                'IPs' => $this->getOptionValue('prohibitIPs'),
+                'isOpen' => $this->getOptionValue('isOpen')
+            );
+            successOutput($result);
         }
         $post = $this->input->post(NULL, TRUE);
         //$maxId = $this->system_model->selectMax('option_id','options');
@@ -155,11 +159,11 @@ class System extends Fzhao_Controller {
         if ($isOpen == 1) {
             $option['option_id'] = 2;
             $option['option_name'] = 'prohibitIPs';
-            $option['option_value'] = serialize($this->input->post('IPs', true));
+            $option['option_value'] = serialize($post['IPs']);
             $options[] = $option;
         }
         $result = $this->system_model->editOptions($options);
-        $this->doIframe($result);
+        $this->_doIframe('提交成功', 2);
     }
 
     /**
@@ -179,25 +183,14 @@ class System extends Fzhao_Controller {
             exit();
         }
         if ($this->input->post('act', true) == 'get') {
-            $this->doJson(array('cacheTime' => $this->getOptionValue('cacheTime')));
+            $result = array(
+                'cacheTime' => $this->getOptionValue('cacheTime')
+            );
+            successOutput($result);
         }
         $cacheTime = $this->input->post('cache', true);
         if ($cacheTime == 0) {
-            $path = 'application/cache/en/';
-            $files = array();
-            $handle = opendir($path);
-            while ($file = readdir($handle)) {
-                if ($file != '.' && $file != '..') {
-                    if (file_exists($path . '/' . $file)) {
-                        if ($file != 'index.html' && $file != '.htaccess') {
-                            unlink($path . '/' . $file);
-                        }
-                    }
-                }
-            }
-
-            $path = 'application/cache/cn/';
-            $files = array();
+            $path = 'application/cache/';
             $handle = opendir($path);
             while ($file = readdir($handle)) {
                 if ($file != '.' && $file != '..') {
@@ -214,7 +207,7 @@ class System extends Fzhao_Controller {
         $option['option_value'] = serialize($cacheTime);
         $options[] = $option;
         $result = $this->system_model->editOptions($options);
-        $this->doIframe($result);
+        $this->_doIframe('提交成功',2);
     }
 
     /**
@@ -288,16 +281,18 @@ class System extends Fzhao_Controller {
             show_404();
         }
         $type = intval($this->input->post('email_type', true));
-        $email_address = $this->input->post('email_address', true);
-        $email_subject = $this->input->post('email_subject', true);
-        $email_content = $this->input->post('email_content', true);
-        $email_content = str_replace("\n", '<br>', $email_content);
-        $email_content = str_replace("\r\n", '<br>', $email_content);
+        $email_address = trim($this->input->post('email_address', true));
+        $email_subject = trim($this->input->post('email_subject', true));
+        $email_content = str_replace(PHP_EOL,'<br>',trim($this->input->post('email_content', true)));
         $subject = $email_subject . '-来自王培照';
         $content = $email_content;
         $this->config->load('custom_config');
         $config = $this->config->item('email_config');
-        $from = array('email' => $this->config->item('from_mail'), 'title' => $this->config->item('from_title'));
+        $from_mail = $this->config->item('from_mail');
+        $from_title = $this->config->item('from_title');
+        $from = array(
+            'email' => $from_mail, 
+            'title' => $from_title);
         $emails = array();
         $lists = array();
         switch ($type) {
@@ -311,7 +306,6 @@ class System extends Fzhao_Controller {
                         $lists[] = $item['email'];
                     }
                 }
-                $result = true;
                 break;
         }
         if ($lists) {
@@ -321,11 +315,25 @@ class System extends Fzhao_Controller {
                 }
             }
         }
-        $emails && $result = $this->myMail($config, $emails, $subject, $content, $from);
+        $emails && $result = $this->_sendEmail($config, $emails, $subject, $content, $from);
         if ($result) {
-            $this->doIframe('e');
+            $this->_doIframe('发送成功',2);
         }
-        $this->doIframe($result);
+        $this->_doIframe('发送失败',0);
+    }
+    
+
+    //发邮件
+    private function _sendEmail($config, $TO, $SUBJECT, $CONTENT, $FROM) {
+        $this->load->library('email');
+        $this->email->initialize($config);
+        $this->email->from($FROM['email'], $FROM['title']);
+        $this->email->to($TO);
+        $this->email->subject($SUBJECT);
+        $this->email->message($CONTENT);
+        $result = $this->email->send();
+        //www($this->email->print_debugger());
+        return $result;
     }
 
     /**
@@ -347,16 +355,16 @@ class System extends Fzhao_Controller {
             if (file_exists($file)) {
                 $result = file_get_contents($file);
             }
-            if(!$result){
+            if (!$result) {
                 $result = 'Welcom,write something here.';
             }
-            successOutput(array('data'=>htmlspecialchars_decode($result)));
+            successOutput(array('data' => htmlspecialchars_decode($result)));
         }
 //        $data = array();
         //$content = str_replace(site_url(''),'LWWEB_LWWEB_DEFAULT_URL',trim($this->input->post('content'))?$this->input->post('content'):'');
         $content = htmlspecialchars(addslashes($this->input->post('content')));
         $result = writeFile($content, $file);
-        $this->_doIframe('提交成功');
+        $this->_doIframe('提交成功', 2);
     }
 
 }
