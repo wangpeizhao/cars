@@ -1,33 +1,6 @@
 <?php include('header.php');?>
 <?=js_url('jquery-3.2.1.min.js,unslider/unslider.min.js')?>
 <?=css_url('home.css')?>
-<!-- ^header -->
-<header class="common-header">
-    <div class="container">
-        <div class="pc-nav">
-            <a class="logo" href="<?=_URL_?>"><img src="<?=img_url('logo.png')?>"></a>
-            <nav>
-                <ul class="navList">
-                    <li class="active"><a href="#">首页</a></li>
-                    <li><a href="">开氪</a></li>
-                    <li><a href="">7×24h 快讯</a></li>
-                    <li><a href="">近期活动</a></li>
-                    <li><a href="">鲸准</a></li>
-                    <li><a href="">氪空间</a></li>
-                    <li><a href="">找人服务</a></li>
-                    <li><a href="">联系我们</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="right-col">
-            <ul class="sub-nav">
-                <li class="search"><a href="javascript:;">搜索</a></li>
-            </ul>
-        </div>
-    </div>
-</header>
-<!-- $header -->
-
 <!-- ^contenter -->
 <div id="app">
     <div class="pagewrap">
