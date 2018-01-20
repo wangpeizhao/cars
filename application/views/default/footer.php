@@ -5,7 +5,7 @@
 		}
 		
 		.main {
-		    width: 1200px;
+		    width: 1120px;
 		    margin: 0 auto;
 		}.clear_both {
 		    zoom: 1;

@@ -3,15 +3,15 @@
 }
 .pagewrap{
     min-height: 400px;
-    max-width: 1200px;
+    max-width: 1120px;
     /*padding: 0 30px;*/
     margin: 0 auto;
 }
 .pagewrap .mainlib{
-    width: 870px;
+    width: 800px;
     display: inline-block;
     box-sizing: border-box;
-    margin-right: 30px;
+    margin-right: 20px;
 }
 .pagewrap .mainlib .carousels {
     background-color: #fff;
@@ -51,8 +51,8 @@
     vertical-align: top;
     margin-right: 15px;
     border-radius: 4px;
-    width:280px;
-    height:160px;
+    width:256px;
+    height:150px;
     overflow: hidden;
 }
 .pagewrap .mainlib .hotFocus ul li:last-child{
@@ -64,7 +64,7 @@
     position: relative;
 }
 .pagewrap .mainlib .hotFocus ul li a img{
-    width:280px;
+    width:256px;
     /*height:160px;*/
     border-radius: 4px;
     -webkit-transition: .7s;
@@ -105,7 +105,7 @@
 .pagewrap .mainlib .list_con .car_tab ul{
     /*overflow: auto;*/
     white-space: nowrap;
-    overflow-x: hidden;
+    overflow-x: auto;
     /*height: 2rem;
     line-height: 1rem;*/
     -webkit-overflow-scrolling: touch;

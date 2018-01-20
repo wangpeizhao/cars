@@ -18,7 +18,7 @@ header.common-header * {
     transition: none;
 }
 header.common-header .container {
-    max-width: 1200px;
+    max-width: 1120px;
     padding: 0;
     margin: 0 auto;
     position: relative;
@@ -93,7 +93,7 @@ footer{
 footer .bg-icon{
     position: absolute;top:0;left: 50%;margin-left:-600px;
     background:url('../images/footer_top_bg.png') no-repeat right top; 
-    width: 1200px;height: 97px;z-index: -1;
+    width: 1120px;height: 97px;z-index: -1;
 }
 footer .f_top{
     padding-top:23px; background:#393e45;
@@ -137,10 +137,10 @@ footer .f_top .link{
 }
 footer .f_top .link .l_lab{
     height:60px; line-height:60px; font-size:14px; color:#fff;
-    padding-top:16px; margin-left:10px;
+    /*padding-top:16px;*/ margin-left:10px;
 }
 footer .f_top .link .l_rab li{
-    font-size:14px; line-height:28px; background:url('../images/f_li.jpg') no-repeat right center; padding-right:10px; margin-right:10px;
+    font-size:14px; line-height:60px; background:url('../images/f_li.jpg') no-repeat right center; padding-right:10px; margin-right:10px;
 }
 footer .f_top .link .l_rab li a{
     color:#fff;

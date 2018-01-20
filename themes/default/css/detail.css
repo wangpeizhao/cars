@@ -3,26 +3,22 @@
 }
 .pagewrap{
     min-height: 400px;
-    max-width: 1200px;
+    max-width: 1120px;
     /*padding: 0 30px;*/
     margin: 0 auto;
 }
 .pagewrap .mainlib{
-    width: 850px;
+    width: 780px;
     display: inline-block;
     box-sizing: border-box;
     vertical-align: top;
-    margin-right: 30px;
+    margin-right: 20px;
 }
 
 .pagewrap .mainlib .center_content {
-    line-height: 2;
+    /*line-height: 2;*/
     padding: 1.5rem 0;
-}
-.pagewrap .mainlib .center_content {
-    line-height: 2;
-    padding: 1.5rem 0;
-    margin-right: 10%;
+    margin-right: 20px;
 }
 .pagewrap .mainlib .center_content h1 {
     font-family: PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,STHeitiSC-Light,simsun,\\5B8B\4F53,WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
@@ -150,18 +146,20 @@
 }
 
 .guess-posts-list .item .desc {
-    color: #3d464d;
+    display: block;
+    /*color: #3d464d;*/
     font-size: 14px;
     text-overflow: ellipsis;
     /*display: -webkit-box;*/
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    line-height: 1.8;
-    max-height: 3.6;
+    /*line-height: 1.8rem;*/
+    max-height: 3.6rem;
     word-break: break-all;
     position: relative;
     padding-left: 16px;
+    box-sizing: border-box;
 }
 .guess-posts-list .item .desc:before {
     position: absolute;
