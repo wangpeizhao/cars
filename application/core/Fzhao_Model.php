@@ -747,15 +747,15 @@ class Fzhao_Model extends CI_Model {
         foreach ($data as $key => $item) {
             if ($item['parent'] == 0) {
                 $term[$item['id']] = $item;
-            } else {
-                if (isset($term[$item['parent']])) {
-                    $item['grandson'] = array();
-                    $term[$item['parent']]['sunTerm'][] = $item;
-                    $sunTerm[$item['id']] = array($item['parent'], count($term[$item['parent']]['sunTerm']) - 1);
-                } else if (isset($sunTerm[$item['parent']])) {
-                    $term[$sunTerm[$item['parent']][0]]['sunTerm'][$sunTerm[$item['parent']][1]]['grandson'][] = $item;
-                    array_sort($term[$sunTerm[$item['parent']][0]]['sunTerm'][$sunTerm[$item['parent']][1]]['grandson'], 'subclass');
-                }
+                continue;
+            }
+            if (isset($term[$item['parent']])) {
+                $item['grandson'] = array();
+                $term[$item['parent']]['sunTerm'][] = $item;
+                $sunTerm[$item['id']] = array($item['parent'], count($term[$item['parent']]['sunTerm']) - 1);
+            } else if (isset($sunTerm[$item['parent']])) {
+                $term[$sunTerm[$item['parent']][0]]['sunTerm'][$sunTerm[$item['parent']][1]]['grandson'][] = $item;
+                array_sort($term[$sunTerm[$item['parent']][0]]['sunTerm'][$sunTerm[$item['parent']][1]]['grandson'], 'subclass');
             }
         }
         $term && rsort($term);
@@ -847,9 +847,9 @@ class Fzhao_Model extends CI_Model {
             $id = array($id);
         }
         $trems = array();
-        $fields = 'id'.($termIdName?','.$termIdName:'');
-        $rows = $this->getRowsByIds($id,$fields);
-        if(!$rows){
+        $fields = 'id' . ($termIdName ? ',' . $termIdName : '');
+        $rows = $this->getRowsByIds($id, $fields);
+        if (!$rows) {
             return false;
         }
         $ids = array_column($rows, 'id');
@@ -859,8 +859,8 @@ class Fzhao_Model extends CI_Model {
 
         $this->trans_start();
         $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $ids));
-        if($trems){
-            foreach($trems as $term_id) {
+        if ($trems) {
+            foreach ($trems as $term_id) {
                 $this->dbSet('term', array('count' => 'count-1'), array('id' => $term_id));
             }
         }
@@ -890,9 +890,9 @@ class Fzhao_Model extends CI_Model {
             $id = array($id);
         }
         $trems = array();
-        $fields = 'id'.($termIdName?','.$termIdName:'');
-        $rows = $this->getRowsByIds($id,$fields);
-        if(!$rows){
+        $fields = 'id' . ($termIdName ? ',' . $termIdName : '');
+        $rows = $this->getRowsByIds($id, $fields);
+        if (!$rows) {
             return false;
         }
         $ids = array_column($rows, 'id');
@@ -902,8 +902,8 @@ class Fzhao_Model extends CI_Model {
 
         $this->trans_start();
         $this->dbUpdateIn($this->table, $data, array($this->primary_key . '!=' => ''), array($this->primary_key => $ids));
-        if($trems){
-            foreach($trems as $term_id) {
+        if ($trems) {
+            foreach ($trems as $term_id) {
                 $this->dbSet('term', array('count' => 'count+1'), array('id' => $term_id));
             }
         }

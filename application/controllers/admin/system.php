@@ -362,7 +362,7 @@ class System extends Fzhao_Controller {
         }
 //        $data = array();
         //$content = str_replace(site_url(''),'LWWEB_LWWEB_DEFAULT_URL',trim($this->input->post('content'))?$this->input->post('content'):'');
-        $content = htmlspecialchars(addslashes($this->input->post('content')));
+        $content = trim(($this->input->post('content')));//htmlspecialchars  addslashes
         $result = writeFile($content, $file);
         $this->_doIframe('提交成功', 2);
     }

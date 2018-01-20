@@ -520,17 +520,17 @@ class Client_Controller extends My_Controller {
     }
 
     public function view($path, $data = array()) {
-//        $this->load->model('default/client_model');
-//        $data['options'] = $this->client_model->getOptionsByOption_name('company');
-//        $data['links'] = $this->client_model->get_links_lists();
-//        $data['foot_mappings'] = array(
-//            'contactUs' => 'contact',
-//            'products' => 'products',
-//            'sheji' => 'sheji',
-//            'cases' => 'cases',
-//            'company' => 'company'
-//        );
-//        $data['foot_terms'] = $this->client_model->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
+        $this->load->model('default/home_model','admin');
+        $data['options'] = $this->common->getOptionsByOption_name('company');
+        $data['links'] = $this->admin->getLinks('link');
+        $data['foot_mappings'] = array(
+            'contactUs' => 'contact',
+            'products' => 'products',
+            'sheji' => 'sheji',
+            'cases' => 'cases',
+            'company' => 'company'
+        );
+        $data['foot_terms'] = $this->admin->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
         $this->load->view('default/'.$path, $data);
     }
 

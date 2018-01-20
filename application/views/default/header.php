@@ -24,13 +24,35 @@
         <link rel="apple-touch-icon" href="/apple-touch-icon-iphone.png"> 
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-ipad.png"> 
         <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-iphone4.png">
-        <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 400px)" href="tinyScreen.css" />
-        <link rel="stylesheet" type="text/css" media="screen and (min-width: 400px) and (max-device-width: 600px)" href="smallScreen.css" />
-        <!–[if lt IE 9]>
-        	<script src="<?=js_url('css3-mediaqueries-js/css3-mediaqueries.js')?>"></script>
-        <![endif]–>
-        
-        <style>
-        </style>
+        <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 400px)" href="<?=_css_url('tinyScreen.css')?>" />
+        <link rel="stylesheet" type="text/css" media="screen and (min-width: 400px) and (max-device-width: 600px)" href="<?=_css_url('smallScreen.css')?>" />
+        <?=css_url('base.css,common.css')?>
+        <!--[if lt IE 9]><?=js_url('css3-mediaqueries-js/css3-mediaqueries.js')?><![endif]-->
     </head>
     <body>
+        <!-- ^header -->
+        <header class="common-header">
+            <div class="container">
+                <div class="pc-nav">
+                    <a class="logo" href="<?=_URL_?>"><img src="<?=img_url('logo.png')?>"></a>
+                    <nav>
+                        <ul class="navList">
+                            <li class="active"><a href="#">首页</a></li>
+                            <li><a href="">开氪</a></li>
+                            <li><a href="">7×24h 快讯</a></li>
+                            <li><a href="">近期活动</a></li>
+                            <li><a href="">鲸准</a></li>
+                            <li><a href="">氪空间</a></li>
+                            <li><a href="">找人服务</a></li>
+                            <li><a href="">联系我们</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="right-col">
+                    <ul class="sub-nav">
+                        <li class="search"><a href="javascript:;">搜索</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <!-- $header -->

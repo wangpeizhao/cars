@@ -38,6 +38,24 @@ class Common_model extends Fzhao_Model {
     }
 
     /**
+     * getOptionsByOption_name
+     * 简介：读取公司基本信息
+     * 参数：$option_name
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018/01/13
+     */
+    function getOptionsByOption_name($option_name) {
+        $optionsData = $this->getData(array(
+            'fields' => 'option_value',
+            'table' => 'options',
+            'conditions' => array('option_name' => $option_name, 'lang' => _LANGUAGE_),
+            'row' => true
+        ));
+        return unserialize($optionsData['option_value']);
+    }
+
+    /**
      * editOptions
      * 简介：记录UV
      * 参数：新数据
