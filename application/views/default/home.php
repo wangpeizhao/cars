@@ -31,7 +31,7 @@
             </div>
 
             <div class="list_con">
-                <div class="car_tab">
+                <div class="car_tab" id="subNavShow">
                     <ul>
                         <li class="active"><span><a href="">最新文章</a></span></li>
                         <li><span><a href="">早期项目</a></span></li>
@@ -44,6 +44,32 @@
                         <li><span><a href="">新能源</a></span></li>
                     </ul>
                 </div>
+                <div class="car_tab" id="subNavHide">
+                    <ul>
+                        <li class="active"><span><a href="">最新文章</a></span></li>
+                        <li><span><a href="">早期项目</a></span></li>
+                        <li><span><a href="">大公司</a></span></li>
+                        <li><span><a href="">创投新闻</a></span></li>
+                        <li><span><a href="">AI is</a></span></li>
+                        <li><span><a href="">消费升级</a></span></li>
+                        <li><span><a href="">深氪</a></span></li>
+                        <li><span><a href="">技能Get</a></span></li>
+                        <li><span><a href="">新能源</a></span></li>
+                    </ul>
+                </div>
+                <script type="text/javascript">
+                    $(function(){
+                        var top = $('#subNavShow').offset().top;
+                        window.onscroll = function(){
+                            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                            if(scrollTop>=top+39){
+                                $('#subNavHide').slideDown();
+                            }else{
+                                $('#subNavHide').hide();
+                            }
+                        }
+                    });
+                </script>
                 <div class="car_article_list">
                     <ul>
                         <?php for($i=0;$i<3;$i++){?>
@@ -248,12 +274,12 @@
                     <?php }?>
                     <script type="text/javascript">
                         $('.real_time_wrapper h4').click(function(){
-                            var _S = $(this);
+                            var _S = $(this).parent().parent();
                             if(_S.hasClass('show')){
-                                _S.parent().parent().removeClass('show');
+                                _S.removeClass('show');
                                 _S.find('.show-content').slideUp();
                             }else{
-                                _S.parent().parent().addClass('show');
+                                _S.addClass('show');
                                 _S.find('.show-content').slideDown();
                             }
                         });

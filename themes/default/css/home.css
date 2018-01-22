@@ -101,7 +101,16 @@
 .pagewrap .mainlib .list_con{
     margin-top: 1rem;
 }
-
+#subNavHide{
+    position:fixed;
+    top:510px; 
+    z-index:1000;
+    _position:absolute; 
+    _top:expression(documentElement.scrollTop+(documentElement.clientHeight-this.offsetHeight)/2);
+    display: none;
+    top: 0;
+    background: #fff;
+}
 .pagewrap .mainlib .list_con .car_tab ul{
     /*overflow: auto;*/
     white-space: nowrap;
@@ -144,6 +153,9 @@
 .car_article_list ul li {
     border-bottom: 1px solid #e6e8eb;
     margin-top: -1px;
+}
+.car_article_list ul li:hover {
+    background-color: #f6f6f6;
 }
 
 .car_article_list ul li:last-child {
@@ -519,6 +531,8 @@
     -webkit-transform-origin: 25% center;
     transform-origin: 25% center;
     border-width: 4px;
+    -webkit-transition: .7s;
+    transition: .7s;
 }
 .pagewrap .rightlib .real_time li .con {
     -webkit-transition: opacity .5s ease-in;

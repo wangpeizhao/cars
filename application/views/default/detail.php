@@ -52,9 +52,6 @@
                     </div>
                 </div>
             </div>
-            <div class="ads_box dn">
-                <a href="" style="background-image:url(https://pic.36krcnd.com//avatar/201712/18032420/p37snbq34xqdjtl7.jpg)" target="_blank" rel="nofollow"></a>
-            </div>
 
             <div class="related-articles">
                 <h4>您可能感兴趣的文章</h4>
@@ -97,6 +94,11 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="ads_box dn">
+                <a href="" style="background-image:url(https://pic.36krcnd.com//avatar/201712/18032420/p37snbq34xqdjtl7.jpg)" target="_blank" rel="nofollow"></a>
+            </div>
+            
         </div><!-- $main --><!-- ^right side --><div class="rightlib">
             <div class="pad_inner">
                 <div class="pin-wrapper" id="pin-wrapper-fixed">
