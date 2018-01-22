@@ -52,7 +52,7 @@
     margin-right: 15px;
     border-radius: 4px;
     width:256px;
-    height:150px;
+    height:158px;
     overflow: hidden;
 }
 .pagewrap .mainlib .hotFocus ul li:last-child{
@@ -439,15 +439,15 @@
 }
 
 .pagewrap .rightlib .ads .mark {
-    background-color: rgba(0,0,0,.8);
-    color: #fff;
-    display: block;
-    font-size: .6rem;
-    padding: .1rem .25rem;
-    border-radius: .2rem;
     position: absolute;
-    bottom: .5rem;
-    right: .5rem;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(0,0,0,.3);
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 1.5em;
 }
 
 .pagewrap .rightlib .pad_inner {
@@ -527,6 +527,8 @@
 .pagewrap .rightlib .real_time li.show .triangle {
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
+    -webkit-transition: .7s;
+    transition: .7s;
 }
 .pagewrap .rightlib .real_time li h4 {
     margin: 0 0 .05rem;

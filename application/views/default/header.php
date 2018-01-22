@@ -27,6 +27,7 @@
         <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 400px)" href="<?=_css_url('tinyScreen.css')?>" />
         <link rel="stylesheet" type="text/css" media="screen and (min-width: 400px) and (max-device-width: 600px)" href="<?=_css_url('smallScreen.css')?>" />
         <?=css_url('base.css,common.css')?>
+        <?=js_url('jquery-3.2.1.min.js')?>
         <!--[if lt IE 9]><?=js_url('css3-mediaqueries-js/css3-mediaqueries.js')?><![endif]-->
     </head>
     <body>

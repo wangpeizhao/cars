@@ -1,5 +1,5 @@
 <?php include('header.php');?>
-<?=js_url('jquery-3.2.1.min.js,unslider/unslider.min.js')?>
+<?=js_url('unslider/unslider.min.js')?>
 <?=css_url('home.css')?>
 <!-- ^contenter -->
 <div id="app">
@@ -246,6 +246,18 @@
                         </div>
                     </li>
                     <?php }?>
+                    <script type="text/javascript">
+                        $('.real_time_wrapper h4').click(function(){
+                            var _S = $(this);
+                            if(_S.hasClass('show')){
+                                _S.parent().parent().removeClass('show');
+                                _S.find('.show-content').slideUp();
+                            }else{
+                                _S.parent().parent().addClass('show');
+                                _S.find('.show-content').slideDown();
+                            }
+                        });
+                    </script>
                 </ul>
                 <a class="more-fastsection" href="/newsflashes" target="_blank" data-stat-click="kuaixunmokuai.gengduo">浏览更多<span class="icon-arrow-right"></span></a>
             </div>

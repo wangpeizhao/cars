@@ -8,17 +8,17 @@
     margin: 0 auto;
 }
 .pagewrap .mainlib{
-    width: 780px;
+    width: 760px;
     display: inline-block;
     box-sizing: border-box;
     vertical-align: top;
-    margin-right: 20px;
+    margin-right: 40px;
 }
 
 .pagewrap .mainlib .center_content {
     /*line-height: 2;*/
-    padding: 1.5rem 0;
-    margin-right: 20px;
+    padding: 1.5rem 0 0 0;
+    margin-right: 0px;
 }
 .pagewrap .mainlib .center_content h1 {
     font-family: PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,STHeitiSC-Light,simsun,\\5B8B\4F53,WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
@@ -81,6 +81,13 @@
     margin-top: 1rem
 }
 
+.article-detail {
+    font-size: 15px;
+    color: #3d464d;
+    opacity: 1;
+    width: 100%;
+}
+
 .article-detail .content-wrapper{
 	font-family: PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,STHeitiSC-Light,simsun,\\5B8B\4F53,WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
     line-height: 28px;
@@ -112,6 +119,128 @@
     margin-bottom: 22px
 }
 
+.article-detail .article-footer-label {
+    margin-top: 30px;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 15px;
+    border: 1px solid #efefef;
+    color: #999;
+    border-radius: 4px;
+}
+.article-detail .article-footer-label a {
+    color: #3d464d;
+}
+.article-detail section.single-post-tags {
+    padding-top: 15px;
+}
+.article-detail section.single-post-tags a {
+    margin-right: 10px;
+    color: #68727d;
+    display: inline-block;
+    height: 26px;
+    line-height: 24px;
+    padding: 0 15px;
+    border: 1px solid #68727d;
+    border-radius: 15px;   
+}
+.article-detail .fav-wrapper {
+    text-align: center;
+    margin: 1.75rem 0;
+    line-height: 2;
+}
+.article-detail .fav-wrapper a.post-pc-like {
+    display: inline-block;
+    padding: .25rem 1.5rem;
+    background-color: #4285f4;
+    border-radius: 4px;
+    color: #fff;
+    font-size: .8rem;
+}
+.article-detail .fav-wrapper a.post-pc-like:hover {
+    background-color: #51b6ff;
+    color: #fff!important;
+}
+
+.article-detail .fav-wrapper .total-count-box {
+    font-size: 12px;
+    margin-left: 2px;
+}
+.article-detail .fav-wrapper .total-count-box b{
+    font-weight: 700;
+    font-size: 10px;
+    color: #fff;
+}
+
+.pagewrap .mainlib .ads_box a {
+    display: block;
+    background-position: 50%;
+    width: 100%;
+    padding-bottom: 19.58%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    margin-top: 30px;
+}
+
+.related-articles{
+
+}
+.related-articles h4{
+    color: #3d464d;
+    margin: 10px 0;
+    font-weight: 600;
+    font-size: 100%;
+}
+.related-articles .layout{
+
+}
+.related-articles .layout ul{
+    
+}
+.related-articles .layout ul li{
+    width: 240px;
+    height: 180px;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    margin-right: 20px;
+    margin-bottom:35px;
+}
+.related-articles .layout ul li:last-child{
+    margin-right: 0;
+}
+.related-articles .layout ul li a.img-box{
+    display: block;
+    width: 240px;
+    height: 138px;
+    overflow: hidden;
+}
+
+.related-articles .layout ul li a.img-box img{
+    width: 240px;
+    -webkit-transition: .7s;
+    transition: .7s;
+}
+.related-articles .layout ul li a.img-box:hover img{
+    transform: scale(1.02);
+}
+.related-articles .layout ul li a.dec span{
+    font-size: 15px;
+    color: #333;
+    width: 100%;
+    padding: .5rem 0;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.5em;
+    max-height: 3.4em;
+    word-break: break-all;
+}
+.related-articles .layout ul li a.dec:hover span{
+    color: #366df0!important;
+}
 
 /*右侧框*/
 .pagewrap .rightlib{
@@ -208,7 +337,17 @@
     color: #9ca4ab;
 }
 
-
+#pin-wrapper-fixed{
+    width: 320px;
+    position:fixed;
+    /*left: 50%; */
+    top:88px; 
+    z-index:1000;
+    /*margin-left: 610px;*/
+    _position:absolute; 
+    _margin-top: 0; 
+    _top:expression(documentElement.scrollTop+(documentElement.clientHeight-this.offsetHeight)/2);
+}
 
 
 

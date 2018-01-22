@@ -45,3 +45,6 @@ a:focus {
 *, :after, :before {
     box-sizing: border-box;
 }
+.dn{
+    display: none;
+}
