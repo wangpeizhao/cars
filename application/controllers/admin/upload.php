@@ -64,8 +64,14 @@ class Upload extends Fzhao_Controller {
         if (!IS_POST) {
             show_404();
         }
+        $act = post_get('act',0,'trim');
         $directory = implode("/", array(date('Y'), date('m'), date('d')));
         $config['upload_path'] = 'uploads/' . $directory . '/images';
+        if($act == 'network'){
+            $_path = $this->_download_image_remote($config['upload_path']);
+            $this->zoomImage($_path, $directory);
+            $this->_doIframe(_URL_ . $_path);
+        }
         //上传图片
         createFolder('uploads/' . $directory . '/images');
         createFolder('uploads/' . $directory . '/small');
@@ -106,6 +112,32 @@ class Upload extends Fzhao_Controller {
         }
         $attachments && $this->upload_model->dbInsertBatch('attachments', $attachments);
         $this->_doIframe(_URL_ . $config['upload_path'] . '/' . $success['file_name']);
+    }
+
+    private function _download_image_remote($uri = '', $path = '') {
+        if (!$uri || !$path) {
+            return false;
+        }
+        $ext = pathinfo($uri, PATHINFO_EXTENSION);
+        if (!$ext) {
+            return false;
+        }
+        $_ext = array();
+        preg_match('/^jpg|gif|png|jpeg/', strtolower($ext), $_ext);
+        if (!$_ext) {
+            return false;
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POST, 0);
+        curl_setopt($ch, CURLOPT_URL, $uri);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $file_content = curl_exec($ch);
+        curl_close($ch);
+        $_path = $path.'/.'.$_ext;
+        $_file = fopen($_path, 'w');
+        fwrite($_file, $file_content);
+        fclose($_file);
+        return $_path;
     }
 
     private function zoomImage($path, $folder = 'dishes') {

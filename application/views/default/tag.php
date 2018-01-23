@@ -1,91 +1,96 @@
 <?php include('header.php');?>
 <?=css_url('home.css')?>
-<?=js_url('unslider/unslider.min.js')?>
+<style type="text/css">  
+.tagsbanner{
+    background-color: #fafafa;
+    width: 100%;
+    height: 9rem;
+    position: relative;
+    padding: 0 1rem;
+    margin: 0 auto;
+    color: #68727d;
+}
+.tags_wrapper {
+    height: 9rem;
+    max-width: 1120px;
+    position: relative;
+    margin: 0 auto;
+}
+.tagsbanner .tag_tip {
+    padding: 1.6rem 0 .5rem;
+    font-size: .8rem;
+}
+.tags_wrapper .tag_read {
+    vertical-align: top;
+}
+.tagsbanner .content {
+    width: 100%;
+}
+.tagsbanner .content .tags_keywords {
+    color: #3d464d;
+}
+.tagsbanner .content .tags_keywords h1 {
+    margin: 0;
+    padding: 0;
+    color: #4285f4;
+    padding-right: .25rem;
+    font-weight: 400;
+    display: inline-block;
+    font-size: 1.2rem;
+}
+.tagsbanner .content .tags_keywords span {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.tagsbanner .content .note {
+    font-size: .7rem;
+    letter-spacing: 1px;
+    color: #aaa;
+}
+.tagsbanner .content .note .select_word {
+    color: #68727d;
+    font-weight: 500;
+}
+.tagsbanner .content .note {
+    font-size: .7rem;
+    letter-spacing: 1px;
+    color: #aaa;
+}
+.tagsbanner .content .note a {
+    color: #4285f4!important;
+    margin-right: 6px;
+}
+</style>
 <!-- ^contenter -->
-<div id="app">
+<div id="app" style="margin-top: 0px;">
+    <div class="tagsbanner">
+        <div class="tags_wrapper">
+            <div class="tag_tip">
+                <span class="icon-tag"></span>
+                <span class="tag_read">聚合阅读</span>
+            </div>
+            <div class="content">
+                <div>
+                    <div class="tags_keywords">
+                        <h1>网银钱包</h1>
+                        <span>相关的文章</span>
+                    </div>
+                    <p class="note">36氪聚合所有<span class="select_word">网银钱包</span>相关的文章报道，并为你提供最新的相关资讯.</p>
+                    <p class="note" style="margin-top: 2px;">
+                        热门标签推荐：
+                        &nbsp;&nbsp;&nbsp;<a href="http://36kr.com/tags/wangqubaobei" target="_blank" style="color:#FFF">网趣宝贝</a>
+                        &nbsp;&nbsp;&nbsp;<a href="http://36kr.com/tags/wangzhanchuangye" target="_blank" style="color:#FFF">网站创业</a>
+                        &nbsp;&nbsp;&nbsp;<a href="http://36kr.com/tags/jingweichuangtou" target="_blank" style="color:#FFF">经纬创投</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="pagewrap">
         <!-- ^main -->
         <div class="mainlib">
-            <div class="carousels">
-                <ul>
-                    <?php if(!empty($carousels)){
-                        foreach($carousels as $k=>$item){?>
-                        <li><a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
-                    <?php }
-                    }?>
-                </ul>
-                <script type="text/javascript">
-                    $(function(){
-                        $('.carousels').unslider({
-                            // animation: 'fade',
-                            speed: 500,               //  滚动速度
-                            delay: 3000,              //  动画延迟
-                            complete: function() {},  //  动画完成的回调函数
-                            keys: true,               //  启动键盘导航
-                            dots: true,               //  显示点导航
-                            fluid: false,              //  支持响应式设计
-                            autoplay: true,   //自动滚动
-                            infinite: true,   //无限循环
-                            arrows: false,    //next|prve 箭头，默认：true
-                        });
-                    });
-                </script>
-            </div>
-            <div class="hotFocus">
-                <ul>
-                    <li>
-                        <a href="http://36kr.com/p/5114445.html"><img src="<?=img_url('u33ugxahv1vfjegl!heading.jpeg')?>"></a>
-                        <a href="http://36kr.com/p/5114445.html"><span>区块链+SaaS系统服务餐饮企业，「亿点点」获A轮融资</span></a>
-                    </li><li>
-                        <a href="http://36kr.com/p/5114526.html"><img src="<?=img_url('rgpz4dt5crigsxwu!heading.jpeg')?>"></a>
-                        <a href="http://36kr.com/p/5114526.html"><span>SpaceCycle完成B轮融资，阿里台湾创业者基金领投</span></a>
-                    </li><li>
-                        <a href="http://36kr.com/p/5112135.html"><img src="<?=img_url('n1cuq3gm3a0rgkqz!heading.jpeg')?>"></a>
-                        <a href="http://36kr.com/p/5112135.html"><span>「分子未来」要做区块链领域的“天天基金网”+“网贷之家”</span></a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="list_con">
-                <div class="car_tab" id="subNavShow">
-                    <ul>
-                        <li class="active"><span><a href="">最新文章</a></span></li>
-                        <li><span><a href="">早期项目</a></span></li>
-                        <li><span><a href="">大公司</a></span></li>
-                        <li><span><a href="">创投新闻</a></span></li>
-                        <li><span><a href="">AI is</a></span></li>
-                        <li><span><a href="">消费升级</a></span></li>
-                        <li><span><a href="">深氪</a></span></li>
-                        <li><span><a href="">技能Get</a></span></li>
-                        <li><span><a href="">新能源</a></span></li>
-                    </ul>
-                </div>
-                <div class="car_tab" id="subNavHide">
-                    <ul>
-                        <li class="active"><span><a href="">最新文章</a></span></li>
-                        <li><span><a href="">早期项目</a></span></li>
-                        <li><span><a href="">大公司</a></span></li>
-                        <li><span><a href="">创投新闻</a></span></li>
-                        <li><span><a href="">AI is</a></span></li>
-                        <li><span><a href="">消费升级</a></span></li>
-                        <li><span><a href="">深氪</a></span></li>
-                        <li><span><a href="">技能Get</a></span></li>
-                        <li><span><a href="">新能源</a></span></li>
-                    </ul>
-                </div>
-                <script type="text/javascript">
-                    $(function(){
-                        var top = $('#subNavShow').offset().top;
-                        window.onscroll = function(){
-                            var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                            if(scrollTop>=top+39){
-                                $('#subNavHide').slideDown();
-                            }else{
-                                $('#subNavHide').hide();
-                            }
-                        }
-                    });
-                </script>
+            <div class="list_con" style="margin-top: 0;">
                 <div class="car_article_list">
                     <ul>
                         <?php for($i=0;$i<3;$i++){?>
@@ -247,63 +252,10 @@
                 <div class="loading_more" data-stat-click="zhufeed.wenzhanggengduo"><!-- react-text: 715 -->浏览更多<!-- /react-text --><span class="icon-arrow-right"></span></div>
             </div>
         </div><!-- $main --><!-- ^right side --><div class="rightlib">
-            <div class="ads ">
+            <div class="ads" style="margin-bottom: 8px;">
                 <a href="#" style="background-image: url('<?=img_url('un68ifk27tary2fy.jpeg')?>')"></a>
                 <span class="mark">广告</span>
             </div>
-
-            <div class="real_time">
-                <h3><span>7×24h 快讯</span></h3>
-                <ul>
-                    <?php for($i=0;$i<10;$i++){?>                            
-                    <li class="real_time_wrapper">
-                        <span class="triangle"></span>
-                        <div class="con">
-                            <h4>
-                                <span class="title" data-stat-click="kuaixunmokuai.kuaixunbiaoti.1.99171">麦当劳中国联手融创 缔结策略伙伴关系加快业务发展</span>
-                            </h4>
-                            <div class="item0 hide show-content" style="display: none;">
-                                据美通社报道，麦当劳中国与融创房地产集团有限公司签订长期战略合作协议。麦当劳与融创在后者布局的全国八大区域的综合体、社区商业、写字楼、文旅等板块进行全面合作。融创将在其全国社区、文旅项目中为麦当劳餐厅提供优先选址权利；与此同时，麦当劳也将发挥其全球品牌效应，支持融创的社区配套与餐饮配套发展。
-                            </div>
-                            <div>
-                                <span class="time" title="2018-01-19 18:32"><?=$i+3?>分钟前</span>
-                                <span class="share">
-                                    <div class="fast-section-share-box hide-phone">
-                                        <span class="share-title">分享至&nbsp;&nbsp; </span>
-                                        <a class="item-weixin hide-phone">
-                                            <span class="icon-weixin"></span>
-                                            <div class="panel-weixin">
-                                                <section class="weixin-section">
-                                                    <p><img src="http://s.jiathis.com/qrcode.php?url=http://36kr.com/newsflashes/99171" alt=""></p>
-                                                </section>
-                                                <h3>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h3>
-                                            </div>
-                                        </a>
-                                        <a href="http://share.baidu.com/s?type=text&amp;searchPic=1&amp;sign=on&amp;to=tsina&amp;key=595885820&amp;url=http://36kr.com/newsflashes/99171&amp;title=%E3%80%9036%E6%B0%AA%E5%BF%AB%E8%AE%AF%E3%80%91%E9%BA%A6%E5%BD%93%E5%8A%B3%E4%B8%AD%E5%9B%BD%E8%81%94%E6%89%8B%E8%9E%8D%E5%88%9B%20%E7%BC%94%E7%BB%93%E7%AD%96%E7%95%A5%E4%BC%99%E4%BC%B4%E5%85%B3%E7%B3%BB%E5%8A%A0%E5%BF%AB%E4%B8%9A%E5%8A%A1%E5%8F%91%E5%B1%95" target="_blank">
-                                            <span class="icon-sina"></span>
-                                        </a>
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-                    <?php }?>
-                    <script type="text/javascript">
-                        $('.real_time_wrapper h4').click(function(){
-                            var _S = $(this).parent().parent();
-                            if(_S.hasClass('show')){
-                                _S.removeClass('show');
-                                _S.find('.show-content').slideUp();
-                            }else{
-                                _S.addClass('show');
-                                _S.find('.show-content').slideDown();
-                            }
-                        });
-                    </script>
-                </ul>
-                <a class="more-fastsection" href="/newsflashes" target="_blank" data-stat-click="kuaixunmokuai.gengduo">浏览更多<span class="icon-arrow-right"></span></a>
-            </div>
-
 
             <div class="hot_article hot_posts pad_inner">
                 <h3><span>热门文章</span></h3>
@@ -415,44 +367,6 @@
         <!-- $right side -->
 
     </div>
-
-    <!-- ^aboutUs -->
-    <div class="h-aboutUs">
-        <div class="hd">
-            <strong>关于我们</strong>
-            <div class="bor-bton"></div>
-        </div>
-        <div class="container">
-            <div class="mod-l"></div>
-            <div class="mod-r">
-                <!-- 首页关于我们碎片start -->
-                <div class="h-about">
-                    <div class="hdd"><strong>关于我们</strong></div>
-                    <div class="bd">
-                        <p><?=$about?></p>
-                        <a class="link-more" href="/company/info/about">了解详情 &gt;&gt;</a>
-                    </div>
-                </div>                <!-- 首页关于我们碎片end -->
-                <div class="h-news">
-                    <div class="hdd">
-                        <strong>新闻分享</strong>
-                    </div>
-                    <div class="bd">
-                        <ul class="h-news-list">
-                            <!-- 首页资讯推荐start -->
-                            <?php if($news){
-                                foreach($news as $item){?>
-                                <li><a href="/news/info/<?=$item['id']?>.html"><?=$item['title']?></a></li>
-                            <?php    }
-                            }?>
-                        </ul>
-                       <a href="/news" class="link-more">更多 &gt;&gt;</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- $aboutUs -->
 
 </div>
 <!-- $contenter -->

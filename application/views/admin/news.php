@@ -129,10 +129,11 @@
 				<th width="5%">推荐</th>
 				<th width="5%">发布</th>
 				<th width="10%">管理员</th>
-				<th width="12%">创建时间</th>
+				<th width="10%">新建时间</th>
+				<th width="10%">更新时间</th>
 				<th width="5%">操作</th>
 			</tr>
-			<tr><td colspan="12" align="center" style="padding:20px;"><img src="<?=site_url('')?>/themes/admin/images/loading.gif" title="Loading..."/></td></tr>
+			<tr><td colspan="13" align="center" style="padding:20px;"><img src="<?=site_url('')?>/themes/admin/images/loading.gif" title="Loading..."/></td></tr>
 		</table>
 		<div id="pageLists" class="pageLists clearfix hide"></div>
 		<div class="batch" style="text-align:left;margin-top:20px;">

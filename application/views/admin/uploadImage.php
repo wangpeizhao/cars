@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?=site_url('')?>/themes/admin/css/admin.css" />
 <script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.9.1.min.js"></script>
-<script type='text/javascript' src="<?=site_url('')?>/themes/common/js/jquery.json.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/common.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/admin/js/admin_image_list.js"></script>
 <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/page.js"></script>
@@ -146,6 +145,14 @@
 		}
 		$("#progress_bar").fadeIn();
 	}
+
+	function _checkForm(){
+		if(!$.trim($('input[name="imageUrl"]').val())){
+			alert('请输入网络图片地址');
+			return false;
+		}
+		$("#progress_bar").fadeIn();
+	}
 //-->
 </script>
 </head>
@@ -155,7 +162,8 @@
 		<div class="position"><h1>后台管理 - 图片管理 - 浏览/上传<br><font color="#ff0000">注：一次只能选择插入一张;双击单张可直接插入;可批量上传图片</font></h1></div>
 		<ul class="tab" style="margin-top:0px;">
 			<li class="selected" id="li_1"><a href="javascript:;">浏览图片</a></li>
-			<li id="li_2" class=""><a href="javascript:;">上传图片</a></li>
+			<li id="li_2" class=""><a href="javascript:;">上传本地图片</a></li>
+			<li id="li_3" class=""><a href="javascript:;">上传网络图片</a></li>
 		</ul>
 		<div class="div_box">
 			<div class="div" style="display: block;margin:20px;">
@@ -174,15 +182,26 @@
 			</div>
 			<div class="div" style="display: none;margin:20px;" align="left">
 				<form method="post" enctype="multipart/form-data" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/upload/uploading" novalidate="true" target="ajaxifr" onSubmit="return checkForm();">
-					<input type="file" id="file" size="30" name="file[]" multiple="">
+					<input type="file" id="file" size="30" name="file[]" multiple="" class="normal">
 					<input type="submit" class="button" style="margin-left:10px;" value="上传">
 					<img src="<?=site_url()?>/themes/common/images/progress_bar.gif" style="margin-left:3px;display:none;position:relative;top:3px;" id="progress_bar" alt="正在上传...">
 					<input type="hidden" value="file" name="inputDOM">
+					<input type="hidden" value="location" name="act">
 					<p style="padding-top:5px;" class="uploadTips">最大可上传文件1M，仅支持<font color="#0099ff">'jpg','jpeg','gif','png'</font>格式图像文件。一次可上传多张图片。</p>
 				</form>
-				<iframe name="ajaxifr" style="display:none;"></iframe>
+			</div>
+			<div class="div" style="display: none;margin:20px;" align="left">
+				<form method="post" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/upload/uploading" novalidate="true" target="ajaxifr" onSubmit="return _checkForm();">
+					<input type="text" placeholder="请输入网络图片地址" name="imageUrl" class="normal" style="width:350px;">
+					<input type="submit" class="button" style="margin-left:10px;" value="上传">
+					<img src="<?=site_url()?>/themes/common/images/progress_bar.gif" style="margin-left:3px;display:none;position:relative;top:3px;" id="progress_bar" alt="正在上传...">
+					<input type="hidden" value="file" name="inputDOM">
+					<input type="hidden" value="network" name="act">
+					<p style="padding-top:5px;" class="uploadTips">最大可上传文件1M，仅支持<font color="#0099ff">'jpg','jpeg','gif','png'</font>格式图像文件。一次可上传多张图片。</p>
+				</form>
 			</div>
 		</div>
+		<iframe name="ajaxifr" style="display:none;"></iframe>
 	</div>
 </div>
 </body>

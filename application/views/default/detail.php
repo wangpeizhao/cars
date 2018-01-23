@@ -1,5 +1,5 @@
 <?php include('header.php');?>
-<?=css_url('base.css,common.css,detail.css')?>
+<?=css_url('detail.css')?>
 <!-- ^contenter -->
 <div id="app">
     <div class="pagewrap">

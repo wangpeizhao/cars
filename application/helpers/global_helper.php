@@ -371,7 +371,7 @@ if (!function_exists('css_url')) {
         $CI = & get_instance();
         $_string = '';
         foreach($uris as $uri){
-            $_string .= "<link rel='stylesheet' type='text/css' href='" . $CI->config->base_url("/themes/" . $folder . "/css/" . $uri.'?'._TIME_) . "'>";
+            $_string .= "<link rel='stylesheet' type='text/css' href='" . $CI->config->base_url("/themes/" . $folder . "/css/" . $uri.'?'._TIME_) . "'>".PHP_EOL;
         }
         
         return $_string;
@@ -389,7 +389,7 @@ if (!function_exists('js_url')) {
         $CI = & get_instance();
         $_string = '';
         foreach($uris as $uri){
-            $_string .= "<script type=\"text/javascript\" src=\"" . $CI->config->base_url("/themes/" . $folder . "/js/" . $uri) . "\"></script>";
+            $_string .= "<script type=\"text/javascript\" src=\"" . $CI->config->base_url("/themes/" . $folder . "/js/" . $uri) . "\"></script>".PHP_EOL;
         }
         return $_string;
     }

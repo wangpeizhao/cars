@@ -34,7 +34,7 @@ class News extends Fzhao_Controller {
         } else {
             $data['title'] = $this->title;
             $data['_title_'] = $this->title;
-            $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
+            $data['terms'] = $this->admin->getTermByTaxonomy('news');
             $this->view('admin/news', $data);
         }
     }
@@ -101,7 +101,7 @@ class News extends Fzhao_Controller {
             $this->doIframe($result);
         }
         $info['thumb_tiny'] = changeImagePath($info['thumb'], 'tiny');
-        $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
+        $data['terms'] = $this->admin->getTermByTaxonomy('news');
         $data['data'] = $info;
         $data['title'] = '编辑' . $this->title . ' - ' . $info['title'];
         $data['_title_'] = $this->title;
@@ -128,13 +128,13 @@ class News extends Fzhao_Controller {
             $this->admin->trans_start();
             $result = $this->admin->add($fields);
             if ($result) {
-                $this->admin->dbSet('term', array('count' => 'count+1', array('id' => $fields['term_id'])));
+                $this->admin->dbSet('term', array('count' => 'count+1'), array('id' => $fields['term_id']));
             }
             $this->admin->trans_complete();
 
             $this->doIframe($result);
         }
-        $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
+        $data['terms'] = $this->admin->getTermByTaxonomy('news');
         $data['title'] = '添加' . $this->title;
         $data['_title_'] = $this->title;
         $this->view('admin/news_add', $data);
@@ -158,7 +158,7 @@ class News extends Fzhao_Controller {
             $this->set_administrator_real_name($result['data']);
             $this->doJson($result);
         } else {
-            $data['terms'] = $this->admin->getTermByTaxonomy('newsInfo');
+            $data['terms'] = $this->admin->getTermByTaxonomy('news');
             $data['title'] = $this->title . '回收站';
             $data['_title_'] = $this->title;
             $this->view('admin/news_recycles', $data);

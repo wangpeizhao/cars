@@ -70,7 +70,6 @@ function w($val) {
     exit();
 }
 
-
 date_default_timezone_set("Asia/Shanghai");
 //读取域名
 if (isset($_SERVER['HTTP_HOST'])) {

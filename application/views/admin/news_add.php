@@ -37,7 +37,7 @@
       <div class="content link_target" align="left">
         <!--container-->
         <div class="content form_content" style="height: 298px;">
-          <form method="post" name="ModelForm" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/system/addNewsInfo" enctype="multipart/form-data" novalidate="true" target="ajaxifr" onSubmit="return checkForm();">
+          <form method="post" name="ModelForm" action="<?=WEB_DOMAIN?>/admin/news/add" novalidate="true" target="ajaxifr" onSubmit="return checkForm();">
             <div id="table_box_1" style="display: block;">
               <table class="form_table">
                 <colgroup>
