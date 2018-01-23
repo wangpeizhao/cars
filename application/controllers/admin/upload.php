@@ -65,17 +65,24 @@ class Upload extends Fzhao_Controller {
             show_404();
         }
         $act = post_get('act',0,'trim');
+        $uri = post_get('imageUrl',0,'trim');
         $directory = implode("/", array(date('Y'), date('m'), date('d')));
         $config['upload_path'] = 'uploads/' . $directory . '/images';
-        if($act == 'network'){
-            $_path = $this->_download_image_remote($config['upload_path']);
-            $this->zoomImage($_path, $directory);
-            $this->_doIframe(_URL_ . $_path);
-        }
-        //上传图片
         createFolder('uploads/' . $directory . '/images');
         createFolder('uploads/' . $directory . '/small');
         createFolder('uploads/' . $directory . '/tiny');
+        $attachment = array('create_time' => _DATETIME_, 'create_time' => _DATETIME_, 'uid' => ADMIN_ID);
+        if($act == 'network'){
+            $success = $this->_download_image_remote($uri,$config['upload_path']);
+            if(!$success){
+                $this->_doIframe('上传失败',0);
+            }
+            $this->_fill_attachment($attachment,$success);
+            $attachment && $this->upload_model->dbInsert('attachments', $attachment);
+            $this->zoomImage($success['file_path'], $directory);
+            $this->_doIframe(_URL_ . $success['file_path']);
+        }
+        //上传图片
         $config['allowed_types'] = 'gif|jpg|jpeg|png';
         $config['max_size'] = '1024';
         $config['encrypt_name'] = true; //是否重命名文件。如果该参数为TRUE，上传的文件将被重命名为随机的加密字符串。
@@ -88,7 +95,7 @@ class Upload extends Fzhao_Controller {
         }
         $_FILES = $_files;
         $attachments = array();
-        $attachment = array('create_time' => _DATETIME_, 'create_time' => _DATETIME_, 'uid' => ADMIN_ID);
+        
         foreach ($_files as $key => $item) {
             if (!$this->upload->do_upload($key)) {
                 $error = $this->upload->display_errors();
@@ -96,29 +103,35 @@ class Upload extends Fzhao_Controller {
             } else {
                 $success = $this->upload->data();
                 $_path = $config['upload_path'] . '/' . $success['file_name'];
+                $success['file_path'] = $_path;
                 $this->zoomImage($_path, $directory);
-                $attachment['file_orig'] = $success['orig_name'];
-                $attachment['file_name'] = $success['file_name'];
-                $attachment['file_ext'] = $success['file_ext'];
-                $attachment['file_type'] = $success['file_type'];
-                $attachment['file_size'] = $success['file_size'];
-                $attachment['file_path'] = $_path;
-                $attachment['is_image'] = '1';
-                $attachment['image_width'] = $success['image_width'];
-                $attachment['image_height'] = $success['image_height'];
-                $attachment['image_type'] = $success['image_type'];
+                $this->_fill_attachment($attachment,$success);
                 $attachments[] = $attachment;
             }
         }
         $attachments && $this->upload_model->dbInsertBatch('attachments', $attachments);
         $this->_doIframe(_URL_ . $config['upload_path'] . '/' . $success['file_name']);
     }
+    
+    private function _fill_attachment(&$attachment,$item){
+        $attachment['file_orig'] = $item['orig_name'];
+        $attachment['file_name'] = $item['file_name'];
+        $attachment['file_ext'] = $item['file_ext'];
+        $attachment['file_type'] = $item['file_type'];
+        $attachment['file_size'] = $item['file_size'];
+        $attachment['file_path'] = $item['file_path'];
+        $attachment['is_image'] = '1';
+        $attachment['image_width'] = $item['image_width'];
+        $attachment['image_height'] = $item['image_height'];
+        $attachment['image_type'] = $item['image_type'];
+    }
 
     private function _download_image_remote($uri = '', $path = '') {
         if (!$uri || !$path) {
             return false;
         }
-        $ext = pathinfo($uri, PATHINFO_EXTENSION);
+        $pathinfo = pathinfo($uri);//ww($pathinfo);
+        $ext = $pathinfo['extension'];
         if (!$ext) {
             return false;
         }
@@ -127,17 +140,30 @@ class Upload extends Fzhao_Controller {
         if (!$_ext) {
             return false;
         }
+        $_ext_ = current($_ext);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POST, 0);
         curl_setopt($ch, CURLOPT_URL, $uri);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $file_content = curl_exec($ch);
         curl_close($ch);
-        $_path = $path.'/.'.$_ext;
+        $filename = date('YmdHis').rand(1000,9999).'.'. $_ext_;
+        $_path = $path.'/'.$filename;
         $_file = fopen($_path, 'w');
         fwrite($_file, $file_content);
         fclose($_file);
-        return $_path;
+        $fileInfo = array(
+            'orig_name' => $pathinfo['basename'],
+            'file_name' => $filename,
+            'file_ext' => '.'. $_ext_,
+            'file_type' => '',
+            'file_size' => 0.00,
+            'file_path' => $_path,
+            'image_width' => 0,
+            'image_height' => 0,
+            'image_type' => ''
+        );
+        return $fileInfo;
     }
 
     private function zoomImage($path, $folder = 'dishes') {

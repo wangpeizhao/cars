@@ -153,6 +153,14 @@
 		}
 		$("#progress_bar").fadeIn();
 	}
+
+	function iResultAlter(str,status){
+		if(status ==0){
+			alert(str);
+			return false;
+		}
+		
+	}
 //-->
 </script>
 </head>
