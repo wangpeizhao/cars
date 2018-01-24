@@ -5,7 +5,7 @@
 		}
 		
 		.main {
-		    width: 1120px;
+		    width: 1200px;
 		    margin: 0 auto;
 		}.clear_both {
 		    zoom: 1;
@@ -38,8 +38,8 @@
 	                                <?=$items['name']?>
 	                            </div>
 	                            <dl>
-	                            	<?php if(!empty($items['sunTerm'])){
-	                    				foreach($items['sunTerm'] as $item){?>
+	                            	<?php if(!empty($items['sonTerm'])){
+	                    				foreach($items['sonTerm'] as $item){?>
 	                            	<dd>
 	                                    <a href="<?=!empty($foot_mappings[$items['taxonomy']])?'/'.$foot_mappings[$items['taxonomy']].(in_array($foot_mappings[$items['taxonomy']], array('contact','company','sheji'))?'/info/':'/sort/').$item['slug']:'/'?>" title="<?=$item['name']?>"><?=$item['name']?></a>
 	                                </dd>

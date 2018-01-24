@@ -40,6 +40,7 @@ function fillData(data, currPage) {
 			html += '	<td><a href="' + baseUrl + lang + '/news/sort/' + data[i]['slug'] + '" target="_blank">' + data[i]['term_name'] + '</a></td>';
 			html += '	<td><a href="' + baseUrl + lang + '/news/info/' + data[i]['id'] + '.html' + '" target="_blank" title="' + data[i]['title'] + '">' + data[i]['title'] + '</a>' + '</td>';
 			html += '	<td title="' + data[i]['summary'] + '">' + data[i]['summary'] + '</td>';
+            html += '   <td title="' + data[i]['tags'] + '">' + data[i]['tags'] + '</td>';
 			html += '	<td>' + (data[i]['from']?data[i]['from']:'') + '</td>';
 			html += '	<td>' + (data[i]['author']?data[i]['author']:'') + '</td>';
 			html += '	<td>' + (parseInt(data[i]['is_commend']) == 1 ? '<font color="#339900">是</font>': '<font color="#ff0000">否</font>') + '</td>';

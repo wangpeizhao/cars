@@ -240,9 +240,9 @@
 
 		        	$('.n_center input[name="slug"]').val(slug);
 		        	if(!parseInt(parent)){
-		        		$('.n_center input[name="slug"]').attr('disabled',true);
+		        		$('.n_center input[name="slug"]').attr('readonly',true);
 		        	}else{
-		        		$('.n_center input[name="slug"]').removeAttr('disabled',false);
+		        		$('.n_center input[name="slug"]').removeAttr('readonly',false);
 		        	}
 
 		        	$('.n_center input[name="sort"]').val(sort);

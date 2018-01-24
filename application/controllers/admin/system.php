@@ -87,6 +87,8 @@ class System extends Fzhao_Controller {
             $data['sitesName'] = serialize(trim($post['sitesName']));
             $data['IndexKeywords'] = serialize(trim($post['IndexKeywords']));
             $data['IndexDescription'] = serialize(trim($post['IndexDescription']));
+            $data['CommonKeywords'] = serialize(trim($post['CommonKeywords']));
+            $data['CommonDescription'] = serialize(trim($post['CommonDescription']));
             $data['sitesName'] = serialize(trim($post['sitesName']));
             $data['closeSites'] = serialize(intval($post['closeSites']));
             $data['closeReason'] = serialize(intval($post['closeSites']) > 0 ? trim($post['closeReason']) : '');

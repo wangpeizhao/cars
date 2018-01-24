@@ -1,0 +1,150 @@
+header.common-header {
+    font-family: 'PingFang SC', 'Lantinghei SC', 'Helvetica Neue', 'Helvetica', 'Arial', 'Microsoft YaHei', '微软雅黑', 'STHeitiSC-Light', 'simsun', '宋体', 'WenQuanYi Zen Hei', 'WenQuanYi Micro Hei', 'sans-serif';
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    height: 62px;
+    z-index: 999;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    border-bottom: solid 1px #f2f2f2;
+    box-sizing: content-box;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+header.common-header * {
+    font-size: 15px;
+    -webkit-transition: none;
+    transition: none;
+}
+header.common-header .container {
+    max-width: 1200px;
+    padding: 0;
+    margin: 0 auto;
+    position: relative;
+}
+header.common-header .logo {
+    display: block;
+    width: 61.5px;
+    height: 34.5px;
+    position: absolute;
+    top: 15px;
+    left: 0;
+}
+header.common-header .logo img {
+    width: 100%;
+}
+
+header.common-header nav {
+    opacity: 1;
+    -webkit-transition: opacity .4s linear 0s;
+    transition: opacity .4s linear 0s;
+    padding-left: 86px;
+    float: left;
+}
+header.common-header nav ul li {
+    float: left;
+    position: relative;
+    top: -2px;
+}
+header.common-header nav ul li.active {
+    border-bottom: solid 2px #4285f4;
+}
+header.common-header nav ul li a {
+    display: block;
+    position: relative;
+    top: 8px;
+    padding: 0 15px;
+    line-height: 54px;
+    height: 62px;
+    overflow: hidden;
+    box-sizing: border-box;
+    color: #333333;
+    text-decoration: none;
+}
+header.common-header nav ul li.active a {
+    color: #000000;
+    font-weight: 600;
+}
+
+header.common-header .right-col {
+    float: right;
+}
+header.common-header .sub-nav {
+    height: 62px;
+    width: 100%;
+    position: relative;
+    white-space: nowrap;
+}
+header.common-header .sub-nav > li {
+    height: 72px;
+    line-height: 62px;
+    display: inline-block;
+    vertical-align: middle;
+}
+header.common-header .sub-nav > li a{
+    display: block;
+    color: #333333;
+}
+
+footer{
+    position: relative;
+}
+footer .bg-icon{
+    position: absolute;top:0;left: 50%;margin-left:-600px;
+    background:url('../images/footer_top_bg.png') no-repeat right top; 
+    width: 1200px;height: 97px;z-index: -1;
+}
+footer .f_top{
+    padding-top:23px; background:#393e45;
+}
+footer .f_top .f_nav li{
+    width:170px;
+}
+footer .f_top .f_nav li .title{
+    padding-left:16px; height:32px; line-height:32px; font-size:16px; 
+    background:url('../images/plus.png') no-repeat left center; color:#fff;
+}
+footer .f_top .f_nav li dl{
+    margin-top:20px; padding-left:16px;
+}
+footer .f_top .f_nav li dd{
+    height:32px; line-height:32px; font-size:14px; overflow:hidden;
+}
+footer .f_top .f_nav li dd a{
+    color:#fff;
+}
+footer .f_top .f_rab{
+    width:335px;
+}
+footer .f_top .f_rab .moge{
+    color:#fff; font-size:14px; line-height:28px;
+}
+footer .f_top .f_rab .moge a{
+    color:#fff;
+}
+footer .f_top .f_rab .share{
+    height:28px; margin-top:10px;
+}
+footer .f_top .f_rab .share .guan{
+    line-height:28px; color:#fff; margin-right:10px;
+}
+footer .f_top .f_rab .zhu a{
+    margin-right:6px;
+}
+footer .f_top .link{
+    margin-top:50px; border-top:1px solid #707070; padding-bottom:10px;
+}
+footer .f_top .link .l_lab{
+    height:60px; line-height:60px; font-size:14px; color:#fff;
+    padding-top:16px; margin-left:10px;
+}
+footer .f_top .link .l_rab li{
+    font-size:14px; line-height:28px; background:url('../images/f_li.jpg') no-repeat right center; padding-right:10px; margin-right:10px;
+}
+footer .f_top .link .l_rab li a{
+    color:#fff;
+}
+footer .f_bottom{
+    height:80px; line-height:30px; text-align:center; color:#fff; font-size:14px; background:#2e3238;padding-top:10px;
+}

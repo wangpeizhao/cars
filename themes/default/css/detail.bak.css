@@ -1,0 +1,218 @@
+#app{
+    margin-top:20px;
+}
+.pagewrap{
+    min-height: 400px;
+    max-width: 1200px;
+    /*padding: 0 30px;*/
+    margin: 0 auto;
+}
+.pagewrap .mainlib{
+    width: 850px;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    margin-right: 30px;
+}
+
+.pagewrap .mainlib .center_content {
+    line-height: 2;
+    padding: 1.5rem 0;
+}
+.pagewrap .mainlib .center_content {
+    line-height: 2;
+    padding: 1.5rem 0;
+    margin-right: 10%;
+}
+.pagewrap .mainlib .center_content h1 {
+    font-family: PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,STHeitiSC-Light,simsun,\\5B8B\4F53,WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
+    color: #3d464d;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 28px;
+    text-align: left;
+    line-height: 36px;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+.pagewrap .mainlib .author-panel {
+    margin-bottom: 1.4rem;
+}
+.pagewrap .mainlib .author {
+    font-size: 14px;
+    height: 25px;
+    line-height: 25px;
+}
+.pagewrap .mainlib .author a{
+    color: #366df0;
+}
+.pagewrap .mainlib .am-fl {
+    float: left;
+}
+.am-cf:after,.am-cf:before {
+    content: " ";
+    display: table
+}
+
+.am-cf:after {
+    clear: both
+}
+.pagewrap .mainlib .author a, .pagewrap .mainlib .author abbr, .pagewrap .mainlib .author img, .pagewrap .mainlib .author span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.pagewrap .mainlib .author .time {
+    color: #999;
+}
+.pagewrap .mainlib .author .time abbr {
+    border: 0 none;
+    cursor: default;
+}
+
+.pagewrap .mainlib .summary {
+    padding: 15px 0;
+    color: #999;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+.pagewrap .mainlib .summary:after {
+    display: block;
+    width: 160px;
+    height: 4px;
+    border-radius: 3px;
+    background: #efefef;
+    content: "";
+    margin-top: 1rem
+}
+
+.article-detail .content-wrapper{
+	font-family: PingFang SC,Lantinghei SC,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,STHeitiSC-Light,simsun,\\5B8B\4F53,WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
+    line-height: 28px;
+    font-size: 15px;
+    color: #3d464d;
+}
+
+.article-detail .content-wrapper .textblock p {
+    margin-bottom: 26px;
+    word-wrap: break-word
+}
+
+.article-detail .content-wrapper .textblock p a {
+    color: #3d464d;
+    border-style: solid;
+    border-width: 0 0 1px;
+    border-color: #999;
+    padding: 0 0 1px;
+    word-wrap: break-word
+}
+
+.article-detail .content-wrapper .textblock p a:hover {
+    color: #4285f4;
+    border-color: #4285f4
+}
+
+.article-detail .content-wrapper .textblock ol,.article-detail .content-wrapper .textblock ul {
+    padding: 0 0 0 20px;
+    margin-bottom: 22px
+}
+
+
+/*右侧框*/
+.pagewrap .rightlib{
+    width: 320px;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    -webkit-box-ordinal-group: 3;
+    -ms-flex-order: 2;
+    order: 2;
+}
+.rightlib .pad_inner {
+    font-size: .65rem;
+    margin-bottom: 2.5rem;
+}
+.guess-posts-list {
+    overflow: hidden;
+}
+.guess-posts-list h4 {
+    margin: 25px 0 10px;
+    font-size: .7rem;
+    font-weight: 600;
+}
+.guess-posts-list ul {
+    list-style: none;
+    padding: 0;
+}
+.guess-posts-list .item {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.guess-posts-list .item .desc {
+    color: #3d464d;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    /*display: -webkit-box;*/
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.8;
+    max-height: 3.6;
+    word-break: break-all;
+    position: relative;
+    padding-left: 16px;
+}
+.guess-posts-list .item .desc:before {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: #4285f4;
+    content: "";
+}
+.guess-posts-list .item:after {
+    clear: both;
+}
+.guess-posts-list .item:after, .guess-posts-list .item:before {
+    content: " ";
+    display: table;
+}
+*, :after, :before {
+    box-sizing: border-box;
+}
+.next-post-wrapper {
+    margin-top: 15px;
+    border: 1px solid #efefef;
+    padding: 15px;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+}
+.next-post-wrapper h4 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 200;
+    color: #9ca4ab;
+}
+.next-post-wrapper.show {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transform: translate(0);
+    transform: translate(0);
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+.next-post-wrapper .tags-list a {
+    color: #9ca4ab;
+}
+
+
+
+
+
+
+

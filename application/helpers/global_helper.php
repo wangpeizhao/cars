@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('BASEPATH')){
+if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 /*
@@ -87,13 +87,13 @@ function delSpace($str) {
     return str_replace($space, $trim, $str);
 }
 
-function changeImagePath($path,$type='tiny'){
-    if(!$path){
+function changeImagePath($path, $type = 'tiny') {
+    if (!$path) {
         return false;
     }
-    $ext = pathinfo($path,PATHINFO_EXTENSION);
-    $search = array('/images/','.'.$ext);
-    $replace = array('/'.$type.'/','_thumb.'.$ext);
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+    $search = array('/images/', '.' . $ext);
+    $replace = array('/' . $type . '/', '_thumb.' . $ext);
     return str_replace($search, $replace, $path);
 }
 
@@ -303,7 +303,6 @@ function json_errorCode($msg = '', $retval = null, $jqremote = false) {
     echo $json;
 }
 
-
 function myMail() {
     $this->load->library('email');
     $config['protocol'] = 'smtp';
@@ -341,7 +340,7 @@ function myMail() {
 if (!function_exists('_css_url')) {
 
     function _css_url($uri = '', $folder = 'default') {
-        if(!$uri){
+        if (!$uri) {
             return '';
         }
         $CI = & get_instance();
@@ -353,7 +352,7 @@ if (!function_exists('_css_url')) {
 if (!function_exists('_js_url')) {
 
     function _js_url($uri = '', $folder = 'default') {
-        if(!$uri){
+        if (!$uri) {
             return '';
         }
         $CI = & get_instance();
@@ -364,16 +363,16 @@ if (!function_exists('_js_url')) {
 if (!function_exists('css_url')) {
 
     function css_url($uri = '', $folder = 'default') {
-        if(!$uri){
+        if (!$uri) {
             return '';
         }
-        $uris = explode(",",$uri);
+        $uris = explode(",", $uri);
         $CI = & get_instance();
         $_string = '';
-        foreach($uris as $uri){
-            $_string .= "<link rel='stylesheet' type='text/css' href='" . $CI->config->base_url("/themes/" . $folder . "/css/" . $uri.'?'._TIME_) . "'>".PHP_EOL;
+        foreach ($uris as $uri) {
+            $_string .= "<link rel='stylesheet' type='text/css' href='" . $CI->config->base_url("/themes/" . $folder . "/css/" . $uri . '?' . _TIME_) . "'>" . PHP_EOL;
         }
-        
+
         return $_string;
     }
 
@@ -382,14 +381,14 @@ if (!function_exists('css_url')) {
 if (!function_exists('js_url')) {
 
     function js_url($uri = '', $folder = 'default') {
-        if(!$uri){
+        if (!$uri) {
             return '';
         }
-        $uris = explode(",",$uri);
+        $uris = explode(",", $uri);
         $CI = & get_instance();
         $_string = '';
-        foreach($uris as $uri){
-            $_string .= "<script type=\"text/javascript\" src=\"" . $CI->config->base_url("/themes/" . $folder . "/js/" . $uri) . "\"></script>".PHP_EOL;
+        foreach ($uris as $uri) {
+            $_string .= "<script type=\"text/javascript\" src=\"" . $CI->config->base_url("/themes/" . $folder . "/js/" . $uri) . "\"></script>" . PHP_EOL;
         }
         return $_string;
     }
@@ -399,7 +398,7 @@ if (!function_exists('js_url')) {
 if (!function_exists('img_url')) {
 
     function img_url($uri = '', $folder = 'default') {
-        if(!$uri){
+        if (!$uri) {
             return '';
         }
         $CI = & get_instance();
@@ -463,7 +462,7 @@ if (!function_exists('successOutput')) {
      * @author  linjianyong
      */
     function successOutput($result, $msg = '', $isDie = true) {
-        if(!is_array($result) && is_string($result) && !$msg){
+        if (!is_array($result) && is_string($result) && !$msg) {
             $msg = $result;
             $result = null;
         }
@@ -617,8 +616,8 @@ if (!function_exists('post_get')) {
         $CI = & get_instance();
         if (IS_POST) {
             $data = $CI->input->post($index, true);
-        } 
-        if(!$data) {
+        }
+        if (!$data) {
             $n = $offset ? $offset : (in_array($CI->uri->segment(1), array('cn', 'en')) ? 5 : 4);
             $data = $CI->uri->segment($n);
         }
@@ -705,4 +704,57 @@ if (!function_exists('getConditions')) {
         return $conditions[0];
     }
 
+}
+
+/**
+ * 时间轴函数, Unix 时间戳
+ * @param int $time 时间
+ */
+function TranTime($time) {
+    //$time = strtotime($time);
+    $nowTime = time();
+    $message = '';
+    //一年前
+    if (idate('Y', $nowTime) != idate('Y', $time)) {
+        $message = date('Y年m月d日', $time);
+    } else {
+        //同一年
+        $days = idate('z', $nowTime) - idate('z', $time);
+        switch (true) {
+            //一天内
+            case (0 == $days):
+                $seconds = $nowTime - $time;
+                //一小时内
+                if ($seconds < 3600) {
+                    //一分钟内
+                    if ($seconds < 60) {
+                        if (3 > $seconds) {
+                            $message = '刚刚';
+                        } else {
+                            $message = $seconds . '秒前';
+                        }
+                    }
+                    $message = intval($seconds / 60) . '分钟前';
+                }
+                $message = idate('H', $nowTime) - idate('H', $time) . '小时前';
+                break;
+            //昨天
+            case (1 == $days):
+                $message = '昨天' . date('H:i', $time);
+                break;
+            //前天
+            case (2 == $days):
+                $message = '前天 ' . date('H:i', $time);
+                break;
+            //7天内
+            case (7 > $days):
+                $message = $days . '天前';
+                break;
+            //超过7天
+            default:
+                $message = date('n月j日 H:i', $time);
+                break;
+        }
+    }
+    return $message;
 }

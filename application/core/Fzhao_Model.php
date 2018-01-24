@@ -728,38 +728,58 @@ class Fzhao_Model extends CI_Model {
      * 时间：2014-1-24
      */
     public function getTermByTaxonomy($taxonomy) {
-        static $term;
-        if (!empty($term)) {
-            return $term;
+        static $terms;
+        if ($taxonomy && is_string($taxonomy) && !empty($terms[$taxonomy])) {
+            return $terms[$taxonomy];
         }
-        if (!is_array($taxonomy)) {
-            $taxonomy = array($taxonomy);
-        }
-        $data = $this->getData(array(
-            'fields' => 'id,name,parent,slug,taxonomy,count,subclass',
+        
+        $_terms = $this->getData(array(
+            'fields' => 'id,name,parent,slug,taxonomy',
             'table' => 'term',
-            'conditions' => array('isHidden' => '0', 'lang' => _LANGUAGE_),
-            'ins' => array(array('taxonomy' => $taxonomy)),
-            'orders' => array('parent,sort', 'asc,desc'),
+            '_conditions' => array(array('isHidden' => '0'), array('lang' => _LANGUAGE_)),
+            '_order' => array(array('parent' => 'asc'), array('sort' => 'desc')),
         ));
-
-        $sunTerm = array();
-        foreach ($data as $key => $item) {
-            if ($item['parent'] == 0) {
-                $term[$item['id']] = $item;
+        $terms = $this->_get_term_trees($_terms, 0, 0);
+        return !empty($terms[$taxonomy])?$terms[$taxonomy]:array();
+    }
+    
+    private function _get_term_trees($data, $pId, $deep) {
+        $tree = array();
+        foreach ($data as $v) {
+            if ($v['parent'] != $pId) {
                 continue;
             }
-            if (isset($term[$item['parent']])) {
-                $item['grandson'] = array();
-                $term[$item['parent']]['sunTerm'][] = $item;
-                $sunTerm[$item['id']] = array($item['parent'], count($term[$item['parent']]['sunTerm']) - 1);
-            } else if (isset($sunTerm[$item['parent']])) {
-                $term[$sunTerm[$item['parent']][0]]['sunTerm'][$sunTerm[$item['parent']][1]]['grandson'][] = $item;
-                array_sort($term[$sunTerm[$item['parent']][0]]['sunTerm'][$sunTerm[$item['parent']][1]]['grandson'], 'subclass');
-            }
+            //父亲找到儿子
+            $v['deep'] = $deep + 1;
+            $v['childs'] = $this->_get_term_trees($data, $v['id'], $deep + 1); //, $class, $method, $directory, $_p_
+            $index = $v['parent']==0?$v['taxonomy']:$v['id'];
+            $tree[$index] = $v;
         }
-        $term && rsort($term);
-        return $term;
+        return $tree;
+    }
+
+    /**
+     * getTermById
+     * 简介：根据ID读取信息
+     * 参数：$id int
+     * 返回：Boole
+     * 作者：Parker
+     * 时间：2018-01-13
+     */
+    function getTermById($id,$field = '') {
+        if (!$id) {
+            return null;
+        }
+        $result = $this->getData(array(
+            'fields' => '*',
+            'table' => 'term',
+            '_conditions' => array(array('id' => $id),array('isHidden' => '0')), //, 'lang' => _LANGUAGE_
+            'row' => true
+        ));
+        if($field && isset($result[$field])){
+            return $result[$field];
+        }
+        return $result;
     }
 
     /**

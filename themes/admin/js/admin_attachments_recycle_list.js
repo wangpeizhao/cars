@@ -46,6 +46,7 @@ function fillData(data, currPage) {
             html += '   <td><a href="javascript:;" class="imgPopover"><img src="/' + data[i]['file_path_tiny'] + '" _src="/' + data[i]['file_path'] + '" class="popover"></a></td>';
             html += '   <td>' + (data[i]['is_image'] == '1' ? '<font color="#339900">是</font><span>('+data[i]['image_width']+'*'+data[i]['image_height']+')</span>': '<font color="red">否</font>') + '</td>';
             html += '   <td>' + data[i]['administrator'] + '</td>';
+            html += '   <td>' + data[i]['create_time'] + '</td>';
             html += '   <td>' + data[i]['update_time'] + '</td>';
             html += '   <td id="' + data[i]['id'] + '"><a href="javascript:;" act="recover"><img class="operator" src="' + site_url + '/themes/admin/images/icon_recover.gif" alt="还原" title="还原" /></a><a act="dump" href="javascript:;"><img class="operator" src="' + site_url + '/themes/admin/images/icon_del.gif" alt="删除" title="删除" /></a></td>';
             html += '</tr>'
