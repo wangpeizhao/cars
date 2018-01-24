@@ -159,7 +159,11 @@
 			alert(str);
 			return false;
 		}
+<<<<<<< HEAD
 		alert('提交成功');
+=======
+		
+>>>>>>> 25131d4572247b84e0e2206ea92e53040dfe5aff
 	}
 //-->
 </script>

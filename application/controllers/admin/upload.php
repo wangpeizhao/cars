@@ -71,7 +71,11 @@ class Upload extends Fzhao_Controller {
         createFolder('uploads/' . $directory . '/images');
         createFolder('uploads/' . $directory . '/small');
         createFolder('uploads/' . $directory . '/tiny');
+<<<<<<< HEAD
         $attachment = array('create_time' => _DATETIME_, 'update_time' => _DATETIME_, 'uid' => ADMIN_ID);
+=======
+        $attachment = array('create_time' => _DATETIME_, 'create_time' => _DATETIME_, 'uid' => ADMIN_ID);
+>>>>>>> 25131d4572247b84e0e2206ea92e53040dfe5aff
         if($act == 'network'){
             $success = $this->_download_image_remote($uri,$config['upload_path']);
             if(!$success){
@@ -152,19 +156,31 @@ class Upload extends Fzhao_Controller {
         $_file = fopen($_path, 'w');
         fwrite($_file, $file_content);
         fclose($_file);
+<<<<<<< HEAD
         $image_info = getimagesize($_path);
         $image_size = filesize($_path);
         clearstatcache();
+=======
+>>>>>>> 25131d4572247b84e0e2206ea92e53040dfe5aff
         $fileInfo = array(
             'orig_name' => $pathinfo['basename'],
             'file_name' => $filename,
             'file_ext' => '.'. $_ext_,
+<<<<<<< HEAD
             'file_type' => $image_info['mime'],
             'file_size' => sprintf("%.2f",($image_size/1024)),
             'file_path' => $_path,
             'image_width' => $image_info[0],
             'image_height' => $image_info[1],
             'image_type' => $_ext_
+=======
+            'file_type' => '',
+            'file_size' => 0.00,
+            'file_path' => $_path,
+            'image_width' => 0,
+            'image_height' => 0,
+            'image_type' => ''
+>>>>>>> 25131d4572247b84e0e2206ea92e53040dfe5aff
         );
         return $fileInfo;
     }
