@@ -740,6 +740,7 @@ class Fzhao_Model extends CI_Model {
             '_order' => array(array('parent' => 'asc'), array('sort' => 'desc')),
         ));
         $terms = $this->_get_term_trees($_terms, 0, 0);
+
         $newTerms = array();
         if($taxonomy && is_array($taxonomy)){
             foreach($taxonomy as $item){
