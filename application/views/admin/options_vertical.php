@@ -26,8 +26,8 @@
 			<td align="left" width="15%">
 				<select name="indexBlockLeft">
 					<option value="">-请选择-</option>
-					<?php if(!empty($indexB[0]['sunTerm'])){
-						foreach($indexB[0]['sunTerm'] as $item){
+					<?php if(!empty($indexB[0]['sonTerm'])){
+						foreach($indexB[0]['sonTerm'] as $item){
 							if($item['slug']==$options['indexB']['indexL']){?>
 					<option value="<?=$item['slug']?>" selected><?=$item['name']?></option>
 					<?php }else{?>
@@ -42,8 +42,8 @@
 			<td align="left" width="15%">
 				<select name="indexBlockMid">
 					<option value="">-请选择-</option>
-					<?php if(!empty($indexM[0]['sunTerm'])){
-						foreach($indexM[0]['sunTerm'] as $item){
+					<?php if(!empty($indexM[0]['sonTerm'])){
+						foreach($indexM[0]['sonTerm'] as $item){
 							if($item['slug']==$options['indexB']['indexM']){?>
 					<option value="<?=$item['slug']?>" selected><?=$item['name']?></option>
 					<?php }else{?>
@@ -58,8 +58,8 @@
 			<td align="left" width="15%">
 				<select name="indexBlockRight">
 					<option value="">-请选择-</option>
-					<?php if(!empty($indexB[0]['sunTerm'])){
-						foreach($indexB[0]['sunTerm'] as $item){
+					<?php if(!empty($indexB[0]['sonTerm'])){
+						foreach($indexB[0]['sonTerm'] as $item){
 							if($item['slug']==$options['indexB']['indexR']){?>
 					<option value="<?=$item['slug']?>" selected><?=$item['name']?></option>
 					<?php }else{?>

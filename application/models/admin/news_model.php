@@ -54,7 +54,7 @@ class News_model extends Fzhao_Model {
         }
 
         $data = $this->getData(array(
-            'fields' => 'p.id,p.term_id,p.title,p.summary,p.isHidden,p.uid,p.views,p.from,p.author,p.is_commend,p.is_issue,p.update_time,p.create_time',//,t.name term_name,t.slug
+            'fields' => 'p.id,p.term_id,p.title,p.summary,p.isHidden,p.uid,p.views,p.from,p.author,p.is_commend,p.is_issue,p.update_time,p.create_time,p.tags',//,t.name term_name,t.slug
             'table' => $this->table.' p',
             '_conditions' => $conditions,
             'order' => array('p.'.$this->primary_key, 'desc'),

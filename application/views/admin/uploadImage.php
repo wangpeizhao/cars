@@ -159,7 +159,7 @@
 			alert(str);
 			return false;
 		}
-		
+		alert('提交成功');
 	}
 //-->
 </script>

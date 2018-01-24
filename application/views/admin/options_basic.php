@@ -83,7 +83,7 @@
 	  <tr>
 		<th>网站名称：</th>
 		<td>
-			<input type="text" title="网站名称不能为空" value="<?=isset($options['sitesName'])?$options['sitesName']:''?>" name="sitesName" class="normal" maxlength="80">
+			<input type="text" placeholder="网站名称不能为空" value="<?=isset($options['sitesName'])?$options['sitesName']:''?>" name="sitesName" class="normal" maxlength="80">
 			<label style="color:red;">*</label>
 			<span class="tip">网站名称</span>
 		</td>
@@ -91,7 +91,7 @@
 	  <tr>
 		<th>公司负责人：</th>
 		<td>
-			<input type="text" title="公司负责人不能为空" value="<?=isset($options['companyLinkman'])?$options['companyLinkman']:''?>" name="companyLinkman" class="normal" maxlength="20">
+			<input type="text" placeholder="公司负责人不能为空" value="<?=isset($options['companyLinkman'])?$options['companyLinkman']:''?>" name="companyLinkman" class="normal" maxlength="20">
 			<label style="color:red;">*</label>
 			<span class="tip">公司负责人</span>
 		</td>
@@ -99,7 +99,7 @@
 	  <tr>
 		<th>负责人手机：</th>
 		<td>
-			<input type="text" title="负责人手机不能为空" value="<?=isset($options['companyMobile'])?$options['companyMobile']:''?>" name="companyMobile" class="normal" maxlength="12">
+			<input type="text" placeholder="负责人手机不能为空" value="<?=isset($options['companyMobile'])?$options['companyMobile']:''?>" name="companyMobile" class="normal" maxlength="12">
 			<label style="color:red;">*</label>
 			<span class="tip">负责人手机</span>
 		</td>
@@ -107,7 +107,7 @@
 	  <tr>
 		<th>公司名称：</th>
 		<td>
-			<input type="text" title="公司名称不能为空" value="<?=isset($options['companyName'])?$options['companyName']:''?>" name="companyName" class="normal" maxlength="80">
+			<input type="text" placeholder="公司名称不能为空" value="<?=isset($options['companyName'])?$options['companyName']:''?>" name="companyName" class="normal" maxlength="80">
 			<label style="color:red;">*</label>
 			<span class="tip">公司名称</span>
 		</td>
@@ -115,84 +115,98 @@
 	  <tr>
 		<th>公司电话：</th>
 		<td>
-			<input type="text" title="请填写公司电话" value="<?=isset($options['companyPhone'])?$options['companyPhone']:''?>" name="companyPhone" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司电话" value="<?=isset($options['companyPhone'])?$options['companyPhone']:''?>" name="companyPhone" class="normal" maxlength="80">
 			<span class="tip">公司电话(可填写多个，用逗号隔开)</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司传真：</th>
 		<td>
-			<input type="text" title="请填写公司传真" value="<?=isset($options['companyFax'])?$options['companyFax']:''?>" name="companyFax" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司传真" value="<?=isset($options['companyFax'])?$options['companyFax']:''?>" name="companyFax" class="normal" maxlength="80">
 			<span class="tip">公司传真(可填写多个，用逗号隔开)</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司地址：</th>
 		<td>
-			<input type="text" title="请填写公司地址" value="<?=isset($options['companyAddress'])?$options['companyAddress']:''?>" name="companyAddress" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司地址" value="<?=isset($options['companyAddress'])?$options['companyAddress']:''?>" name="companyAddress" class="normal" maxlength="80">
 			<span class="tip">公司地址(越详细越好)</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司邮编：</th>
 		<td>
-			<input type="text" title="请填写公司邮编" pattern="^\d{6}$" value="<?=isset($options['companyZipCode'])?$options['companyZipCode']:''?>" name="companyZipCode" class="normal" maxlength="6">
+			<input type="text" placeholder="请填写公司邮编" pattern="^\d{6}$" value="<?=isset($options['companyZipCode'])?$options['companyZipCode']:''?>" name="companyZipCode" class="normal" maxlength="6">
 			<span class="tip">公司邮编</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司E-mali：</th>
 		<td>
-			<input type="text" title="请填写公司E-mali" value="<?=isset($options['companyEmail'])?$options['companyEmail']:''?>" name="companyEmail" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司E-mali" value="<?=isset($options['companyEmail'])?$options['companyEmail']:''?>" name="companyEmail" class="normal" maxlength="80">
 			<span class="tip">公司E-mali</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司服务QQ：</th>
 		<td>
-			<input type="text" title="请填写公司服务QQ" value="<?=isset($options['companyQQ'])?$options['companyQQ']:''?>" name="companyQQ" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司服务QQ" value="<?=isset($options['companyQQ'])?$options['companyQQ']:''?>" name="companyQQ" class="normal" maxlength="80">
 			<span class="tip">公司服务QQ</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司服务微信：</th>
 		<td>
-			<input type="text" title="请填写公司服务微信" value="<?=isset($options['companyWeiXin'])?$options['companyWeiXin']:''?>" name="companyWeiXin" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司服务微信" value="<?=isset($options['companyWeiXin'])?$options['companyWeiXin']:''?>" name="companyWeiXin" class="normal" maxlength="80">
 			<span class="tip">公司服务微信</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司服务Skype：</th>
 		<td>
-			<input type="text" title="请填写公司服务Skype" value="<?=isset($options['companySkype'])?$options['companySkype']:''?>" name="companySkype" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司服务Skype" value="<?=isset($options['companySkype'])?$options['companySkype']:''?>" name="companySkype" class="normal" maxlength="80">
 			<span class="tip">公司服务Skype</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>公司服务热线：</th>
 		<td>
-			<input type="text" title="请填写公司免费服务热线" value="<?=isset($options['companyHotline'])?$options['companyHotline']:''?>" name="companyHotline" class="normal" maxlength="80">
+			<input type="text" placeholder="请填写公司免费服务热线" value="<?=isset($options['companyHotline'])?$options['companyHotline']:''?>" name="companyHotline" class="normal" maxlength="80">
 			<span class="tip">公司免费服务热线(可填写多个，用逗号隔开)</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>首页keywords：</th>
 		<td>
-			<input type="text" title="请填写首页keywords" value="<?=isset($options['IndexKeywords'])?$options['IndexKeywords']:''?>" name="IndexKeywords" class="normal" maxlength="100">
-			<span class="tip">多个请用空格或逗号隔开</span>
+			<input type="text" placeholder="请填写首页keywords" value="<?=isset($options['IndexKeywords'])?$options['IndexKeywords']:''?>" name="IndexKeywords" class="normal" maxlength="100">
+			<span class="tip">首页的keywords，多个请用空格或逗号隔开</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>首页description：</th>
 		<td>
-			<textarea rows="" title="请填写首页description" cols="" name="IndexDescription"><?=isset($options['IndexDescription'])?$options['IndexDescription']:''?></textarea>
-			<span class="tip">公司的详细描述</span>
+			<textarea rows="" placeholder="请填写首页description" cols="" name="IndexDescription"><?=isset($options['IndexDescription'])?$options['IndexDescription']:''?></textarea>
+			<span class="tip">首页的详细描述</span>
+		</td>
+	  </tr>
+	  <tr>
+		<th>其它keywords：</th>
+		<td>
+			<input type="text" placeholder="请填写其它keywords" value="<?=isset($options['CommonKeywords'])?$options['CommonKeywords']:''?>" name="CommonKeywords" class="normal" maxlength="100">
+			<span class="tip">其他页面的keywords，多个请用空格或逗号隔开</span>
+		</td>
+	  </tr>
+	  <tr>
+		<th>其它description：</th>
+		<td>
+			<textarea rows="" placeholder="请填写其它description" cols="" name="CommonDescription"><?=isset($options['CommonDescription'])?$options['CommonDescription']:''?></textarea>
+			<span class="tip">其他页面的详细描述</span>
 		</td>
 	  </tr>
 	  <tr>
 		<th>首页视频链接：</th>
 		<td>
-			<textarea rows="" title="请填写首页视频链接" cols="" name="VideoUrl"><?=isset($options['VideoUrl'])?$options['VideoUrl']:''?></textarea>
+			<textarea rows="" placeholder="请填写首页视频链接" cols="" name="VideoUrl"><?=isset($options['VideoUrl'])?$options['VideoUrl']:''?></textarea>
 			<span class="tip">首页视频链接</span>
 		</td>
 	  </tr>

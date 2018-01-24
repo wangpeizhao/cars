@@ -179,8 +179,8 @@
 				<option value="">选择分类</option>
 				<?php if(!empty($product_term)){
 					foreach($product_term as $item){?>
-					<?php if(!empty($item['sunTerm'])){
-						foreach($item['sunTerm'] as $sunItem){?>
+					<?php if(!empty($item['sonTerm'])){
+						foreach($item['sonTerm'] as $sunItem){?>
 							<option value="<?=$sunItem['id']?>" style="color:#ff6600;"><?=$sunItem['name']?></option>
 							<?php if(!empty($sunItem['grandson'])){?>
 								<?php foreach($sunItem['grandson'] as $son_key=>$son){?>

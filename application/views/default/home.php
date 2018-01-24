@@ -301,7 +301,7 @@
                         });
                     </script>
                 </ul>
-                <a class="more-fastsection" href="/newsflashes" target="_blank" data-stat-click="kuaixunmokuai.gengduo">浏览更多<span class="icon-arrow-right"></span></a>
+                <a class="more-fastsection" href="/newsflash" target="_blank">浏览更多<span class="icon-arrow-right"></span></a>
             </div>
 
 

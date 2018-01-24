@@ -17,6 +17,7 @@ class Classify extends Fzhao_Controller {
             return true;
         }
         $data = $this->_get();
+        $data['title'] = '系统分类';
         $this->view('admin/classifies',$data);
     }
     

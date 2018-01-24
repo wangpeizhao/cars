@@ -93,8 +93,8 @@
 			foreach($terms as $item){?>
       <div class="position"><span>系统</span><span>></span><span><?=$item['name']?></span><span>></span><span id="term"></span></div>
       <ul class="tab" style="margin-top:0px;">
-		<?php if(!empty($item['sunTerm'])){$sunTerm=$item['sunTerm'];
-			foreach($item['sunTerm'] as $key=>$term){?>
+		<?php if(!empty($item['sonTerm'])){$sunTerm=$item['sonTerm'];
+			foreach($item['sonTerm'] as $key=>$term){?>
 				<li><a href="javascript:;" term="<?=$term['taxonomy'].'_'.$term['slug']?>"><?=$term['name']?></a></li>
 			<?php }}?>
 	  </ul>

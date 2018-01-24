@@ -218,7 +218,7 @@ class Fzhao_Controller extends My_Controller {
         define('LOGO', $this->getLogo()); //logo 地址
         define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
 //        $this->checkClose(); //是否关闭网站
-        $this->prohibitIPs(); //是否禁止IP访问
+//        $this->prohibitIPs(); //是否禁止IP访问
 //        $this->visitIp(); //记录访问IP
         $this->userId = 0;
 
@@ -499,11 +499,11 @@ class Client_Controller extends My_Controller {
 //        $this->load->helper('language');
 //        $this->_initLanguage();
 //
-//        define('LOGO', $this->getLogo()); //logo 地址
-//        define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
-//        $this->checkClose(); //是否关闭网站
-//        $this->prohibitIPs(); //是否禁止IP访问
-//        $this->visitIp(); //记录访问IP
+        define('LOGO', $this->getLogo()); //logo 地址
+        define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
+        $this->checkClose(); //是否关闭网站
+        $this->prohibitIPs(); //是否禁止IP访问
+        $this->visitIp(); //记录访问IP
     }
 
     //初始化语言

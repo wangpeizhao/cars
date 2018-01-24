@@ -51,6 +51,11 @@ class News extends Fzhao_Controller {
         $data['views'] = intval($this->input->post('views', true));
         $data['from'] = trim($this->input->post('from', true));
         $data['author'] = trim($this->input->post('author', true));
+        $data['tags'] = trim($this->input->post('tags', true));
+        if (!$data['tags']) {
+            $this->_doIframe('标签不能为空', 0);
+        }
+        $data['tags'] = str_replace('，',',',$data['tags']);
         $data['title'] = trim($this->input->post('title', true));
         if (!$data['title']) {
             $this->_doIframe('标题不能为空', 0);
@@ -70,7 +75,7 @@ class News extends Fzhao_Controller {
         if (!$data['content']) {
             $this->_doIframe('详细内容不能为空', 0);
         }
-        $data['SEOKeywords'] = htmlspecialchars($this->input->post('SEOKeywords', true));
+        $data['SEOKeywords'] = str_replace('，',',',htmlspecialchars($this->input->post('SEOKeywords', true)));
         $data['SEODescription'] = htmlspecialchars($this->input->post('SEODescription', true));
         $data['sort'] = intval($this->input->post('sort', true));
 
@@ -98,13 +103,17 @@ class News extends Fzhao_Controller {
             $fields['update_time'] = _DATETIME_;
 
             $result = $this->admin->edit($fields, $id);
-            $this->doIframe($result);
+            if(!$result){
+                $this->_doIframe('提交失败',0);
+            }
+            $this->_doIframe('提交成功');
         }
         $info['thumb_tiny'] = changeImagePath($info['thumb'], 'tiny');
         $data['terms'] = $this->admin->getTermByTaxonomy('news');
         $data['data'] = $info;
         $data['title'] = '编辑' . $this->title . ' - ' . $info['title'];
         $data['_title_'] = $this->title;
+        $data['tags'] = $this->admin->getTermByTaxonomy('tags');
         $this->view('admin/news_edit', $data);
     }
 
@@ -129,14 +138,17 @@ class News extends Fzhao_Controller {
             $result = $this->admin->add($fields);
             if ($result) {
                 $this->admin->dbSet('term', array('count' => 'count+1'), array('id' => $fields['term_id']));
+            }else{
+                $this->_doIframe('提交失败',0);
             }
             $this->admin->trans_complete();
 
-            $this->doIframe($result);
+            $this->_doIframe('提交成功');
         }
         $data['terms'] = $this->admin->getTermByTaxonomy('news');
         $data['title'] = '添加' . $this->title;
         $data['_title_'] = $this->title;
+        $data['tags'] = $this->admin->getTermByTaxonomy('tags');
         $this->view('admin/news_add', $data);
     }
 

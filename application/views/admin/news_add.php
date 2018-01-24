@@ -20,11 +20,36 @@
           return false;
       }
 
-      if(!$.trim($('textarea[name="content"]').val())){
-          alert('详细内容不能为空');
-          return false;
-      }
+      // if(!$.trim($('textarea[name="content"]').val())){
+      //     alert('详细内容不能为空');
+      //     return false;
+      // }
   }
+
+  $(function(){
+    $('textarea[name="summary"]').blur(function(){
+      var val = $(this).val();
+      if(!$.trim(val)){
+        return false;
+      }
+      var SEODescription = $('textarea[name="SEODescription"]').val();
+      if(!$.trim(SEODescription)){
+        $('textarea[name="SEODescription"]').val(val);
+      }
+    });
+
+    $('input[name="tags"]').blur(function(){
+      var val = $(this).val();
+      if(!$.trim(val)){
+        return false;
+      }
+      var SEOKeywords = $('input[name="SEOKeywords"]').val();
+      if(!$.trim(SEOKeywords)){
+        $('input[name="SEOKeywords"]').val(val);
+      }
+    });
+
+  });
   </script>
   <div id="admin_right">
     <div class="headbar">
@@ -71,6 +96,43 @@
                   <tr>
                     <th>作者：</th>
                     <td><input type="text" placeholder="作者" value="" maxlength="30" name="author" class="normal"></td>
+                  </tr>
+                  <tr>
+                    <th>标签：</th>
+                    <td>
+                      <?php if(!empty($tags['childs'])){?>
+                        <?php foreach($tags['childs'] as $item){?>
+                          <p class="tags">
+                            <label><input type="checkbox" value="<?=$item['id']?>"><b><span><?=$item['name']?></span></b></label>:
+                            <?php if(empty($item['childs'])){continue;}?>
+                            <?php foreach($item['childs'] as $_item){?>
+                              <label><input type="checkbox" value="<?=$_item['id']?>"><span><?=$_item['name']?></span></label>,
+                            <?php }?>
+                          </p>
+                        <?php }?>
+                      <?php }?>
+                      <input type="text" placeholder="标签,多个用','隔开" value="" readonly name="_tags" class="normal">
+                      <input type="hidden" placeholder="标签,多个用','隔开" value="<?=isset($data['tags'])?$data['tags']:''?>" readonly name="tags" class="normal">
+                      <script type="text/javascript">
+                        $(function(){
+                          $('p.tags input:checkbox').click(function(){
+                            var tags = [];
+                            var tagsIds = [];
+                            $('p.tags input:checkbox').each(function(k,v){
+                              if($(v).prop('checked')){
+                                tags.push($(v).parent().find('span').text());
+                                tagsIds.push($(v).val());
+                              }
+                            });
+                            var _tags = tags.join(',');
+                            var _tagsIds = tagsIds.join(',');
+                            $('input[name="_tags"]').val(_tags);
+                            $('input[name="tags"]').val(_tagsIds);
+                            $('input[name="SEOKeywords"]').val(_tags);
+                          });
+                        });
+                      </script>
+                    </td>
                   </tr>
                   <tr>
                     <th>详细内容：</th>
