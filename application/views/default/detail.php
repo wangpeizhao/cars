@@ -35,8 +35,8 @@
                     </div>
                     <?php if($tags){?>
                     <section class="single-post-tags">
-                        <?php foreach($tags as $item){?>
-                        <a class="kr-tag-gray" href="/tags/<?=$item?>" target="_blank"><?=$item?></a>
+                        <?php foreach($tags as $k=>$item){?>
+                        <a class="kr-tag-gray" href="/tag/<?=$k?>.html"><?=$item?></a>
                         <?php }?>
                     </section>
                     <?php }?>

@@ -85,6 +85,7 @@ class System extends Fzhao_Controller {
             $company['companyMobile'] = trim($post['companyMobile']);
             $data['company'] = serialize($company);
             $data['sitesName'] = serialize(trim($post['sitesName']));
+            $data['sitesShortName'] = serialize(trim($post['sitesShortName']));
             $data['IndexKeywords'] = serialize(trim($post['IndexKeywords']));
             $data['IndexDescription'] = serialize(trim($post['IndexDescription']));
             $data['CommonKeywords'] = serialize(trim($post['CommonKeywords']));

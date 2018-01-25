@@ -53,3 +53,4 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['p/(:num).html'] = 'newsflash/detail/$1';
+$route['tag/(:any).html'] = 'tag/index/$1';

@@ -331,6 +331,9 @@
     display: inline-block;
     white-space: nowrap;
 }
+.car_article_list .tags-list span.separate:last-child{
+    display: none;
+}
 .car_article_list .info-list-abtest {
     padding-right: 1rem!important;
 }

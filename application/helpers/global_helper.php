@@ -710,16 +710,16 @@ if (!function_exists('getConditions')) {
  * 时间轴函数, Unix 时间戳
  * @param int $time 时间
  */
-function TranTime($time) {
+function TimeLine($time) {
     //$time = strtotime($time);
     $nowTime = time();
     $message = '';
     //一年前
-    if (idate('Y', $nowTime) != idate('Y', $time)) {
+    if (date('Y', $nowTime) != date('Y', $time)) {
         $message = date('Y年m月d日', $time);
     } else {
         //同一年
-        $days = idate('z', $nowTime) - idate('z', $time);
+        $days = date('z', $nowTime) - date('z', $time);
         switch (true) {
             //一天内
             case (0 == $days):
@@ -736,7 +736,7 @@ function TranTime($time) {
                     }
                     $message = intval($seconds / 60) . '分钟前';
                 }
-                $message = idate('H', $nowTime) - idate('H', $time) . '小时前';
+                $message = date('H', $nowTime) - date('H', $time) . '小时前';
                 break;
             //昨天
             case (1 == $days):

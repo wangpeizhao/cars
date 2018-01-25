@@ -1,6 +1,6 @@
 <html lang="zh-CN" class="" style="font-size: 20px;">
     <head>
-        <title><?=!empty($title)?$title.'_36氪':SITESNAME?></title>
+        <title><?=!empty($title)?$title.'_'.SITESNAMESHORT:SITESNAME?></title>
         <meta name="keywords" content="创业,互联网创业,互联网创业项目">
         <meta name="description" content="36氪为您提供创业资讯、科技新闻、投融资对接、股权投资、极速融资等创业服务，致力成为创业者可以依赖的创业服务平台，为创业者提供最好的产品和服务。">
         <meta property="og:url" content="http://36kr.com/">

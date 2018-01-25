@@ -71,7 +71,7 @@ class News extends Fzhao_Controller {
         $this->load->helper('char');
         $data['ft_title'] = wordSegment($data['title']);
         $data['summary'] = htmlspecialchars($this->input->post('summary', true));
-        $data['content'] = str_replace(site_url(''), 'LWWEB_LWWEB_DEFAULT_URL', htmlspecialchars($this->input->post('content')));
+        $data['content'] = htmlspecialchars($this->input->post('content'));
         if (!$data['content']) {
             $this->_doIframe('详细内容不能为空', 0);
         }
@@ -82,6 +82,26 @@ class News extends Fzhao_Controller {
         $data['thumb'] = str_replace(site_url(''), '', trim($this->input->post('thumb', true)));
 
         return $data;
+    }
+    
+    private function _calculate_term_count($fields,$info = array()){
+        $tags = $fields['tags']?explode(',',$fields['tags']):array();
+        $plusTags = $minusTags = array();
+        if($tags){
+            $originTags = !empty($info['tags'])?explode(',',$info['tags']):array();
+            $plusTags = array_diff($tags,$originTags);
+            $minusTags = array_diff($originTags,$tags);
+        }
+        if($plusTags){
+            foreach($plusTags as $item){
+                $this->admin->dbSet('term',array('count'=>'count + 1'), array('id' => $item));
+            }
+        }
+        if($minusTags){
+            foreach($minusTags as $item){
+                $this->admin->dbSet('term',array('count'=>'count - 1'), array('id' => $item));
+            }
+        }
     }
 
     /**
@@ -101,8 +121,10 @@ class News extends Fzhao_Controller {
         if (IS_POST) {
             $fields = $this->_verifyForm($info);
             $fields['update_time'] = _DATETIME_;
-
+            $this->admin->trans_start();
+            $this->_calculate_term_count($fields,$info);
             $result = $this->admin->edit($fields, $id);
+            $this->admin->trans_complete();
             if(!$result){
                 $this->_doIframe('提交失败',0);
             }
@@ -137,7 +159,7 @@ class News extends Fzhao_Controller {
             $this->admin->trans_start();
             $result = $this->admin->add($fields);
             if ($result) {
-                $this->admin->dbSet('term', array('count' => 'count+1'), array('id' => $fields['term_id']));
+                $this->_calculate_term_count($fields);
             }else{
                 $this->_doIframe('提交失败',0);
             }

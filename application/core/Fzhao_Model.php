@@ -734,7 +734,7 @@ class Fzhao_Model extends CI_Model {
         }
         
         $_terms = $this->getData(array(
-            'fields' => 'id,name,parent,slug,taxonomy',
+            'fields' => 'id,name,parent,slug,taxonomy,count',
             'table' => 'term',
             '_conditions' => array(array('isHidden' => '0'), array('lang' => _LANGUAGE_)),
             '_order' => array(array('parent' => 'asc'), array('sort' => 'desc')),
@@ -781,14 +781,27 @@ class Fzhao_Model extends CI_Model {
         if (!$id) {
             return null;
         }
-        $result = $this->getData(array(
+        $ids = $id;
+        if(!is_array($id)){
+            $ids = array($ids);
+        }
+        $params = array(
             'fields' => '*',
             'table' => 'term',
-            '_conditions' => array(array('id' => $id),array('isHidden' => '0')), //, 'lang' => _LANGUAGE_
-            'row' => true
-        ));
-        if($field && isset($result[$field])){
-            return $result[$field];
+            '_conditions' => array(array('isHidden' => '0')), //, 'lang' => _LANGUAGE_
+            'ins' => array(array('id' => $ids))
+        );
+        if(!is_array($id)){
+            $params['row'] = true;
+        }
+        $result = $this->getData($params);
+        if($field){
+            if(!is_array($id) && isset($result[$field])){
+                return $result[$field];
+            }
+            if(is_array($id) && $result){
+                return array_column($field, 'id');
+            }
         }
         return $result;
     }

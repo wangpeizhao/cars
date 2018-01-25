@@ -10,6 +10,7 @@ class Home extends Client_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('default/home_model', 'admin');
+        $this->load->model('default/tag_model', 'tag');
         $this->title = '首页';
     }
     
@@ -36,6 +37,7 @@ class Home extends Client_Controller {
             $about = str_replace('LWWEB_LWWEB_DEFAULT_URL', site_url(''), html_entity_decode(file_get_contents($file)));
             $data['about'] = trim(str_replace('&nbsp;','',strip_tags($about)));
         }
+        $data['hotTags'] = $this->tag->get_hot_tags(10);
         $this->view('home',$data);
     }
 

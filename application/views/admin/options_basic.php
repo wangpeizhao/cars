@@ -81,11 +81,19 @@
 	</colgroup>
 	<tbody>
 	  <tr>
-		<th>网站名称：</th>
+		<th>网站全称：</th>
 		<td>
 			<input type="text" placeholder="网站名称不能为空" value="<?=isset($options['sitesName'])?$options['sitesName']:''?>" name="sitesName" class="normal" maxlength="80">
 			<label style="color:red;">*</label>
 			<span class="tip">网站名称</span>
+		</td>
+	  </tr>
+	  <tr>
+		<th>网站简称：</th>
+		<td>
+			<input type="text" placeholder="网站简称" value="<?=isset($options['sitesShortName'])?$options['sitesShortName']:''?>" name="sitesShortName" class="normal" maxlength="80">
+			<!-- <label style="color:red;">*</label> -->
+			<span class="tip">网站简称</span>
 		</td>
 	  </tr>
 	  <tr>

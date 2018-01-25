@@ -132,16 +132,21 @@ class Upload extends Fzhao_Controller {
             return false;
         }
         $pathinfo = pathinfo($uri);//ww($pathinfo);
-        $ext = $pathinfo['extension'];
-        if (!$ext) {
-            return false;
+        if(!empty($pathinfo['extension'])){
+            $ext = $pathinfo['extension'];
+            if (!$ext) {
+                return false;
+            }
+            $_ext = array();
+            preg_match('/^jpg|gif|png|jpeg/', strtolower($ext), $_ext);
+            if (!$_ext) {
+                return false;
+            }
+            $_ext_ = current($_ext);
+        }else{
+            $_ext_ = 'jpg';
         }
-        $_ext = array();
-        preg_match('/^jpg|gif|png|jpeg/', strtolower($ext), $_ext);
-        if (!$_ext) {
-            return false;
-        }
-        $_ext_ = current($_ext);
+        
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POST, 0);
         curl_setopt($ch, CURLOPT_URL, $uri);

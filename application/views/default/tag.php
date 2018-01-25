@@ -72,10 +72,10 @@
             <div class="content">
                 <div>
                     <div class="tags_keywords">
-                        <h1>网银钱包</h1>
+                        <h1><?=$name?></h1>
                         <span>相关的文章</span>
                     </div>
-                    <p class="note">36氪聚合所有<span class="select_word">网银钱包</span>相关的文章报道，并为你提供最新的相关资讯.</p>
+                    <p class="note"><?=SITESNAMESHORT?>聚合所有<span class="select_word"><?=$name?></span>相关的文章报道，并为你提供最新的相关资讯.</p>
                     <p class="note" style="margin-top: 2px;">
                         热门标签推荐：
                         &nbsp;&nbsp;&nbsp;<a href="http://36kr.com/tags/wangqubaobei" target="_blank" style="color:#FFF">网趣宝贝</a>
@@ -93,6 +93,46 @@
             <div class="list_con" style="margin-top: 0;">
                 <div class="car_article_list">
                     <ul>
+                        <?php if($news){?>
+                            <?php foreach($news as $item){?>
+                                <li>
+                                    <div class="am-cf inner_li inner_li_abtest">
+                                        <a href="/p/<?=$item['id']?>.html" target="_blank">
+                                            <div class="img_box">
+                                                <div target="_blank">
+                                                    <img src="<?=WEB_DOMAIN.'/'.$item['thumb']?>" alt="<?=$item['title']?>" class="load-img fade">
+                                                </div>
+                                            </div>
+                                            <div class="intro">
+                                                <h3><?=$item['title']?></h3>
+                                                <div class="abstract"><?=$item['summary']?></div>
+                                            </div>
+                                        </a>
+                                        <div class="info">
+                                            <div class="info-list info-list-abtest">
+                                                <div class="user-info">
+                                                    <a href="javascript:;" target="_blank" class="name"><?=$item['author']?></a>
+                                                    <span class="oblique_line">·</span>
+                                                </div>
+                                                <div class="time-div">
+                                                    <span class="time" title="<?=$item['create_time']?>"><?=$item['timeLine']?></span>
+                                                </div>
+                                            </div>
+                                            <div class="tags-list">
+                                                <!-- <i class="icon-tag"></i> -->
+                                                <?php if($item['tags']){?>
+                                                    <?php foreach($item['tags'] as $k=>$item){?>
+                                                        <span><a href="/tag/<?=$k?>.html" target="_blank"><?=$item?></a></span><span class="separate">，</span>
+                                                    <?php }?>
+                                                <?php }?>
+                                            </div>
+                                            <div class="comments-list"><span class="comments">10收藏</span></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php }?>
+                        <?php }?>
+
                         <?php for($i=0;$i<3;$i++){?>
                         <li>
                             <div class="am-cf inner_li inner_li_abtest">
@@ -252,117 +292,7 @@
                 <div class="loading_more" data-stat-click="zhufeed.wenzhanggengduo"><!-- react-text: 715 -->浏览更多<!-- /react-text --><span class="icon-arrow-right"></span></div>
             </div>
         </div><!-- $main --><!-- ^right side --><div class="rightlib">
-            <div class="ads" style="margin-bottom: 8px;">
-                <a href="#" style="background-image: url('<?=img_url('un68ifk27tary2fy.jpeg')?>')"></a>
-                <span class="mark">广告</span>
-            </div>
-
-            <div class="hot_article hot_posts pad_inner">
-                <h3><span>热门文章</span></h3>
-                <ul class="am-list">
-                    <li class="top" data-index="1">
-                        <div>
-                            <div class="img-cover">
-                                <a href="/p/5114448.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.1.5114448">
-                                    <span class=""><b><!-- react-text: 950 -->Top<!-- /react-text --><!-- react-text: 951 -->1<!-- /react-text --></b></span>
-                                    <div class="img-cell" style="background-image: url('https://pic.36krcnd.com/201801/17080416/8bbji6pk757xxcq3!heading');"></div>
-                                    <div class="article-title"><div class="article-wrapper">36氪首发 | 「阿丘科技」完成800万美元A轮融资，DCM和百度风投领投</div></div>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="top" data-index="2">
-                        <div>
-                            <div class="img-cover">
-                                <a href="/p/5114307.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.2.5114307">
-                                    <span class="top2"><b><!-- react-text: 961 -->Top<!-- /react-text --><!-- react-text: 962 -->2<!-- /react-text --></b></span>
-                                    <div class="img-cell" style="background-image: url('https://pic.36krcnd.com/201801/18105631/y80ez69x99o4r1p6!heading');"></div>
-                                    <div class="article-title"><div class="article-wrapper">深度 | 暴跌不止的币圈：史上最疯狂与脆弱的一幕</div></div>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    <?php for($i=2;$i<5;$i++){?>
-                    <li class="top" data-index="<?=$i+1?>">
-                        <div>
-                            <div>
-                                <div class="img-left-cover">
-                                    <a href="/p/1.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.3.1"><span><?=$i?></span>
-                                        <div class="img-cell" style="background-image: url('https://pic.36krcnd.com/201801/18095434/bs9t7wnpbvb0db5f!heading');"></div>
-                                    </a>
-                                </div>
-                                <div class="right-article">
-                                    <h4><a href="/p/1.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.3.1">36氪首发 | 获华润数千万人民币 A+ 轮融资,「极视角」上线计算机视觉 PasS 云平台</a></h4>
-                                    <div class="time_about" title="2018-01-20 09:34">刚刚</div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="top" data-index="<?=$i+1?>">
-                        <div>
-                            <div>
-                                <div class="img-left-cover">
-                                    <a href="/p/1.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.3.1"><span><?=$i?></span>
-                                        <div class="img-cell" style="background-image: url('https://pic.36krcnd.com/201801/18033513/9j4drjyecbcs4n4e!heading');"></div>
-                                    </a>
-                                </div>
-                                <div class="right-article">
-                                    <h4><a href="/p/1.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.3.1">刚刚，任天堂用一套纸盒子，吊打索尼微软的高科技</a></h4>
-                                    <div class="time_about" title="2018-01-20 09:34">刚刚</div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="top" data-index="<?=$i+1?>">
-                        <div>
-                            <div>
-                                <div class="img-left-cover">
-                                    <a href="/p/1.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.3.1"><span><?=$i?></span>
-                                        <div class="img-cell" style="background-image: url('https://pic.36krcnd.com/201801/18120042/8nq8y8j5fqmcx7tw!heading');"></div>
-                                    </a>
-                                </div>
-                                <div class="right-article">
-                                    <h4><a href="/p/1.html" target="_blank" data-stat-click="remenwenzhang.wenzhangbiaoti.3.1">血战2018：优酷、爱奇艺、腾讯共预算亏损190亿</a></h4>
-                                    <div class="time_about" title="2018-01-20 09:34">刚刚</div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <?php }?>
-                </ul>
-            </div>
-
-
-            <div class="hot_tag_right pad_inner">
-                <h3><span>热点标签</span></h3>
-                <div class="inner_con am-cf">
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/tags/taodangpu">淘当铺</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/tags/bitebi">比特币</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/p/5055657.html">Uber新APP</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/p/5055625.html">网约车新政第一天</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/tags/feifanwang">飞凡网</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/tags/qufenqi">趣分期</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/tags/licai">理财相关</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/tags/wangyinqianbao">网银钱包</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/p/5055707.html">苹果iPhone8</a>
-                    <a class="kr-tag-blue" data-stat-click="rementag.biaoqian" target="_blank" href="http://36kr.com/p/5055572.html">网约车新政</a>
-                </div>
-            </div>
-
-            <div class="hot_focus_right pad_inner">
-                <h3><span>热点聚焦</span></h3>
-                <div class="inner_con am-cf">
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="https://www.36jr.com/projects">股权投资项目</a>
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="https://www.36jr.com/project/203">普安药房股权投资</a>
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/533801.html">机器翻译</a>
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/tags/yijiaminsu">一家民宿</a>
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/5061409.html">王思聪香蕉体育</a>
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/532777.html">三好网社区</a>
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/5035627.html">更美医疗</a>
-                    <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/tags/feifanwang">非凡网相关报道</a>
-                </div>
-            </div>
-
+            <?php include('sidebar.php');?>
         </div>
         <!-- $right side -->
 

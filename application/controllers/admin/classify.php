@@ -140,7 +140,7 @@ class Classify extends Fzhao_Controller {
             $this->_doIframe('分类名称不能为空',0);
         }
         
-        $field['slug'] = trim($parms['slug']);
+        $field['slug'] = strtolower(trim($parms['slug']));
         if (!$field['slug']) {
             $this->_doIframe('URL别名不能为空',0);
         }

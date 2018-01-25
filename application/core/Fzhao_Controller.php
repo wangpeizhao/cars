@@ -501,6 +501,7 @@ class Client_Controller extends My_Controller {
 //
         define('LOGO', $this->getLogo()); //logo 地址
         define('SITESNAME', $this->getOptionValue('sitesName')); //网站名称
+        define('SITESNAMESHORT', $this->getOptionValue('sitesShortName')); //网站简称
         $this->checkClose(); //是否关闭网站
         $this->prohibitIPs(); //是否禁止IP访问
         $this->visitIp(); //记录访问IP
@@ -520,9 +521,9 @@ class Client_Controller extends My_Controller {
     }
 
     public function view($path, $data = array()) {
-        $this->load->model('default/home_model','admin');
+        $this->load->model('default/home_model');
         $data['options'] = $this->common->getOptionsByOption_name('company');
-        $data['links'] = $this->admin->getLinks('link');
+        $data['links'] = $this->home_model->getLinks('link');
         $data['foot_mappings'] = array(
             'contactUs' => 'contact',
             'products' => 'products',
