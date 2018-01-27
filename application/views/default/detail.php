@@ -11,7 +11,7 @@
                     <div class="am-cf author-panel">
                         <div class="author am-fl">
                             <a href="javascript:;" class="am-fl"><span class="name"><?=$author?></span></a>
-                            <span class="time am-fl"><span class="dot">&nbsp;•&nbsp;</span><abbr class="time"><?=$create_time?></abbr></span>
+                            <span class="time am-fl"><span class="dot">&nbsp;•&nbsp;</span><abbr class="time"><?=TimeLine(strtotime($create_time))?></abbr></span>
                             <span class="time am-fl"><span class="dot">&nbsp;•&nbsp;</span><abbr class="time"><?=$term_name?></abbr></span>
                         </div>
                     </div>
@@ -53,42 +53,13 @@
                 <div class="layout">
                     <ul>
                         <?php if($interested){?>
-                            <?php foreach($interested as $item){?><li>
+                            <?php foreach($interested as $k=>$item){?><li>
                             <a href="/p/<?=$item['id']?>.html" class="img-box">
                                 <img src="/<?=$item['thumb']?>"/>
                             </a>
-                            <a href="" class="dec"><span>36氪首发 | 智能空中机器人研发企业「酷黑科技」完成Pre-A轮融资，启动研发城市空中交通工具</span></a>
-                        </li><?php }?>
+                            <a href="" class="dec"><span><?=$item['title']?></span></a>
+                        </li><?php echo $k>0 && $k%2==0?'</ul><ul>':'';} ?>
                         <?php }?>
-                        <li>
-                            <a href="" class="img-box">
-                                <img src="https://pic.36krcnd.com/201801/22024844/9upph0vgeu6c86kr!heading">
-                            </a>
-                            <a href="" class="dec"><span>深氪｜携程在手，先搞定3万员工的价值观再走</span></a>
-                        </li><li>
-                            <a href="" class="img-box">
-                                <img src="https://pic.36krcnd.com/201801/08104502/lcmyhonqm98y47pm!heading">
-                            </a>
-                            <a href="" class="dec"><span>消费升级四部曲：同样讲新零售，为什么消费者其实并不care效率问题？</span></a>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <a href="" class="img-box">
-                                <img src="https://pic.36krcnd.com/201801/22011657/wmdmt5qgnpxeao5g!heading">
-                            </a>
-                            <a href="" class="dec"><span>沈南鹏：智能汽车行业比手机大很多，将会是一个几十万亿的市场</span></a>
-                        </li><li>
-                            <a href="" class="img-box">
-                                <img src="https://pic.36krcnd.com/201801/22013827/dr7fz6lubq8kia7c!heading">
-                            </a>
-                            <a href="" class="dec"><span>央视纪录片全程用AI配音，再现已故播音员李易声音</span></a>
-                        </li><li>
-                            <a href="" class="img-box">
-                                <img src="https://pic.36krcnd.com/201801/22021408/vwla19k7vgswgjxr!heading">
-                            </a>
-                            <a href="" class="dec"><span>医疗影像运营服务商「同心医联」完成第四轮融资，加速独立医学影像中心发展</span></a>
-                        </li>
                     </ul>
                 </div>
             </div>

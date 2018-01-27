@@ -733,10 +733,12 @@ function TimeLine($time) {
                         } else {
                             $message = $seconds . '秒前';
                         }
+                    }else{
+                        $message = intval($seconds / 60) . '分钟前';
                     }
-                    $message = intval($seconds / 60) . '分钟前';
+                }else{
+                    $message = date('H', $nowTime) - date('H', $time) . '小时前';
                 }
-                $message = date('H', $nowTime) - date('H', $time) . '小时前';
                 break;
             //昨天
             case (1 == $days):
