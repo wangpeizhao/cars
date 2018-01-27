@@ -30,5 +30,36 @@ class News_model extends Fzhao_Model {
 
         return $result;
     }
+    
+    public function getRelatedNews($tags){
+        if(!$tags){
+            return false;
+        }
+        $news = $this->getData(array(
+            'fields' => 'id,title',
+            'table' => $this->table,
+            '_conditions' => array(array('isHidden' => '0'), array('lang' => _LANGUAGE_), array('is_issue' => '1')),
+            'where' => "CONCAT(',',tags,',') regexp CONCAT('(,',replace('".$tags."',',','|'), '),')",
+            '_order' => array(array('sort' => 'desc'), array('id' => 'desc')),
+            'limit' => array(5,0)
+        ));
+        return $news;
+    }
+    
+    public function getInterestedNews($keywords){
+        if(!$keywords){
+            return false;
+        }
+        
+        $news = $this->getData(array(
+            'fields' => 'id,title,thumb',
+            'table' => $this->table,
+            '_conditions' => array(array('isHidden' => '0'), array('lang' => _LANGUAGE_), array('is_issue' => '1')),
+            'where' => "CONCAT(',',keywords,',') regexp CONCAT('(,',replace('".$keywords."',',','|'), '),')",
+            '_order' => array(array('sort' => 'desc'), array('id' => 'desc')),
+            'limit' => array(5,0)
+        ));
+        return $news;
+    }
 
 }

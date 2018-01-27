@@ -148,6 +148,10 @@
                     </td>
                   </tr>
                   <tr>
+                    <th>关键字：</th>
+                    <td><input type="text" placeholder="关键字,多个用','隔开" value="<?=isset($data['keywords'])?$data['keywords']:''?>" maxlength="255" name="keywords" class="normal"></td>
+                  </tr>
+                  <tr>
                     <th>详细内容：</th>
                     <td><textarea name="content" placeholder="内容"><?=str_replace('LWWEB_LWWEB_DEFAULT_URL',site_url(''),isset($data['content'])?html_entity_decode($data['content']):'');?></textarea>
                       <script>

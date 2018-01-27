@@ -111,7 +111,7 @@
                           </p>
                         <?php }?>
                       <?php }?>
-                      <input type="text" placeholder="标签,多个用','隔开" value="" readonly name="_tags" class="normal">
+                      <input type="text" placeholder="标签,多个用','隔开" value="" maxlength="255" readonly name="_tags" class="normal">
                       <input type="hidden" placeholder="标签,多个用','隔开" value="<?=isset($data['tags'])?$data['tags']:''?>" readonly name="tags" class="normal">
                       <script type="text/javascript">
                         $(function(){
@@ -133,6 +133,10 @@
                         });
                       </script>
                     </td>
+                  </tr>
+                  <tr>
+                    <th>关键字：</th>
+                    <td><input type="text" placeholder="关键字,多个用','隔开" value="" maxlength="255" name="keywords" class="normal"></td>
                   </tr>
                   <tr>
                     <th>详细内容：</th>

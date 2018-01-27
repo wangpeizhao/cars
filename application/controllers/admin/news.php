@@ -51,6 +51,10 @@ class News extends Fzhao_Controller {
         $data['views'] = intval($this->input->post('views', true));
         $data['from'] = trim($this->input->post('from', true));
         $data['author'] = trim($this->input->post('author', true));
+        $data['keywords'] = trim($this->input->post('keywords', true));
+        if($data['keywords']){
+            $data['keywords'] = str_replace(array('，',' '),array(',',','),$data['keywords']);
+        }
         $data['tags'] = trim($this->input->post('tags', true));
         if (!$data['tags']) {
             $this->_doIframe('标签不能为空', 0);
@@ -75,7 +79,8 @@ class News extends Fzhao_Controller {
         if (!$data['content']) {
             $this->_doIframe('详细内容不能为空', 0);
         }
-        $data['SEOKeywords'] = str_replace('，',',',htmlspecialchars($this->input->post('SEOKeywords', true)));
+        $SEOKeywords = $this->input->post('SEOKeywords', true);
+        $data['SEOKeywords'] = htmlspecialchars(str_replace(array('，',' '),array(',',','),$SEOKeywords));
         $data['SEODescription'] = htmlspecialchars($this->input->post('SEODescription', true));
         $data['sort'] = intval($this->input->post('sort', true));
 

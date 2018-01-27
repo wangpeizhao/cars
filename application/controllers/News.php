@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Newsflash extends Client_Controller {
+class News extends Client_Controller {
     
 
     private $title = '';
@@ -17,6 +17,7 @@ class Newsflash extends Client_Controller {
     public function index() {
         $data = array();
         $data['title'] = $this->title;
+        $data['hotTags'] = $this->tag->get_hot_tags(10);
         $this->view('newsflash',$data);
     }
     
@@ -27,9 +28,11 @@ class Newsflash extends Client_Controller {
         $this->verify($data);
         $data['term_name'] = $this->admin->getTermById(intval($data['term_id']),'name');
         $data['praises'] = 0;
+        $data['hotTags'] = $this->tag->get_hot_tags(10);
+        $data['related'] = $this->admin->getRelatedNews($data['tags']);
+        $data['interested'] = $this->admin->getInterestedNews($data['keywords']);
         $this->load->model('default/tag_model', 'tag');
         $data['tags'] = $this->tag->get_tags($data['tags']);
-        $data['hotTags'] = $this->tag->get_hot_tags(10);
         $this->view('detail',$data);
     }
 

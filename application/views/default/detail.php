@@ -52,12 +52,15 @@
                 <h4>您可能感兴趣的文章</h4>
                 <div class="layout">
                     <ul>
-                        <li>
-                            <a href="" class="img-box">
-                                <img src="https://pic.36krcnd.com/201801/19100744/qyi2c3oa6wzru5su!heading"/>
+                        <?php if($interested){?>
+                            <?php foreach($interested as $item){?><li>
+                            <a href="/p/<?=$item['id']?>.html" class="img-box">
+                                <img src="/<?=$item['thumb']?>"/>
                             </a>
                             <a href="" class="dec"><span>36氪首发 | 智能空中机器人研发企业「酷黑科技」完成Pre-A轮融资，启动研发城市空中交通工具</span></a>
-                        </li><li>
+                        </li><?php }?>
+                        <?php }?>
+                        <li>
                             <a href="" class="img-box">
                                 <img src="https://pic.36krcnd.com/201801/22024844/9upph0vgeu6c86kr!heading">
                             </a>
@@ -101,21 +104,15 @@
                         <div class="guess-posts-list">
                             <h4>相关文章</h4>
                             <ul>
-                                <li class="top" data-index="1">
-                                    <a href="/p/212342.html?from=related" target="_blank" class="item" data-stat-click="articles.related.1">
-                                        <span class="desc">网易云音乐发布一周年：拥有3200万个用户自主创建歌单，成为中国最大的在线歌单音乐库</span>
-                                    </a>
-                                </li>
-                                <li class="top" data-index="2">
-                                    <a href="/p/5106389.html?from=related" target="_blank" class="item" data-stat-click="articles.related.2">
-                                        <span class="desc">阿里腾讯“合力围剿”3个月后，网易云音乐为什么还没狗带？</span>
-                                    </a>
-                                </li>
-                                <li class="top" data-index="3">
-                                    <a href="/p/5111161.html?from=related" target="_blank" class="item" data-stat-click="articles.related.3">
-                                        <span class="desc">可能是2018年首个刷屏案例，为什么又是网易云音乐？</span>
-                                    </a>
-                                </li>
+                                <?php if($related){?>
+                                    <?php foreach($related as $item){?>
+                                    <li class="top" data-index="1">
+                                        <a href="/p/<?=$item['id']?>.html" target="_blank" class="item">
+                                            <span class="desc"><?=$item['title']?></span>
+                                        </a>
+                                    </li>
+                                    <?php }?>
+                                <?php }?>
                             </ul>
                         </div>
                         <div class="sponsor" style="display: none;">
