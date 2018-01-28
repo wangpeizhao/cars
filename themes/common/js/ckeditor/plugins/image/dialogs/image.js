@@ -258,11 +258,11 @@
 							onClick:function(){
 								var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
 								if(isChrome){
-									var retFile = open(baseUrl+"/admin/upload/index", '', 'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=730px,height=500px');
+									var retFile = open(baseUrl+"/admin/upload/index", '', 'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=730px,height=550px');
 									_getDialog = this.getDialog();
 									//this.getDialog().setValueOf('info','txtUrl',_retFile);
 								}else{
-									var retFile = showModalDialog(baseUrl+"/admin/upload/index", "", "dialogHeight:500px;dialogWidth:730px;"); 
+									var retFile = showModalDialog(baseUrl+"/admin/upload/index", "", "dialogHeight:550px;dialogWidth:730px;"); 
 									if(retFile != null){
 										this.getDialog().setValueOf('info','txtUrl',retFile);
 									}

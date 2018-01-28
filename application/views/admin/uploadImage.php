@@ -100,6 +100,8 @@
 			$('select._type').change(function(k,v){
 				var val = $(this).val();
 				if(!val){
+					_attachments_type = '';
+					setData(1);
 					return false;
 				}
 				$('select._type').val(val);

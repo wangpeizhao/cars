@@ -51,6 +51,9 @@
     
   });
   </script>
+  <style type="text/css">
+    .tags label{margin-left:0;margin-right:10px;}
+  </style>
   <div id="admin_right">
     <div class="headbar">
       <div class="position"><span>系统</span><span>></span><span><?=$_title_?></span><span>></span><span>修改<?=$_title_?></span></div>
@@ -116,6 +119,7 @@
                           </p>
                         <?php }?>
                       <?php }?>
+                      <p><a href="javascript:;" style="color:blue;">+新增标签</a></p>
                       <?php 
                       $tagsStr = array();
                       if($_tags){

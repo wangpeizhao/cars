@@ -51,6 +51,9 @@
 
   });
   </script>
+  <style type="text/css">
+    .tags label{margin-left:0;margin-right:10px;}
+  </style>
   <div id="admin_right">
     <div class="headbar">
       <div class="position"><span>系统</span><span>></span><span><?=$_title_?></span><span>></span><span>添加<?=$_title_?></span></div>
@@ -111,6 +114,7 @@
                           </p>
                         <?php }?>
                       <?php }?>
+                      <p><a href="javascript:;" style="color:blue;">+新增标签</a></p>
                       <input type="text" placeholder="标签,多个用','隔开" value="" maxlength="255" readonly name="_tags" class="normal">
                       <input type="hidden" placeholder="标签,多个用','隔开" value="<?=isset($data['tags'])?$data['tags']:''?>" readonly name="tags" class="normal">
                       <script type="text/javascript">

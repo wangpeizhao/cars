@@ -35,7 +35,7 @@ $(function(){
         });
         $('a.choose').click(function(){
             var iWidth=730;                          //弹出窗口的宽度; 
-            var iHeight=500;                         //弹出窗口的高度; 
+            var iHeight=550;                         //弹出窗口的高度; 
             //获得窗口的垂直位置 
             var iTop = (window.screen.availHeight - 30 - iHeight) / 2; 
             //获得窗口的水平位置 
