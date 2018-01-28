@@ -90,3 +90,5 @@ defined('_LANGUAGE_')        OR define('_LANGUAGE_', 'cn'); // default language
 defined('_DATETIME_')        OR define('_DATETIME_', date('Y-m-d H:i:s')); // default datetime
 defined('_DATE_')            OR define('_DATE_', date('Y-m-d')); // default date
 defined('_TIME_')            OR define('_TIME_', time()); // default date
+
+defined('VIEW_NEWS_RECORD_INTERVAL')    OR define('VIEW_NEWS_RECORD_INTERVAL', 60); // time of view news interval;

@@ -42,27 +42,54 @@
                     <?php }?>
                     <div class="fav-wrapper">
                         <a href="javascript:;" class="post-pc-like">赞
-                            <span class="total-count-box"><b>(<?=$praises?>)</b></span>
+                            <span class="total-count-box">(<b><?=$praises?$praises:0?></b>)</span>
                         </a>
+                        <script type="text/javascript">
+                            $(function(){
+                                $('a.post-pc-like').click(function(){
+                                    var id = '<?=$id?>';
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '/news/doPraises',
+                                        data: {id:id},
+                                        dataType: "json",
+                                        timeout: 30000,
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                            alert('赞不成功')
+                                        },
+                                        success: function(data) {
+                                            if(data.code=='1'){
+                                                alert('success');
+                                                var num = $('a.post-pc-like span b').text();
+                                                $('a.post-pc-like span b').text(parseInt(num) + 1);
+                                                return true;
+                                            }else{
+                                                alert(data.msg);
+                                                return false;
+                                            }
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
-
+            <?php if($interested){?>
             <div class="related-articles">
                 <h4>您可能感兴趣的文章</h4>
                 <div class="layout">
                     <ul>
-                        <?php if($interested){?>
-                            <?php foreach($interested as $k=>$item){?><li>
+                        <?php foreach($interested as $k=>$item){?><li>
                             <a href="/p/<?=$item['id']?>.html" class="img-box">
                                 <img src="/<?=$item['thumb']?>"/>
                             </a>
                             <a href="" class="dec"><span><?=$item['title']?></span></a>
                         </li><?php echo $k>0 && $k%2==0?'</ul><ul>':'';} ?>
-                        <?php }?>
                     </ul>
                 </div>
             </div>
+            <?php }?>
 
             <div class="ads_box dn">
                 <a href="" style="background-image:url(https://pic.36krcnd.com//avatar/201712/18032420/p37snbq34xqdjtl7.jpg)" target="_blank" rel="nofollow"></a>
@@ -94,14 +121,38 @@
                         </div>
                         <div class="next-post-wrapper show">
                             <h4>下一篇</h4>
-                            <div class="item" data-stat-click="articles.next">
-                                <a href="/p/5114863.html?from=next" class="title" target="_blank">记录创业者 | C.D.Utility在“慢慢”创业：做阳刚、实用的男装</a>
+                            <div class="item">
+                                <?php if($next){?>
+                                <a href="/p/<?=$next['id']?>.html" class="title" target="_blank"><?=$next['title']?></a>
                                 <div class="tags-list">
                                     <i class="icon-tag"></i>
-                                    <span><a href="/tag/%E6%B6%88%E8%B4%B9" target="_blank">消费</a><span>，</span></span>
-                                    <span><a href="/tag/%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1" target="_blank">企业服务</a><span>，</span></span>
-                                    <span><a href="/tag/%E6%B0%AA%E7%A9%BA%E9%97%B4" target="_blank">氪空间</a></span>
+                                    <?php if($next['tags']){?>
+                                        <?php foreach($next['tags'] as $k=>$item){?>
+                                    <span><a href="/tag/<?=$k?>.html" target="_blank"><?=$item?></a><span>，</span></span>
+                                    <?php }}?>
                                 </div>
+                                <?php }else{?>
+                                <a href="/tag/<?=$other?$other['slug']:'javascript:;'?>.html" class="title" target="_blank">没有喽，试下其他？</a>
+                                <?php }?>
+                            </div>
+                        </div>
+
+
+                        <div class="next-post-wrapper show">
+                            <h4>上一篇</h4>
+                            <div class="item">
+                                <?php if($prev){?>
+                                <a href="/p/<?=$prev['id']?>.html" class="title" target="_blank"><?=$prev['title']?></a>
+                                <div class="tags-list">
+                                    <i class="icon-tag"></i>
+                                    <?php if($prev['tags']){?>
+                                        <?php foreach($prev['tags'] as $k=>$item){?>
+                                    <span><a href="/tag/<?=$k?>.html" target="_blank"><?=$item?></a><span>，</span></span>
+                                    <?php }}?>
+                                </div>
+                                <?php }else{?>
+                                <a href="/tag/<?=$other?$other['slug']:'javascript:;'?>.html" class="title" target="_blank">没有喽，试下其他？</a>
+                                <?php }?>
                             </div>
                         </div>
                     </div>

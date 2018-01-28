@@ -78,9 +78,11 @@
                     <p class="note"><?=SITESNAMESHORT?>聚合所有<span class="select_word"><?=$name?></span>相关的文章报道，并为你提供最新的相关资讯.</p>
                     <p class="note" style="margin-top: 2px;">
                         热门标签推荐：
-                        &nbsp;&nbsp;&nbsp;<a href="http://36kr.com/tags/wangqubaobei" target="_blank" style="color:#FFF">网趣宝贝</a>
-                        &nbsp;&nbsp;&nbsp;<a href="http://36kr.com/tags/wangzhanchuangye" target="_blank" style="color:#FFF">网站创业</a>
-                        &nbsp;&nbsp;&nbsp;<a href="http://36kr.com/tags/jingweichuangtou" target="_blank" style="color:#FFF">经纬创投</a>
+                        <?php if($hotTagsRSS){?>
+                            <?php foreach($hotTagsRSS as $k=>$item){?>
+                            &nbsp;&nbsp;&nbsp;<a href="/tag/<?=$item['slug']?>.html" style="color:#FFF"><?=$item['name']?></a>
+                            <?php }?>
+                        <?php }?>
                     </p>
                 </div>
             </div>

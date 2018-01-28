@@ -10,6 +10,7 @@ class Tag extends Client_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('default/tag_model', 'admin');
+        $this->load->model('default/news_model', 'news');
         $this->title = '相关报道';
     }
     
@@ -30,6 +31,9 @@ class Tag extends Client_Controller {
         $data['news'] = $news;
         $data['title'] = $term['name'].$this->title;
         $data['hotTags'] = $this->admin->get_hot_tags(10);
+        $data['hotTagsRSS'] = $this->admin->get_hot_tags(5);
+        //热门文章
+        $data['hotNews'] = $this->news->getHotNews(10);
         $this->view('tag',$data);
     }
 

@@ -341,6 +341,9 @@
 .next-post-wrapper .tags-list a {
     color: #9ca4ab;
 }
+.next-post-wrapper .item .tags-list>span:last-child span{
+    display: none;
+}
 
 #pin-wrapper-fixed{
     width: 320px;
