@@ -24,17 +24,24 @@ class Upload extends Fzhao_Controller {
      */
     function index() {
         if (!IS_POST) {
-            $this->view('admin/uploadImage');
+            $result = array();
+            $result['terms'] = $this->upload_model->getTermByTaxonomy('attachments');
+            $this->view('admin/uploadImage',$result);
             return false;
         }
         $currPage = getPages('currPage');
         $rows = getPageSize(8);
-        $post['currPage'] = $this->input->post('currPage', true);
-        $post['rows'] = $this->input->post('rows', true);
+//        $post['currPage'] = intval($this->input->post('currPage', true));
+//        $post['rows'] = intval($this->input->post('rows', true));
+        $type = intval($this->input->post('type', true));
+        $_conditions = array(array('is_image' => '1'), array('isHidden' => '0'));
+        if($type){
+            $_conditions[] = array('tid' => $type);
+        }
         $attachments = $this->upload_model->getData(array(
             'fields' => 'id,file_path,file_orig',
             'table' => 'attachments',
-            '_conditions' => array(array('is_image' => '1'), array('isHidden' => '0')),
+            '_conditions' => $_conditions,
             'limit' => array($rows, $rows * ($currPage - 1)),
             '_order' => array(array('id' => 'desc'))
         ));
@@ -45,7 +52,7 @@ class Upload extends Fzhao_Controller {
         }
         $total = $this->upload_model->getData(array(
             'table' => 'attachments',
-            '_conditions' => array(array('is_image' => '1'), array('isHidden' => '0')),
+            '_conditions' => $_conditions,
             'count' => true,
         ));
         $result['files'] = $attachments;

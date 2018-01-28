@@ -6,7 +6,8 @@ function setData(currPage) {
 			data: {
 				currPage: currPage,
 				rows: rows,
-				act: 'get'
+				act: 'get',
+				type: _attachments_type
 			},
 			dataType: "json",
 			timeout: 30000,

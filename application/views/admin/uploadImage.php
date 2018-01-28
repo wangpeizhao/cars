@@ -15,7 +15,8 @@
 		site_url = '<?=site_url('')?>',
 		rows = 8,
 		pathVal = '',
-		thumb = '';
+		thumb = '',
+		_attachments_type = '';
 	$(function(){
 		try{
 			setData(1);
@@ -96,6 +97,18 @@
 					},"json");
 				}
 			});
+			$('select._type').change(function(k,v){
+				var val = $(this).val();
+				if(!val){
+					return false;
+				}
+				$('select._type').val(val);
+				if(!$(this).hasClass('bind')){
+					return false;
+				}
+				_attachments_type = val;
+				setData(1);
+			});
 		}catch(e){
 			alert(e.message);
 		}
@@ -143,12 +156,20 @@
 			alert('请先选择图像文件');
 			return false;
 		}
+		if(!$('select[name="_type_2"]').val()){
+			alert('请先选择附件类型');
+			return false;
+		}
 		$("#progress_bar").fadeIn();
 	}
 
 	function _checkForm(){
 		if(!$.trim($('input[name="imageUrl"]').val())){
 			alert('请输入网络图片地址');
+			return false;
+		}
+		if(!$('select[name="_type_3"]').val()){
+			alert('请先选择附件类型');
 			return false;
 		}
 		$("#progress_bar").fadeIn();
@@ -159,10 +180,25 @@
 			alert(str);
 			return false;
 		}
-		alert('提交成功');
+		// alert('上传成功');
+		if(confirm('上传成功,是否继续上传')){
+			$("#progress_bar").fadeOut();
+			document.getElementById("file").outerHTML = document.getElementById("file").outerHTML;
+			$('input[name="file[]"]').click();
+		}else{
+			$("#progress_bar").fadeOut();
+			$('.tab li').eq(0).click();
+			//window.returnValue = path;
+			//window.close();
+		}
 	}
 //-->
 </script>
+<style type="text/css">
+	select.normal{
+		margin:0px 0 20px 5px;
+	}
+</style>
 </head>
 <body>
 <div class="container">
@@ -175,6 +211,12 @@
 		</ul>
 		<div class="div_box">
 			<div class="div" style="display: block;margin:20px;">
+				<div style="text-align:left;">
+					<select name="_type_1" class="normal _type bind">
+						<option value="">- 请选择附件分类 -</option>
+						<?php include('terms.php');?>
+					</select>
+				</div>
 				<div class="images">
 					<ul id="images">
 						<li align="center" style="padding:20px;width:32px;height:32px;border:0px;"><img src="<?=site_url('')?>/themes/admin/images/loading.gif" title="Loading..." style="width:32px;height:32px;"/></li>
@@ -189,7 +231,13 @@
 				</div>
 			</div>
 			<div class="div" style="display: none;margin:20px;" align="left">
-				<form method="post" enctype="multipart/form-data" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/upload/uploading" novalidate="true" target="ajaxifr" onSubmit="return checkForm();">
+				<form method="post" enctype="multipart/form-data" action="<?=WEB_DOMAIN?>/admin/upload/uploading" novalidate="true" target="ajaxifr" onSubmit="return checkForm();">
+					<div style="text-align:left;">
+						<select name="_type_2" class="normal _type">
+							<option value="">- 请选择附件分类 -</option>
+							<?php include('terms.php');?>
+						</select>
+					</div>
 					<input type="file" id="file" size="30" name="file[]" multiple="" class="normal">
 					<input type="submit" class="button" style="margin-left:10px;" value="上传">
 					<img src="<?=site_url()?>/themes/common/images/progress_bar.gif" style="margin-left:3px;display:none;position:relative;top:3px;" id="progress_bar" alt="正在上传...">
@@ -199,7 +247,13 @@
 				</form>
 			</div>
 			<div class="div" style="display: none;margin:20px;" align="left">
-				<form method="post" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/upload/uploading" novalidate="true" target="ajaxifr" onSubmit="return _checkForm();">
+				<form method="post" action="<?=WEB_DOMAIN?>/admin/upload/uploading" novalidate="true" target="ajaxifr" onSubmit="return _checkForm();">
+					<div style="text-align:left;">
+						<select name="_type_3" class="normal _type">
+							<option value="">- 请选择附件分类 -</option>
+							<?php include('terms.php');?>
+						</select>
+					</div>
 					<input type="text" placeholder="请输入网络图片地址" name="imageUrl" class="normal" style="width:350px;">
 					<input type="submit" class="button" style="margin-left:10px;" value="上传">
 					<img src="<?=site_url()?>/themes/common/images/progress_bar.gif" style="margin-left:3px;display:none;position:relative;top:3px;" id="progress_bar" alt="正在上传...">
