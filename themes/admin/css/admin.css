@@ -340,6 +340,15 @@ textarea[disabled], textarea[readonly], fieldset[disabled]{
 	background:url(../images/admin_bg.gif) 0 -271px repeat-x;
 	border-radius: 4px;
 }
+.close{
+	background: #fff;
+    /*padding: 4px 20px;*/
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    outline: none;
+    color: #333;
+    /*margin: 10px 0 10px 10px;*/
+}
 .submit:hover{
 	filter:alpha(opacity=80);
 	opacity:0.8;
@@ -2207,3 +2216,71 @@ a.imgPopover img.popover{
 }
 span.yes{color: green;}
 span.no{color: red;}
+
+/*弹出层*/
+.popup_bg{
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 9999;
+	background: rgba(255,255,255,0.6);
+	display: none;
+}
+.popup_content{
+	border-radius: 6px;
+	margin: auto;
+	position: absolute;
+	text-align: center;
+    width: 620px; 
+    height: 380px;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+.popup_content .js-none{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	background: #000;
+	color: #fff;
+	width: 25px;
+	border-radius: 12.5px;
+	margin-top: -2px;
+	cursor: pointer;
+	height:25px;
+	line-height: 25px;
+	text-align: center;
+}
+.popup_content .js-none i{
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: -1px;
+	margin-top:1px;
+}
+.popup_content table.list_table th{
+	text-align: right;
+	padding-right: 10px;
+}
+.popup_content table.list_table td{
+	text-align: left;
+	padding-left: 10px;
+}
+
+.popup_content form h1{
+	text-align: left;
+	font-size: 14px;
+	margin-bottom: 10px;
+	margin: 15px;
+}
+.popup_content form .title{border-bottom:1px solid #ddd;}
+.popup_content form .form{padding:20px 15px;}
+.popup_content form .btns{border-top:1px solid #ddd;}
+

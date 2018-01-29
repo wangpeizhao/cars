@@ -85,7 +85,7 @@ class Upload extends Fzhao_Controller {
             if(!$success){
                 $this->_doIframe('上传失败',0);
             }
-            $this->_fill_attachment($attachment,$success);
+            $this->_fill_attachment($attachment,$success,$act);
             $attachment && $this->upload_model->dbInsert('attachments', $attachment);
             $this->zoomImage($success['file_path'], $directory);
             $this->_doIframe(_URL_ . $success['file_path']);
@@ -113,7 +113,7 @@ class Upload extends Fzhao_Controller {
                 $_path = $config['upload_path'] . '/' . $success['file_name'];
                 $success['file_path'] = $_path;
                 $this->zoomImage($_path, $directory);
-                $this->_fill_attachment($attachment,$success);
+                $this->_fill_attachment($attachment,$success,$act);
                 $attachments[] = $attachment;
             }
         }
@@ -121,7 +121,12 @@ class Upload extends Fzhao_Controller {
         $this->_doIframe(_URL_ . $config['upload_path'] . '/' . $success['file_name']);
     }
     
-    private function _fill_attachment(&$attachment,$item){
+    private function _fill_attachment(&$attachment,$item,$act){
+        if($act == 'location'){
+            $attachment['tid'] = intval($this->input->post('_type_2',true));
+        }else if($act == 'network'){
+            $attachment['tid'] = intval($this->input->post('_type_3',true));
+        }
         $attachment['file_orig'] = $item['orig_name'];
         $attachment['file_name'] = $item['file_name'];
         $attachment['file_ext'] = $item['file_ext'];

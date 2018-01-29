@@ -133,98 +133,99 @@
 			<tbody><?=$menus_lists?></tbody>
 		</table>
 		<div class="clear"></div>
-		<div class="b_g">
-			<div class="n_center">
-				<span class="js-none"><i>×</i></span>
-				<h1>添加分类</h1>
+		<div class="popup_bg">
+			<div class="popup_content">
 				<form method="post" name="ModelForm" action="" data-parsley-validate="" novalidate target="ajaxifr" onSubmit="return checkForm();">
-				<table class="list_table" width="100%" border="0" cellpadding="0" cellspacing="1" style="line-height: 35px;">
-					<tr>
-						<th width="20%">父级分类</th>
-						<td width="80%">
-							<select name="pid" class="normal" required>
-								<option value="">- 请选择 -</option>
-								<option value="0">顶级菜单</option>
-								<?=$select_menus?>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th>分类名称</th>
-						<td><input placeholder="分类名称" type="text" name="name" class="normal" style="width: 365px;" required></td>
-					</tr>
-					<tr>
-						<th>URL别名</th>
-						<td><input placeholder="URL别名" type="text" name="slug" class="normal" style="width: 365px;" required></td>
-					</tr>
-					<tr>
-						<th>分类描述</th>
-						<td><input placeholder="分类描述" type="text" name="description" class="normal" style="width: 365px;"></td>
-					</tr>
-					<tr>
-						<th>分类排序</th>
-						<td><input placeholder="分类排序" type="number" name="sort" class="normal" style="width: 365px;"></td>
-					</tr>
-					<tr>
-						<th>是否激活</th>
-						<td class="radioIsHidden">
-							<label style="width:50px;display:inline;"><input style="width:20px;" type="radio" checked name="isHidden" value="0">是</label> 
-        					<label style="width:50px;display:inline;"><input style="width:20px;" type="radio" name="isHidden" value="1">否</label>
-						</td>
-					</tr>
-				</table>
-				<table width="100%" border="0" align="center" id="Btn" style="text-align:center;margin-top:5px;">
-					<tr>
-						<td valign="center">
-						<input type="hidden" name="id" value="0">
-						<input class="submit" type="submit" id="submit_menu" value="保存" onfocus="this.blur();"/>
-						<input class="submit close" type="button" value="关闭" onfocus="this.blur();"/>
-						</td>
-					</tr>
-				</table>
+					<span class="js-none"><i>×</i></span>
+					<div class="title">
+						<h1>添加分类</h1>
+					</div>
+				
+				
+					<div class="form">
+						<table class="list_table" width="100%" border="0" cellpadding="0" cellspacing="1" style="line-height: 35px;">
+							<tr>
+								<th width="20%">父级分类</th>
+								<td width="80%">
+									<select name="pid" class="normal" required>
+										<option value="">- 请选择 -</option>
+										<option value="0">顶级菜单</option>
+										<?=$select_menus?>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>分类名称</th>
+								<td><input placeholder="分类名称" type="text" name="name" class="normal" style="width: 365px;" required></td>
+							</tr>
+							<tr>
+								<th>URL别名</th>
+								<td><input placeholder="URL别名" type="text" name="slug" class="normal" style="width: 365px;" required></td>
+							</tr>
+							<tr>
+								<th>分类描述</th>
+								<td><input placeholder="分类描述" type="text" name="description" class="normal" style="width: 365px;"></td>
+							</tr>
+							<tr>
+								<th>分类排序</th>
+								<td><input placeholder="分类排序" type="number" name="sort" class="normal" style="width: 365px;"></td>
+							</tr>
+							<tr>
+								<th>是否激活</th>
+								<td class="radioIsHidden">
+									<label style="width:50px;display:inline;"><input style="width:20px;" type="radio" checked name="isHidden" value="0">是</label> 
+		        					<label style="width:50px;display:inline;"><input style="width:20px;" type="radio" name="isHidden" value="1">否</label>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="btns">
+						<table width="100%" border="0" align="center" id="Btn" style="text-align:center;margin-top:5px;">
+							<tr>
+								<td valign="center">
+								<input type="hidden" name="id" value="0">
+								<input class="submit" type="submit" id="submit_menu" value="保存" onfocus="this.blur();"/>
+								<input class="submit close" type="button" value="关闭" onfocus="this.blur();"/>
+								</td>
+							</tr>
+						</table>
+					</div>
 				</form>
           		<iframe name="ajaxifr" style="display:none;"></iframe>
 			</div>
 		</div>
-		<style type="text/css">
-			
-			.b_g{position: fixed;top: 0;left: 0;bottom: 0;right: 0;z-index: 9999;background: rgba(255,255,255,0.6);display: none;}
-			.n_center{
-				border-radius: 6px;padding: 20px;margin: auto;position: absolute;background: #fff;text-align: center;    
-				-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-			    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-			    width: 600px; height: 300px; /*left: 399.5px; top: 136.5px;*/
-			}
-			.n_center .js-none{position: absolute;right: -5px;;top: -4px;;background: #000;color: #fff;width: 25px;border-radius: 12.5px;margin-top: -10px;margin-right: -7px;cursor: pointer;height:25px;line-height: 25px;}
-			.n_center .js-none i{font-size: 15px}
-
-			.n_center table.list_table th{text-align: right;padding-right: 10px;}
-			.n_center table.list_table td{text-align: left;padding-left: 10px;}
-
-			.n_center h1{text-align: left;font-size: 16px;margin-bottom: 10px;}
-
-		</style>
 		<script type='text/javascript'>
 			$(function(){
-				$('.n_center .js-none,input:button.close').click(function(){
-					$('.b_g').fadeOut();
+
+		        var width = $(window).width();
+        		var height = $(window).height();
+        		var _width = 600+40;
+        		var _height = 400+40;
+        		var left = _width>width?0:((width-_width)/2);
+        		var top = _height>height?0:((height-_height)/2);
+        		$('.popup_content').css({'left':left,'top':top});
+
+				$('.popup_content .js-none,input:button.close').click(function(){
+					$('.popup_bg').fadeOut();
 				});
+
 		        $('._add,#_add').live('click',function(){
-		        	$('.n_center h1').text('添加分类');
-		        	$('.n_center form[name="ModelForm"]').attr('action','<?=WEB_DOMAIN?>/admin/classify/add');
+		        	$('.popup_content h1').text('添加分类');
+		        	$('.popup_content form[name="ModelForm"]').attr('action','<?=WEB_DOMAIN?>/admin/classify/add');
 		        	var pid = $(this).attr('_id');
-		        	$('.n_center select[name="pid"]').val(pid);
-		        	$('.n_center input[name="name"]').val('');
-		        	$('.n_center input[name="description"]').val('');
-		        	$('.n_center input[name="slug"]').val('');
-		        	$('.n_center input[name="sort"]').val('');
-		        	$('.n_center input[name="id"]').val('0');
+		        	$('.popup_content select[name="pid"]').val(pid);
+		        	$('.popup_content input[name="name"]').val('');
+		        	$('.popup_content input[name="description"]').val('');
+		        	$('.popup_content input[name="slug"]').val('');
+		        	$('.popup_content input[name="sort"]').val('');
+		        	$('.popup_content input[name="id"]').val('0');
 		        	setRadio($('.radioIsHidden input:radio'),'0');
-		        	$('.b_g').fadeIn();
+		        	$('.popup_bg').fadeIn();
 		        });
 		        $('._edit').live('click',function(){
-		        	$('.n_center h1').text('编辑分类');
-		        	$('.n_center form[name="ModelForm"]').attr('action','<?=WEB_DOMAIN?>/admin/classify/edit');
+		        	$('.popup_content h1').text('编辑分类');
+		        	$('.popup_content form[name="ModelForm"]').attr('action','<?=WEB_DOMAIN?>/admin/classify/edit');
 		        	var tr = $(this).parent().parent();
 		        	var pid = tr.attr('_pid');
 		        	var name = tr.attr('_name');
@@ -234,21 +235,21 @@
 		        	var isHidden = tr.attr('_isHidden');
 		        	var parent = tr.attr('_parent');
 		        	var id = $(this).attr('_id');
-		        	$('.n_center select[name="pid"]').val(pid);
-		        	$('.n_center input[name="name"]').val(name);
-		        	$('.n_center input[name="description"]').val(desc);
+		        	$('.popup_content select[name="pid"]').val(pid);
+		        	$('.popup_content input[name="name"]').val(name);
+		        	$('.popup_content input[name="description"]').val(desc);
 
-		        	$('.n_center input[name="slug"]').val(slug);
+		        	$('.popup_content input[name="slug"]').val(slug);
 		        	if(!parseInt(parent)){
-		        		$('.n_center input[name="slug"]').attr('readonly',true);
+		        		$('.popup_content input[name="slug"]').attr('readonly',true);
 		        	}else{
-		        		$('.n_center input[name="slug"]').removeAttr('readonly',false);
+		        		$('.popup_content input[name="slug"]').removeAttr('readonly',false);
 		        	}
 
-		        	$('.n_center input[name="sort"]').val(sort);
-		        	$('.n_center input[name="id"]').val(id);
+		        	$('.popup_content input[name="sort"]').val(sort);
+		        	$('.popup_content input[name="id"]').val(id);
 		        	setRadio($('.radioIsHidden input:radio'),isHidden);
-		        	$('.b_g').fadeIn();
+		        	$('.popup_bg').fadeIn();
 		        });
 
 		        $('._del').live('click',function(){
@@ -266,14 +267,6 @@
 		        		return false;
 		        	},'json');
 		        });
-
-		        var width = $(window).width();
-        		var height = $(window).height();
-        		var _width = 600+40;
-        		var _height = 400+40;
-        		var left = _width>width?0:((width-_width)/2);
-        		var top = _height>height?0:((height-_height)/2);
-        		$('.n_center').css({'left':left,'top':top});
 			});
 
 			function setRadio(obj,val){

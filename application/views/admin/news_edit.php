@@ -26,6 +26,61 @@
       // }
   }
 
+  function iResultAlter(str,status){
+    if(status==0){
+        alert(str);
+        return false;
+    }
+    alert('提交成功!');
+    if(status == 3){
+      var pid = $('.popup_content form select[name="pid"]').val();
+      var txt = $('.popup_content form input[name="name"]').val();
+      if(!pid){
+        return false;
+      }
+      if($('#t_'+pid).length){
+        var html = '<label><input type="checkbox" value="'+str+'"><span>'+txt+'</span><span>,</span></label>';
+        $('#t_'+pid).append(html);
+      }else{
+        var html = '';
+        html += '<p class="tags" id="t_'+pid+'">';
+        html += '<label class="parent"><input type="checkbox" value="'+str+'"><b><span>'+txt+'</span><span></span></b></label>';
+        html += '</p>';
+        $('#tags').append(html);
+      }
+      $('.popup_bg').fadeOut();
+    }
+  }
+
+  function farmatTags(){
+    $.post(baseUrl+ "/admin/news/add",{act:'getTags'}, function(data){
+      if(data.code == '1'){
+        $('#tags').html('');
+        var html = '';
+        var _data = data.result.childs;
+        if(!_data){
+          return false;
+        }
+        for(var i in _data){
+          var v = _data[i];
+          html += '<p class="tags">';
+          html += '<label class="parent"><input type="checkbox" value="'+v.id+'"><b><span>'+v.name+'</span><span></span></b></label>';
+          if(v.childs){
+            for(var _i in v.childs){
+              var _v = v.childs[_i];
+              html += '<label><input type="checkbox" value="'+_v.id+'"><span>'+_v.name+'</span><span>,</span></label>';
+            }
+          }
+          html += '</p>';
+        }
+        $('#tags').html(html);
+        return true;
+      }
+      alert(data.msg);
+      return false;
+    },'json');
+  }
+
   $(function (){
     $('textarea[name="summary"]').blur(function(){
       var val = $(this).val();
@@ -53,6 +108,7 @@
   </script>
   <style type="text/css">
     .tags label{margin-left:0;margin-right:10px;}
+    p.tags label:last-child span:last-child{display: none;} 
   </style>
   <div id="admin_right">
     <div class="headbar">
@@ -104,22 +160,24 @@
                   <tr>
                     <th>标签：</th>
                     <td>
-                      <?php 
-                      $_terms = array();
-                      $_tags = !empty($data['tags'])?explode(",",$data['tags']):array();
-                      ?>
-                      <?php if(!empty($tags['childs'])){?>
-                        <?php foreach($tags['childs'] as $item){$_terms[$item['id']] = $item['name'];?>
-                          <p class="tags">
-                            <label><input type="checkbox" value="<?=$item['id']?>"<?=in_array($item['id'],$_tags)?' checked':''?>><b><span><?=$item['name']?></span></b></label>:
-                            <?php if(empty($item['childs'])){continue;}?>
-                            <?php foreach($item['childs'] as $_item){$_terms[$_item['id']] = $_item['name'];?>
-                              <label><input type="checkbox" value="<?=$_item['id']?>"<?=in_array($_item['id'],$_tags)?' checked':''?>><span><?=$_item['name']?></span></label>,
-                            <?php }?>
-                          </p>
+                      <div id="tags">
+                        <?php 
+                        $_terms = array();
+                        $_tags = !empty($data['tags'])?explode(",",$data['tags']):array();
+                        ?>
+                        <?php if(!empty($tags['childs'])){?>
+                          <?php foreach($tags['childs'] as $item){$_terms[$item['id']] = $item['name'];?>
+                            <p class="tags" id="t_<?=$item['id']?>">
+                              <label class="parent"><input type="checkbox" value="<?=$item['id']?>"<?=in_array($item['id'],$_tags)?' checked':''?>><b><span><?=$item['name']?></span><span></span></b></label>
+                              <?php if(empty($item['childs'])){continue;}?>
+                              <?php foreach($item['childs'] as $_item){$_terms[$_item['id']] = $_item['name'];?>
+                                <label><input type="checkbox" value="<?=$_item['id']?>"<?=in_array($_item['id'],$_tags)?' checked':''?>><span><?=$_item['name']?></span><span>,</span></label>
+                              <?php }?>
+                            </p>
+                          <?php }?>
                         <?php }?>
-                      <?php }?>
-                      <p><a href="javascript:;" style="color:blue;">+新增标签</a></p>
+                      </div>
+                      <p><a href="javascript:;" style="color:blue;" class="addTag">+新增标签</a></p>
                       <?php 
                       $tagsStr = array();
                       if($_tags){
@@ -129,7 +187,7 @@
                       <input type="hidden" placeholder="标签,多个用','隔开" value="<?=isset($data['tags'])?$data['tags']:''?>" readonly name="tags" class="normal">
                       <script type="text/javascript">
                         $(function(){
-                          $('p.tags input:checkbox').click(function(){
+                          $('p.tags input:checkbox').live('click',function(){
                             var tags = [];
                             var tagsIds = [];
                             $('p.tags input:checkbox').each(function(k,v){
@@ -142,10 +200,33 @@
                             var _tagsIds = tagsIds.join(',');
                             $('input[name="_tags"]').val(_tags);
                             $('input[name="tags"]').val(_tagsIds);
-                            if(!$.trim($('input[name="SEOKeywords"]').val())){
-                              $('input[name="SEOKeywords"]').val(_tags);
-                            }
-                            
+                            $('input[name="SEOKeywords"]').val(_tags);
+                          });
+
+
+                          var width = $(window).width();
+                          var height = $(window).height();
+                          var _width = 600+40;
+                          var _height = 400+40;
+                          var left = _width>width?0:((width-_width)/2);
+                          var top = _height>height?0:((height-_height)/2);
+                          $('.popup_content').css({'left':left,'top':top});
+
+                          $('.popup_content .js-none,input:button.close').click(function(){
+                            $('.popup_bg').fadeOut();
+                          });
+
+                          $('a.addTag').click(function(){
+                            $('.popup_bg').fadeIn(function(){
+                              $('.popup_content form input.reset').click();
+                            });
+                            var select = $('.popup_content form select[name="pid"]');
+                            select.find('option:gt(1)').remove();
+                            $('p.tags label.parent').each(function(){
+                              var val = $(this).find('input').attr('value');
+                              var txt = $(this).find('b span').text();
+                              select.append('<option value="'+val+'">'+txt+'</option>');
+                            });
                           });
                         });
                       </script>
@@ -219,6 +300,70 @@
           					</td>
                   </tr>
                 </tbody>
+              </table>
+            </div>
+          </form>
+          <iframe name="ajaxifr" style="display:none;"></iframe>
+        </div>
+      </div>
+
+      <div class="popup_bg">
+        <div class="popup_content">
+          <form method="post" name="ModelForm" action="<?=WEB_DOMAIN?>/admin/classify/add" data-parsley-validate="" novalidate target="ajaxifr">
+            <span class="js-none"><i>×</i></span>
+            <div class="title">
+              <h1>添加标签</h1>
+            </div>
+          
+          
+            <div class="form">
+              <table class="list_table" width="100%" border="0" cellpadding="0" cellspacing="1" style="line-height: 35px;">
+                <tr>
+                  <th width="20%">父级标签</th>
+                  <td width="80%">
+                    <select name="pid" class="normal" required>
+                      <option value="">- 请选择 -</option>
+                      <option value="<?=!empty($tags['id'])?$tags['id']:0?>">顶级菜单</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th>标签名称</th>
+                  <td><input placeholder="分类名称" type="text" name="name" class="normal" style="width: 365px;" required></td>
+                </tr>
+                <tr>
+                  <th>URL别名</th>
+                  <td><input placeholder="URL别名" type="text" name="slug" class="normal" style="width: 365px;" required></td>
+                </tr>
+                <tr>
+                  <th>标签描述</th>
+                  <td><input placeholder="分类描述" type="text" name="description" class="normal" style="width: 365px;"></td>
+                </tr>
+                <tr>
+                  <th>标签排序</th>
+                  <td><input placeholder="分类排序" type="number" name="sort" class="normal" style="width: 365px;"></td>
+                </tr>
+                <tr>
+                  <th>是否激活</th>
+                  <td class="radioIsHidden">
+                    <label style="width:50px;display:inline;"><input style="width:20px;" type="radio" checked name="isHidden" value="0">是</label> 
+                        <label style="width:50px;display:inline;"><input style="width:20px;" type="radio" name="isHidden" value="1">否</label>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="btns">
+              <table width="100%" border="0" align="center" id="Btn" style="text-align:center;margin-top:5px;">
+                <tr>
+                  <td valign="center">
+                  <input type="hidden" name="id" value="0">
+                  <input type="hidden" name="act" value="addNewsTag">
+                  <input class="submit" type="submit" id="submit_menu" value="保存" onfocus="this.blur();"/>
+                  <input class="submit close" type="button" value="关闭" onfocus="this.blur();"/>
+                  <input class="submit close reset" type="reset" value="重置" onfocus="this.blur();"/>
+                  </td>
+                </tr>
               </table>
             </div>
           </form>

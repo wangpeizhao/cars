@@ -59,7 +59,10 @@ class Classify extends Fzhao_Controller {
         }
         $parms = $this->input->post(null,true);
         $data = $this->_validation($parms,false);
-        $this->admin->dbInsert('term',$data);
+        $termId = $this->admin->dbInsert('term',$data,true);
+        if(!empty($parms['act']) && $parms['act']=='addNewsTag'){
+            $this->_doIframe($termId,3);
+        }
         $this->_doIframe('添加成功');
     }
     

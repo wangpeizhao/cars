@@ -61,6 +61,17 @@ class News_model extends Fzhao_Model {
             'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
             'likes' => $like
         ));
+        foreach ($data as &$item) {
+            $tags = $this->get_tags($item['tags']);
+            if(!$tags){
+                continue;
+            }
+            $html = array();
+            foreach($tags as $k=>$_item){
+                $html[] = "<a href='/tag/".$k.".html' target='_blank'>".$_item."</a>";
+            }
+            $item['tags'] = $html?implode(",",$html):'';
+        }
         $term_ids = array_filter(array_unique(array_column($data, 'term_id')));
         if ($term_ids) {
             $terms = $this->getData(array(
@@ -84,6 +95,18 @@ class News_model extends Fzhao_Model {
             'likes' => $like
         ));
         return array('data' => $data, 'count' => $count);
+    }
+
+    private function get_tags($tags) {
+        if (!$tags) {
+            return false;
+        }
+        $term_ids = $tags ? explode(",", $tags) : array();
+        if (!$term_ids) {
+            return false;
+        }
+        $_tags = $this->getTermById($term_ids);
+        return array_column($_tags, 'name', 'slug');
     }
 
     /**

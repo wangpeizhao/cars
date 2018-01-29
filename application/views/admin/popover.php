@@ -13,15 +13,30 @@
 	
 	.b_g{position: fixed;top: 0;left: 0;bottom: 0;right: 0;z-index: 9999;background: rgba(255,255,255,0.6);display: none;}
 	.n_center{
-		border-radius: 6px;padding: 10px;margin: auto;position: absolute;background: #ddd;text-align: center;    
-		-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+		border-radius: 6px;
+		padding: 10px;
+		margin: auto;
+		position: absolute;
+		text-align: center;    
+	    max-width: 900px; 
+	    max-height: 1200px; /*left: 399.5px; top: 136.5px;*/
+
+
+	    /*position: relative;*/
+	    background-color: #fff;
+	    -webkit-background-clip: padding-box;
+	    background-clip: padding-box;
+	    border: 1px solid #999;
+	    border: 1px solid rgba(0, 0, 0, .2);
+	    border-radius: 6px;
+	    outline: 0;
+	    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
 	    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-	    max-width: 900px; max-height: 1200px; /*left: 399.5px; top: 136.5px;*/
 	    
 	}
 	.n_center .img{overflow: hidden;max-height: 1180px;}
 	.n_center .js-none{position: absolute;right: 0;top: 0;background: #ccc;color: #fff;width: 25px;border-radius: 12.5px;margin-top: -10px;margin-right: -7px;cursor: pointer;height:25px;line-height: 25px;}
-	.n_center .js-none i{font-size: 15px}
+	.n_center .js-none i{font-size: 20px;margin-left:-1px;}
 	.n_center img{overflow: hidden;-webkit-transform-origin: center center;transform-origin: center center;max-width: 880px;}
 	.n_center .prompt{left: 250px; top: 200px;   height: 50px;width: 120px;background: rgba(0,0,0,.7);position: absolute;color: #fff;font-size: 14px;text-align: center;line-height: 50px;border-radius: 5px;display: none;}
 	.n_center .showImgBtn{top: 40%;height:3em;width: 1.5em;border: 1px solid transparent;-webkit-border-radius: 0.5em;-moz-border-radius: 0.5em;border-radius: 0.5em;background-color: rgba(0,0,0,.5);color: #fff;font-size: 2em;text-align: center;line-height: 3em;position: absolute;}

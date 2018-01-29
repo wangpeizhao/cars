@@ -154,6 +154,14 @@ class News extends Fzhao_Controller {
      */
     function add() {
         $data = array();
+        if(IS_AJAX){
+            $act = trim($this->input->post('act',true));
+            if($act != 'getTags'){
+                errorOutput('非法操作');
+            }
+            $tags = $this->admin->getTermByTaxonomy('tags');
+            successOutput($tags,'读取成功');
+        }
         if (IS_POST) {
             $fields = $this->_verifyForm();
             $fields['update_time'] = _DATETIME_;
