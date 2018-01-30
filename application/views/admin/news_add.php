@@ -49,6 +49,9 @@
         $('#tags').append(html);
       }
       $('.popup_bg').fadeOut();
+    }else{
+      window.history.back('-1');
+      window.location.href = '/admin/news/index';
     }
   }
 
