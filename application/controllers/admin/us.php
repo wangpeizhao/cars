@@ -27,7 +27,7 @@ class Us extends Fzhao_Controller {
             $data['id'] = post_get('id');
             $data['title'] = $this->title;
             $data['_title_'] = $this->title;
-            $this->view('admin/contact', $data);
+            $this->view('admin/us', $data);
             return true;
         }
 

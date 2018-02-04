@@ -578,7 +578,11 @@
     position: relative;
     overflow: hidden;
 }
-.mainlib .focus .focus-left a,.mainlib .focus .focus-right a{
+.mainlib .focus .focus-left a,
+.mainlib .focus .focus-right a,
+.focus-banner .fb-left a,
+.focus-banner .fb-right a
+{
     display: block;
     /*overflow: hidden;*/
     position: relative;
@@ -591,27 +595,39 @@
     max-width:269px;
     min-height: 180px;
 }
-.mainlib .focus .focus-left a img,.mainlib .focus .focus-right a img{
+.mainlib .focus .focus-left a img,
+.mainlib .focus .focus-right a img,
+.focus-banner .fb-left a img,
+.focus-banner .fb-right a img
+{
     -webkit-transition: .7s;
     transition: .7s;
     border-radius: 4px;
 }
-.mainlib .focus .focus-left a img:hover,.mainlib .focus .focus-right a img:hover{  
+.mainlib .focus .focus-left a img:hover,
+.mainlib .focus .focus-right a img:hover,
+.focus-banner .fb-left a img:hover,
+.focus-banner .fb-right a img:hover
+{  
     transform: scale(1.05);  
 } 
-.mainlib .focus .focus-left a span,.mainlib .focus .focus-right a span{
+.mainlib .focus .focus-left a span,
+.mainlib .focus .focus-right a span,
+.focus-banner .fb-left a.con,
+.focus-banner .fb-right a.con
+{
     padding: .25rem .75rem;
     display: block;
     bottom: 0;
     left: 0;
     width: 100%;
     position: absolute;
-    background: rgba(0,0,0,.8);
+    background: rgba(0,0,0,.7);
     word-break: break-all;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 5;
     overflow: hidden;
     font-size: .7rem;
     line-height: 1.6;
@@ -639,4 +655,80 @@
 }
 .mainlib .focus .focus-right li:last-child{
     margin-bottom: 0px;
+}
+.iblock{
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+.focus-banner{
+    max-width: 1120px;
+    margin: 0 auto;
+    height: 400px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.focus-banner .fb-left{
+    width: 312px;
+}
+.focus-banner .fb-left img{
+    max-width:312px;
+    min-height:401px;
+}
+.focus-banner .fb-right{
+    width: 807px;
+    margin-left: 1px;
+}
+.focus-banner .fb-right .fb-first-left{
+    width: 268px;
+    height: 200px;
+}
+.focus-banner .fb-right .fb-first-right{
+    width: 537px;
+    height: 200px;
+    margin-left: 1px;
+}
+.focus-banner .fb-right .fb-second{
+    width: 268px;
+    height: 200px;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+.focus-banner .fb-right .fb-second:first-child{
+    margin-left: 0px;
+}
+
+.focus-banner .fb-left a.con{
+    top: 92%;
+    -webkit-line-clamp: 5;
+}
+
+.focus-banner .fb-right a.con{
+    top: 85%;
+    -webkit-line-clamp: 5;
+}
+.focus-banner .fb-left a.con:hover{
+    top:50%!important;
+    -webkit-transition: all 300ms ease-in;
+    -o-transition: all 300ms ease-in;
+    -moz-transition: all 300ms ease-in;
+}
+.focus-banner .fb-right a.con:hover{
+    top:0!important;
+    -webkit-transition: all 300ms ease-in;
+    -o-transition: all 300ms ease-in;
+    -moz-transition: all 300ms ease-in;
+}
+.focus-banner a p{
+    /*padding: 0px .75rem;*/
+    color: rgb(203, 203, 203);
+    line-height: 20px;
+    font-size: 12px;
+}
+.focus-banner .fb-left a span,
+.focus-banner .fb-right a span{
+    font-weight: bold;
 }

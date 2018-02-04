@@ -106,7 +106,7 @@
         <div class="content form_content" style="height: 298px;">
 		<div class="div_box">
 			<div class="div" style="margin-left:10px;" align="left">
-				<form method="post" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/contact" target="ajaxifr" onSubmit="return checkForm();">
+				<form method="post" action="<?=WEB_DOMAIN.(_LANGUAGE_=='en'?'/en':'')?>/admin/us" target="ajaxifr" onSubmit="return checkForm();">
 					<table class="form_table">
 						<colgroup>
 							<col width="108px"><col>
