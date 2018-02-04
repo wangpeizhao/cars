@@ -46,6 +46,7 @@ header.common-header nav ul li {
     float: left;
     position: relative;
     top: -1px;
+    padding: 0 15px;
 }
 header.common-header nav ul li.active {
     border-bottom: solid 2px #4285f4;
@@ -54,17 +55,93 @@ header.common-header nav ul li a {
     display: block;
     position: relative;
     top: 8px;
-    padding: 0 15px;
     line-height: 54px;
-    height: 62px;
+    height: 55px;
     overflow: hidden;
     box-sizing: border-box;
     color: #333333;
     text-decoration: none;
 }
-header.common-header nav ul li.active a {
+header.common-header nav ul li.parent em {
+    position: absolute;
+    top: 33px;
+    right: 3px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: #4285f4 #fff #fff #fff;
+    -webkit-transform-origin: 25% center;
+    transform-origin: 25% center;
+    border-width: 4px;
+    -webkit-transition: .7s;
+    transition: .7s;
+}
+header.common-header nav ul li.on em  {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    -webkit-transition: .7s;
+    transition: .7s;
+    top: 30px;
+    right: 0px;
+}
+header.common-header nav ul li.active a,header.common-header nav ul li.on a {
     color: #000000;
     font-weight: 600;
+}
+
+
+header.common-header nav ul li dl {
+    background: rgba(0,0,0,.8);
+    box-shadow: 0 0 10px #666666;
+    display: none;
+    line-height: normal;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    white-space: nowrap;
+    z-index:99999;
+    opacity:0.9; 
+    filter:alpha(opacity=90);
+    border-radius: 4px;
+    padding-bottom: 15px;
+}
+header.common-header nav ul li dl dd{
+    width:110px;
+    position:relative;
+}
+header.common-header nav ul li dl dd a {
+    /*background: none repeat scroll 0 0 #487395;*/
+    color: #EEEEEE;
+    display: block;
+    font-size: 13px;
+    /*padding: 2px 0px;*/
+    text-decoration: none;
+    transition: all 0.2s ease-in-out 0s;
+    margin-top:0px;
+    height:28px;
+    line-height:28px;
+    opacity:0.9; 
+    filter:alpha(opacity=90);
+    width:100px;
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    text-align:left;
+    padding-left:10px;
+    font-weight:normal;
+}
+header.common-header nav ul li dl dd a:hover {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #fff;
+    text-decoration: none;
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    border-radius: 4px;
+}
+header.common-header nav ul li.on dl dd a {
+    color: #fff;
+    font-weight: normal!important;
 }
 
 header.common-header .right-col {

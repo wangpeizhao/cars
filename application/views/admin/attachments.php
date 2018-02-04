@@ -102,6 +102,11 @@
 							<span class="addition">[+]添加<?=$_title_?></span>
 						</button>
 					</a> 
+					<a href="/admin/upload/index" class="addBtn">
+						<button class="operating_btn" type="button">
+							<span class="addition">[+]添加网络图片</span>
+						</button>
+					</a> 
 					<a href="javascript:;" id="selectAll" status="uncheck">
 						<button class="operating_btn" type="button">
 							<span class="sel_all">全选</span>

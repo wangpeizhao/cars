@@ -58,7 +58,7 @@
 	function getContent(term,index){
 		try{
 			_index = index;
-			$.post(baseUrl + lang + "/admin/contact",{term:term,act:'get'}, function(data){
+			$.post(baseUrl + lang + "/admin/us",{term:term,act:'get'}, function(data){
 				if(data.done===true){
 					$('textarea[name="content_'+index+'"]').val('');
 					$('textarea[name="content_'+index+'"]').val(data.data);
@@ -83,22 +83,22 @@
 	    if(status==0){
 	        return false;
 	    }
-	    window.location.href = '/admin/contact/index/'+_index;
+	    window.location.href = '/admin/us/index/'+_index;
 	}
 //-->
 </script>
   <div id="admin_right">
     <div class="headbar">
-	<?php if(!empty($terms)){
-			foreach($terms as $item){?>
-      <div class="position"><span>系统</span><span>></span><span><?=$item['name']?></span><span>></span><span id="term"></span></div>
-      <ul class="tab" style="margin-top:0px;">
-		<?php if(!empty($item['sonTerm'])){$sunTerm=$item['sonTerm'];
-			foreach($item['sonTerm'] as $key=>$term){?>
-				<li><a href="javascript:;" term="<?=$term['taxonomy'].'_'.$term['slug']?>"><?=$term['name']?></a></li>
-			<?php }}?>
-	  </ul>
-	  <?php break;}}?>
+	<?php if(!empty($terms)){?>
+      <div class="position"><span>系统</span><span>></span><span><?=$terms['name']?></span><span>></span><span id="term"></span></div>
+    <?php }?>
+	<ul class="tab" style="margin-top:0px;">
+    <?php if(!empty($terms['childs'])){
+    	$sunTerm = array_values($terms['childs']);
+    	foreach($terms['childs'] as $item){?>
+		<li><a href="javascript:;" term="<?=$item['taxonomy'].'_'.$item['slug']?>"><?=$item['name']?></a></li>
+	<?php }}?>
+	</ul>
     </div>
     <div class="content_box">
       <div class="content link_target" align="left">

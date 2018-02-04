@@ -531,7 +531,7 @@ class Client_Controller extends My_Controller {
             'cases' => 'cases',
             'company' => 'company'
         );
-        $data['foot_terms'] = $this->admin->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
+        $data['foot_terms'] = $this->home_model->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
         $this->load->view('default/'.$path, $data);
     }
 

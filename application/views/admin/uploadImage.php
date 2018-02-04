@@ -187,12 +187,14 @@
 			$("#progress_bar").fadeOut();
 			document.getElementById("file").outerHTML = document.getElementById("file").outerHTML;
 			$('input[name="file[]"]').click();
+			$('input[name="imageUrl"]').val('');
 		}else{
 			$("#progress_bar").fadeOut();
 			$('.tab li').eq(0).click();
 			//window.returnValue = path;
 			//window.close();
 		}
+		$('input:submit').blur();
 	}
 //-->
 </script>

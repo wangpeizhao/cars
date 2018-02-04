@@ -38,6 +38,7 @@
                     <a class="logo" href="<?=_URL_?>"><img src="<?=img_url('logo.png')?>"></a>
                     <nav>
                         <ul class="navList">
+                            <?php include('dynamic/index_nav_cn.php');?><!-- 
                             <li class="active"><a href="#">首页</a></li>
                             <li><a href="">开氪</a></li>
                             <li><a href="">7×24h 快讯</a></li>
@@ -45,9 +46,33 @@
                             <li><a href="">鲸准</a></li>
                             <li><a href="">氪空间</a></li>
                             <li><a href="">找人服务</a></li>
-                            <li><a href="">联系我们</a></li>
+                            <li><a href="">联系我们</a></li> -->
                         </ul>
                     </nav>
+                    <script type="text/javascript">
+                        $(function(){
+                            var slide = false;
+                            $('nav li').hover(function() {
+                                var _S = $(this);
+                                if(_S.find('> dl').css('display') == "none"){
+                                    _S.find('> dl').slideDown(200);
+                                    slide = true;
+                                    // _S.addClass('active');
+                                }
+                                _S.addClass('on');
+                            }, function() {
+                                var _S = $(this);
+                                if(slide == true){
+                                    _S.find('> dl').slideUp();
+                                    slide = false;
+                                    setTimeout(function(){
+                                        // _S.removeClass('active');
+                                    },500);
+                                }
+                                _S.removeClass('on');
+                            });
+                        });
+                    </script>
                 </div>
                 <div class="right-col">
                     <ul class="sub-nav">

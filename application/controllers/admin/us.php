@@ -4,7 +4,7 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Contact extends Fzhao_Controller {
+class Us extends Fzhao_Controller {
     
     private $title = '';
     
@@ -23,7 +23,7 @@ class Contact extends Fzhao_Controller {
      */
     function index() {
         if (!IS_POST) {
-            $data['terms'] = $this->common->getTermByTaxonomy('contact');
+            $data['terms'] = $this->common->getTermByTaxonomy('us');
             $data['id'] = post_get('id');
             $data['title'] = $this->title;
             $data['_title_'] = $this->title;

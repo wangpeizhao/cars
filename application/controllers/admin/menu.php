@@ -232,30 +232,35 @@ class Menu extends Fzhao_Controller {
             return writeFile($str, $directory.'/index_nav_' . _LANGUAGE_ . '.php');
         }
         foreach ($indexNav as $item) {
-            $class = 'index';
             $uri = $item['link'];
-            if (trim(strlen($uri)) > 3) {
-                if (in_array(substr($uri, 0, 4), array('/en/', '/cn/'))) {
-                    $_uri = substr($uri, 4);
-                } else {
-                    $_uri = substr($uri, 1);
-                }
-                if ($_uri) {
-                    $_uri_arr = explode("/", $_uri);
-                    $class = current($_uri_arr);
-                }
-            }
+            $class = get_style_class($uri);
+//            if (trim(strlen($uri)) > 3) {
+//                if (in_array(substr($uri, 0, 4), array('/en/', '/cn/'))) {
+//                    $_uri = substr($uri, 4);
+//                } else {
+//                    $_uri = substr($uri, 1);
+//                }
+//                if ($_uri) {
+//                    $_uri_arr = explode("/", $_uri);
+//                    $class = current($_uri_arr);
+//                }
+//            }
             //hover active
             $str .= '<li' . (!empty($item['son_link']) ? ' class="parent"' : '') . '>';
+            $target = $item['link_target']?' target="' . $item['link_target'] . '"':'';
+            $em = !empty($item['son_link'])?'<em></em>':'';
             if ((strpos($uri, 'http://') !== false || strpos($uri, 'https://') !== false)) {
-                $str.= '<a href="' . $uri . '" target="' . $item['link_target'] . '">' . $item['title'] . '</a>';
+                $str.= '<a href="' . $uri . '" '.$target.'>' . $item['title'] . '</a>';
             } else {
-                $str.= '<a class="nav_' . $class . '" href="' . WEB_DOMAIN . $uri . '" target="' . $item['link_target'] . '">' . $item['title'] . '</a>';
+                $href = $uri=='#'?'javascript:;':WEB_DOMAIN . $uri;
+                $str.= '<a class="nav_' . $class . '" href="' . $href . '" '.$target.'>' . $item['title'] . '</a>';
             }
+            $str.= $em;
             if (!empty($item['son_link'])) {
                 $str.= '<dl>';
                 foreach ($item['son_link'] as $son_link) {
-                    $str.= '<dd><a href="' . WEB_DOMAIN . $son_link['link'] . '" target="' . $son_link['link_target'] . '">' . $son_link['title'] . '</a></dd>';
+                    $target = $son_link['link_target']?' target="' . $son_link['link_target'] . '"':'';
+                    $str.= '<dd><a href="' . WEB_DOMAIN . $son_link['link'] . '"'.$target.'>' . $son_link['title'] . '</a></dd>';
                 }
                 $str.= '</dl>';
             }
@@ -264,7 +269,7 @@ class Menu extends Fzhao_Controller {
         $str.= <<<EOM
 <script>
   $(function(){
-    var _class = '<?=_CLASS?>';
+    var _class = '<?=get_style_class()?>';
     $('a.nav_'+_class).parent().addClass('hover active');
   });
 </script>

@@ -564,5 +564,79 @@
     color: #fff;
 }
 
-
-
+/*focus*/
+.mainlib .focus{
+    width: 800px;
+}
+.mainlib .focus .focus-left{
+    width: 530px;
+    height: 361px;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+.mainlib .focus .focus-left a,.mainlib .focus .focus-right a{
+    display: block;
+    /*overflow: hidden;*/
+    position: relative;
+}
+.mainlib .focus .focus-left a img{
+    max-width:530px;
+    min-height:361px;
+}
+.mainlib .focus .focus-right a img{
+    max-width:269px;
+    min-height: 180px;
+}
+.mainlib .focus .focus-left a img,.mainlib .focus .focus-right a img{
+    -webkit-transition: .7s;
+    transition: .7s;
+    border-radius: 4px;
+}
+.mainlib .focus .focus-left a img:hover,.mainlib .focus .focus-right a img:hover{  
+    transform: scale(1.05);  
+} 
+.mainlib .focus .focus-left a span,.mainlib .focus .focus-right a span{
+    padding: .25rem .75rem;
+    display: block;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    background: rgba(0,0,0,.8);
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: .7rem;
+    line-height: 1.6;
+    color: #fff;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+.mainlib .focus .focus-right{
+    width: 269px;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    margin-left: 1px;
+    height: 361px;
+    border-radius: 4px;
+    position: relative;
+}
+.mainlib .focus .focus-right li{
+    width: 269px;
+    height: 180px;
+    margin-bottom: 1px;
+    overflow: hidden;
+}
+.mainlib .focus .focus-right li:last-child{
+    margin-bottom: 0px;
+}

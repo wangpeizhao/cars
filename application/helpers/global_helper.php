@@ -536,13 +536,13 @@ if (!function_exists('format_data')) {
                 $v = 'I am very smart!';
             }
             if (is_array($v)) {
-                $post.='&post(' . $k . ')=>' . format_data($v);
+                $post .= '&post(' . $k . ')=>' . format_data($v);
             } else {
-                $post.='&post(' . $k . ')=>[' . $v . ']';
+                $post .= '&post(' . $k . ')=>[' . $v . ']';
             }
         }
         if (!empty($post)) {
-            $post.='}';
+            $post .= '}';
         }
         return $post;
     }
@@ -733,10 +733,10 @@ function TimeLine($time) {
                         } else {
                             $message = $seconds . '秒前';
                         }
-                    }else{
+                    } else {
                         $message = intval($seconds / 60) . '分钟前';
                     }
-                }else{
+                } else {
                     $message = date('H', $nowTime) - date('H', $time) . '小时前';
                 }
                 break;
@@ -759,4 +759,17 @@ function TimeLine($time) {
         }
     }
     return $message;
+}
+
+function get_style_class($link = '') {
+    if(!$link){
+        $link = $_SERVER['REQUEST_URI'];
+    }
+    $uri = trim(strtolower($link));
+    $uris = explode("/", $uri);
+    if ($uris) {
+        $uris = array_slice($uris, 0, 2);
+    }
+    $class = $uris ? implode('_', $uris) : '';
+    return $class;
 }
