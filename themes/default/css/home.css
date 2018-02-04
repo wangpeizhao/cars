@@ -255,7 +255,7 @@
 }
 .car_article_list .img_box img:hover{  
     transform: scale(1.05);  
-} 
+}
 .car_article_list .inner_li_abtest .h5_mark {
     display: none!important;
 }
@@ -387,19 +387,23 @@
     height: 100%;
     overflow: hidden;
 }
+.car_article_list ul li .info-flow-monographic-inner a{
+    display: block;
+}
 .car_article_list ul li .info-flow-monographic-inner .img-pad {
     background-size: cover;
     background-position: 50%;
     position: absolute;
     width: 100%;
     height: 100%;
+    -webkit-transition: .7s;
+    transition: .7s;
 }
 .car_article_list ul li .info-flow-monographic-inner .img-pad:hover{  
     transform: scale(1.05);  
 } 
 .car_article_list ul li .info-flow-monographic-inner .img-pad img {
-    -webkit-transition: .7s;
-    transition: .7s;
+    
 }
 .car_article_list ul li .info-flow-monographic-inner .background-cover {
     content: " ";
@@ -410,6 +414,7 @@
     width: 100%;
     background-color: rgba(0,0,0,.4);
     z-index: 8;
+    display: none;
 }
 
 .car_article_list ul li .info-flow-monographic-inner .info {

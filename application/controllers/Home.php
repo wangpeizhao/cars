@@ -11,6 +11,7 @@ class Home extends Client_Controller {
         parent::__construct();
         $this->load->model('default/home_model', 'admin');
         $this->load->model('default/tag_model', 'tag');
+        $this->load->model('default/news_model', 'news');
         $this->title = '首页';
     }
     
@@ -38,6 +39,8 @@ class Home extends Client_Controller {
             $data['about'] = trim(str_replace('&nbsp;','',strip_tags($about)));
         }
         $data['hotTags'] = $this->tag->get_hot_tags(10);
+        //热门文章
+        $data['hotNews'] = $this->news->getHotNews(10);
         $this->view('home',$data);
     }
 
