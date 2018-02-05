@@ -31,7 +31,7 @@ class Home extends Client_Controller {
         $data['news'] = $news;
         
         //about us
-        $type = 'contact_about';
+        $type = 'us_about';
         $file = 'application/views/default/dynamic/' . _LANGUAGE_ . '_' . $type . '_htm_html.php';
         $data['about'] = '';
         if (file_exists($file)) {

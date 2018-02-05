@@ -102,7 +102,7 @@
 							<span class="addition">[+]添加<?=$_title_?></span>
 						</button>
 					</a> 
-					<a href="/admin/upload/index" class="addBtn">
+					<a href="/admin/upload/index" class="" target="_blank">
 						<button class="operating_btn" type="button">
 							<span class="addition">[+]添加网络图片</span>
 						</button>
