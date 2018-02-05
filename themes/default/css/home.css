@@ -1,4 +1,4 @@
-.pagewrap .mainlib .carousels {
+#app .carousels {
     background-color: #fff;
     min-height: 5rem;
     vertical-align: top;
@@ -7,20 +7,20 @@
     overflow: auto;
     height: 250px;
 }
-.pagewrap .mainlib .carousels ul{
+#app .carousels ul{
     position: absolute;
 }
-.pagewrap .mainlib .carousels ul li{
+#app .carousels ul li{
     /*display: none;*/
     overflow: hidden;
     height: 250px;
     list-style: none;
     float: left;
 }
-.pagewrap .mainlib .carousels ul li.slick-active{
+#app .carousels ul li.slick-active{
     /*display: block!important;*/
 }
-.pagewrap .mainlib .carousels ul li a {
+#app .carousels ul li a {
     display: block;
     width: 100%;
     height: 100%;
@@ -30,7 +30,7 @@
     -webkit-transition: .7s;
     transition: .7s;
 }
-.pagewrap .mainlib .carousels ul li a:hover{  
+#app .carousels ul li a:hover{  
     transform: scale(1.02);  
 } 
 .unslider{
