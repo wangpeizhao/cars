@@ -773,3 +773,20 @@ function get_style_class($link = '') {
     $class = $uris ? implode('_', $uris) : '';
     return $class;
 }
+
+function get_array_rands(&$carousels,&$rands,$num = 2){
+    if(!$carousels){
+        return false;
+    }
+    $_rands = array_rand($carousels,$num);
+    if(!$_rands){
+        return false;
+    }
+    foreach($carousels as $k=>$item){
+        if(in_array($k,$_rands)){
+            $rands[] = $item;
+            unset($carousels[$k]);
+            continue;
+        }
+    }
+}

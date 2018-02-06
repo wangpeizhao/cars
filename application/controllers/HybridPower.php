@@ -20,7 +20,12 @@ class HybridPower extends Client_Controller {
         $data = array();
         $data['title'] = $this->title;
         //carousels
-        $data['carousels'] = $this->home->getLinks('driverless');
+        $carousels = $this->home->getLinks('hybrid-power');
+        $rands = array();
+        
+        get_array_rands($carousels,$rands,2);
+        $data['rands'] = $rands;
+        $data['carousels'] = $carousels;
         //热门标签
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章

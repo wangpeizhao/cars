@@ -26,6 +26,7 @@
     }
     .focus-banner .banner-right img{
         width: 300px;
+        min-height: 175px;
     }
     .focus-banner .banner-right li{
         margin-bottom: 1px;
@@ -67,22 +68,18 @@
             </div>
         </div><div class="banner-right iblock">
             <ul>
+                <?php if(!empty($rands)){
+                    foreach($rands as $item){?>
                 <li>
-                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml">
-                        <img src="http://www.cars.com/uploads/2018/02/04/images/201802041712268658.jpg" alt="越来越多律所开始接受初创公司用加密货币付费">
+                    <a href="<?=$item['link_url']?>">
+                        <img src="<?=site_url($item['link_image'])?>" alt="<?=$item['link_name']?>">
                     </a>
-                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml" title="越来越多律所开始接受初创公司用加密货币付费">
-                        <span>越来越多律所开始接受初创公司用加密货币付费</span>
+                    <a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>">
+                        <span><?=$item['link_name']?></span>
                     </a>
                 </li>
-                <li>
-                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml">
-                        <img src="http://www.cars.com/uploads/2018/02/04/images/201802041712138953.jpg" alt="腾讯信用全国公测：免押金骑行租房、借贷等">
-                    </a>
-                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml" title="腾讯信用全国公测：免押金骑行租房、借贷等">
-                        <span>腾讯信用全国公测：免押金骑行租房、借贷等</span>
-                    </a>
-                </li>
+                <?php }
+                }?>
             </ul>
         </div>
     </div>
