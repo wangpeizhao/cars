@@ -96,5 +96,17 @@
 	    	<?php include('dynamic/footer_detail.php');?>
 	    </div>
 	</footer>
+	<script type="text/javascript"> 
+		// document.body.oncopy = function(){ 
+		//   setTimeout( 
+		//     function (){ 
+		//     var text = window.clipboardData.getData("text"); 
+		//     if(text){ 
+		//       text = text + "\r\n本文来自: (<?=site_url('/')?>) 详细出处参考："+location.href; 
+		//       window.clipboardData.setData("text", text); 
+		//     } 
+		//   },100) 
+		// } 
+	</script>
 	</body>
 </html>

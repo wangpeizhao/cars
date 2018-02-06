@@ -1,49 +1,95 @@
 <?php include('header.php');?>
 <?=css_url('home.css')?>
 <?=js_url('unslider/unslider.min.js')?>
-<style type="text/css"> 
+<!-- ^contenter -->
+<style type="text/css">
     #app .carousels{
-        /*height: 300px!important;*/
+        height: 351px!important;
     }
-    #app .carousels ul li a{
-        /*min-height: 300px;*/
+    #app .carousels ul li{
+        height: 351px!important;
+    }
+    .focus-banner{
+        height: 351px!important;
+    }
+    .focus-banner .banner-left{
+        width: 819px;
+        height: 100%;
+    }
+    .focus-banner .banner-left li{
+        overflow: hidden;
+    }
+    .focus-banner .banner-right{
+        width: 300px;
+        height: 351px;
+        margin-left: 1px;
+    }
+    .focus-banner .banner-right img{
+        width: 300px;
+    }
+    .focus-banner .banner-right li{
+        margin-bottom: 1px;
+        overflow: hidden;
+        width: 300px;
+        height: 175px;
+    }
+    .focus-banner .banner-right li:last-child{
+        margin-bottom: 0px;
     }
 </style>
-<!-- ^contenter -->
-<div id="app" style="margin-top: 0px;">
-    <div class="focus-banner" style="height:auto;">
-        <div class="carousels">
-            <ul>
-                <?php if(!empty($carousels)){
-                    foreach($carousels as $k=>$item){?>
-                    <li><a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
-                <?php }
-                }?>
-            </ul>
-            <script type="text/javascript">
-                $(function(){
-                    $('.carousels').unslider({
-                        // animation: 'fade',
-                        speed: 500,               //  滚动速度
-                        delay: 3000,              //  动画延迟
-                        complete: function() {},  //  动画完成的回调函数
-                        keys: true,               //  启动键盘导航
-                        dots: true,               //  显示点导航
-                        fluid: false,              //  支持响应式设计
-                        autoplay: true,   //自动滚动
-                        infinite: true,   //无限循环
-                        arrows: false,    //next|prve 箭头，默认：true
+<div id="app">
+    <div class="focus-banner">
+        <div class="banner-left iblock">
+            <div class="carousels">
+                <ul>
+                    <?php if(!empty($carousels)){
+                        foreach($carousels as $k=>$item){?>
+                        <li><a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
+                    <?php }
+                    }?>
+                </ul>
+                <script type="text/javascript">
+                    $(function(){
+                        $('.carousels').unslider({
+                            // animation: 'fade',
+                            speed: 500,               //  滚动速度
+                            delay: 3000,              //  动画延迟
+                            complete: function() {},  //  动画完成的回调函数
+                            keys: true,               //  启动键盘导航
+                            dots: true,               //  显示点导航
+                            fluid: false,              //  支持响应式设计
+                            autoplay: true,   //自动滚动
+                            infinite: true,   //无限循环
+                            arrows: false,    //next|prve 箭头，默认：true
+                        });
                     });
-                });
-            </script>
+                </script>
+            </div>
+        </div><div class="banner-right iblock">
+            <ul>
+                <li>
+                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml">
+                        <img src="http://www.cars.com/uploads/2018/02/04/images/201802041712268658.jpg" alt="越来越多律所开始接受初创公司用加密货币付费">
+                    </a>
+                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml" title="越来越多律所开始接受初创公司用加密货币付费">
+                        <span>越来越多律所开始接受初创公司用加密货币付费</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml">
+                        <img src="http://www.cars.com/uploads/2018/02/04/images/201802041712138953.jpg" alt="腾讯信用全国公测：免押金骑行租房、借贷等">
+                    </a>
+                    <a href="http://www.techweb.com.cn/world/2018-02-02/2635381.shtml" title="腾讯信用全国公测：免押金骑行租房、借贷等">
+                        <span>腾讯信用全国公测：免押金骑行租房、借贷等</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="pagewrap">
         <!-- ^main -->
         <div class="mainlib">
-
             <div class="list_con" style="margin-top:0;">
-
                 <div class="car_tab" id="subNavShow">
                     <ul>
                         <li class="active"><span><a href="">最新文章</a></span></li>
@@ -83,6 +129,7 @@
                         }
                     });
                 </script>
+                
                 <div class="car_article_list">
                     <ul>
                         <?php if(!empty($news)){?>

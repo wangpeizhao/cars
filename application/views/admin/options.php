@@ -142,7 +142,7 @@
       <ul name="menu1" class="tab">
         <li class="selected"><a href="javascript:;">网站设置</a></li>
         <li><a href="javascript:;">菜单设置</a></li>
-		<li><a href="javascript:;">广告切图</a></li>
+		<li><a href="javascript:;">Banner & 广告</a></li>
 		<li><a href="javascript:;">站点底部信息</a></li>
 		<li><a href="javascript:;">首页三竖块</a></li>
 		<li><a href="javascript:;">禁止IP访问</a></li>

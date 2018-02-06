@@ -16,6 +16,8 @@
 		rows = 8,
 		pathVal = '',
 		thumb = '',
+		act = '<?=$act?>',
+		_S_ = null,
 		_attachments_type = '';
 	$(function(){
 		try{
@@ -43,6 +45,10 @@
 				//获取值
 				pathVal = $(this).find('span img').attr('srcval');
 				thumb = $(this).find('span img').attr('src');
+				if(act == 'copy'){
+					_S_ = $(this).find('.copy');
+					_return_value();
+				}
 			});
 			
 			$(document).on('dblclick','.div_box ul li',function(){
@@ -52,7 +58,11 @@
 				thumb = $(this).find('span img').attr('src');
 				//传值
 				_return_value();
-				window.close();
+				if(act != 'copy'){
+					window.close();
+				}else{
+					_S_ = $(this).find('.copy');
+				}
 			});
 
 			$("#add").click(function(){
@@ -116,9 +126,23 @@
 		}
 	});
 
+	function _copy(){
+		$('#_image_url_').val(pathVal);
+		var Url=document.getElementById("_image_url_");
+		Url.select(); // 选择对象
+		document.execCommand("Copy"); // 执行浏览器复制命令
+		// alert("已复制好，可贴粘。");
+		$('#_image_url_').blur();
+		_S_.text('复制成功');
+	}
+
 	//return value
 	function _return_value(){
 		var act = getQueryString('act');
+		if(act == 'copy'){
+			_copy();
+			return true;
+		}
 		if(act == 'specify'){
 			window.opener.window.chooseImage(pathVal,thumb);
 			return true;
@@ -202,6 +226,10 @@
 	select.normal{
 		margin:0px 0 20px 5px;
 	}
+	.copy{
+		background: #fff!important;
+		color: blue;
+	}
 </style>
 </head>
 <body>
@@ -220,6 +248,7 @@
 						<option value="">- 请选择附件分类 -</option>
 						<?php include('terms.php');?>
 					</select>
+					<input type="text" name="_image_url_" id="_image_url_" value="" style="width:1px;height:1px;border:0;color:#fff;">
 				</div>
 				<div class="images">
 					<ul id="images">
@@ -230,7 +259,9 @@
 				<div id="pageLists" class="pageLists clearfix hide"></div>
 				<input type="hidden" name="currentPage" value="1">
 				<div class="do_images hide">
+					<?php if($act != 'copy'){?>
 					<input id="add" class="button" type="button" onfocus="this.blur();" value="插入图片">
+					<?php }?>
 					<input id="close" class="button" type="button" onfocus="this.blur();" value="关闭">
 				</div>
 			</div>

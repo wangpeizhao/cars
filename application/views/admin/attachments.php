@@ -102,7 +102,7 @@
 							<span class="addition">[+]添加<?=$_title_?></span>
 						</button>
 					</a> 
-					<a href="/admin/upload/index" class="" target="_blank">
+					<a href="/admin/upload/index?act=copy" class="" target="_blank">
 						<button class="operating_btn" type="button">
 							<span class="addition">[+]添加网络图片</span>
 						</button>
@@ -202,24 +202,6 @@
           		<iframe name="ajaxifr" style="display:none;"></iframe>
 			</div>
 		</div>
-		<style type="text/css">
-			
-			.b_g2{position: fixed;top: 0;left: 0;bottom: 0;right: 0;z-index: 9999;background: rgba(255,255,255,0.6);display: none;}
-			.b_g2 .n_center{
-				border-radius: 6px;padding: 20px;margin: auto;position: absolute;background: #fff;text-align: center;    
-				-webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-			    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-			    width: 600px; height: 160px; /*left: 399.5px; top: 136.5px;*/
-			}
-			.b_g2 .n_center .js-none{position: absolute;right: -5px;;top: -4px;;background: #000;color: #fff;width: 25px;border-radius: 12.5px;margin-top: -10px;margin-right: -7px;cursor: pointer;height:25px;line-height: 25px;}
-			.b_g2 .n_center .js-none i{font-size: 15px}
-
-			.b_g2 .n_center table.list_table th{text-align: right;padding-right: 10px;}
-			.b_g2 .n_center table.list_table td{text-align: left;padding-left: 10px;}
-
-			.b_g2 .n_center h1{text-align: left;font-size: 16px;margin-bottom: 10px;}
-
-		</style>
 
 		<input type="hidden" name="currentPage" value="1">
 	<?php include('popover.php');?>

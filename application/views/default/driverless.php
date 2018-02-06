@@ -3,10 +3,10 @@
 <?=js_url('unslider/unslider.min.js')?>
 <style type="text/css"> 
     #app .carousels{
-        /*height: 300px!important;*/
+        height: 350px!important;
     }
-    #app .carousels ul li a{
-        /*min-height: 300px;*/
+    #app .carousels ul li {
+        height: 350px;
     }
 </style>
 <!-- ^contenter -->

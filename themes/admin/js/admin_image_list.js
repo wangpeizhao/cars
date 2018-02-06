@@ -39,9 +39,17 @@ function fillData(data, currPage) {
 		var html = '';
 		if (data.length) {
 			for (var i = 0; i < data.length; i++) {
-				html += '<li class="images" title="' + data[i].file_orig + '" id="i_' + data[i].id + '"><a href="javascript:;" class="del cover" title="删除" _id="' + data[i].id + '"></a><span><img srcval="' + site_url + data[i].file_path + '" src="' + site_url + data[i].thumb + '"></span>';
-				html += '<a>' + data[i].file_orig + '</a>';
-				html += '<div class="cover_bg"></div><div class="cover" id="' + data[i].id + '"></div></li>'
+				html += '<li class="images" title="' + data[i].file_orig + '" id="i_' + data[i].id + '">';
+				html += '	<a href="javascript:;" class="del cover" title="删除" _id="' + data[i].id + '"></a>';
+				html += '	<span><img srcval="' + site_url + data[i].file_path + '" src="' + site_url + data[i].thumb + '"></span>';
+				html += '	<a>' + data[i].file_orig + '</a>';
+				html += '	<div class="cover_bg"></div>';
+				if(typeof(act) != "undefined" && act == 'copy'){
+					html += '	<div class="copy cover" id="' + data[i].id + '">点击复制图片链接</div>';
+				}else{
+					html += '	<div class="cover" id="' + data[i].id + '"></div>';
+				}
+				html += '</li>'
 			}
 		}
 		if (html == '') {

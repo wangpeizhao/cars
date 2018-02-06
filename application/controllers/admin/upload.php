@@ -26,6 +26,7 @@ class Upload extends Fzhao_Controller {
         if (!IS_POST) {
             $result = array();
             $result['terms'] = $this->upload_model->getTermByTaxonomy('attachments');
+            $result['act'] = trim($this->input->get('act', true));
             $this->view('admin/uploadImage',$result);
             return false;
         }

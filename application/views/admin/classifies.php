@@ -140,8 +140,6 @@
 					<div class="title">
 						<h1>添加分类</h1>
 					</div>
-				
-				
 					<div class="form">
 						<table class="list_table" width="100%" border="0" cellpadding="0" cellspacing="1" style="line-height: 35px;">
 							<tr>

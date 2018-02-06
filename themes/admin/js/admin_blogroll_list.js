@@ -37,15 +37,15 @@ function fillData(data, currPage) {
             html += '<tr id="' + data[i]['id'] + '">';
             html += '	<td><input type="checkbox" value="' + data[i]['id'] + '" class="cursor"/></td>';
             html += '	<td>' + data[i]['id'] + '</td>';
-            // html += '	<td>' + data[i]['link_term_name'] + '</td>';
-            html += '	<td>' + data[i]['link_name'] + '</td>';
+            html += '	<td>' + data[i]['link_term_name'] + '</td>';
+            html += '	<td title="' + data[i]['link_name'] + '">' + data[i]['link_name'] + '</td>';
             html += '	<td><a href="' + data[i]['link_url'] + '" title="' + data[i]['link_url'] + '" target="_blank">' + data[i]['link_url'] + '</a></td>';
             // html += '	<td>' + (data[i]['link_image'] ? '<a href="' + site_url + data[i]['link_image'] + '" target="_blank" style="color:#339900;">【图】</a>': '<font color="#0099ff">无</font>') + '</td>';
             html += '   <td><div class="seeimg">'+(data[i]['link_image']?'<img class="popover" src="' + (site_url+data[i]['link_image']) + '" _src="' + (site_url+data[i]['link_image']) + '">':'无')+'</div></td>';
             html += '	<td>' + data[i]['link_target'] + '</td>';
             // html += '	<td>' + (data[i]['isHidden'] == '0' ? '<font color="#339900">是</font>': '<font color="red">否</font>') + '</td>';
             html += '	<td>' + data[i]['link_sort'] + '</td>';
-            html += '	<td>' + data[i]['link_description'] + '</td>';
+            html += '	<td title="' + data[i]['link_description'] + '">' + data[i]['link_description'] + '</td>';
             html += '	<td>' + data[i]['administrator'] + '</td>';
             html += '	<td>' + data[i]['update_time'] + '</td>';
             html += '	<td id="' + data[i]['id'] + '"><a href="javascript:;" act="edit"><img class="operator" src="' + site_url + '/themes/admin/images/icon_edit.gif" alt="编辑" title="编辑" /></a><a act="del" href="javascript:;"><img class="operator" src="' + site_url + '/themes/admin/images/icon_del.gif" alt="删除" title="删除" /></a></td>';

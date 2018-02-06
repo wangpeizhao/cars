@@ -581,7 +581,8 @@
 .mainlib .focus .focus-left a,
 .mainlib .focus .focus-right a,
 .focus-banner .fb-left a,
-.focus-banner .fb-right a
+.focus-banner .fb-right a,
+.iblock a
 {
     display: block;
     /*overflow: hidden;*/
@@ -598,7 +599,8 @@
 .mainlib .focus .focus-left a img,
 .mainlib .focus .focus-right a img,
 .focus-banner .fb-left a img,
-.focus-banner .fb-right a img
+.focus-banner .fb-right a img,
+.iblock a img
 {
     -webkit-transition: .7s;
     transition: .7s;
@@ -607,14 +609,16 @@
 .mainlib .focus .focus-left a img:hover,
 .mainlib .focus .focus-right a img:hover,
 .focus-banner .fb-left a img:hover,
-.focus-banner .fb-right a img:hover
+.focus-banner .fb-right a img:hover,
+.iblock a img:hover
 {  
     transform: scale(1.05);  
 } 
 .mainlib .focus .focus-left a span,
 .mainlib .focus .focus-right a span,
 .focus-banner .fb-left a.con,
-.focus-banner .fb-right a.con
+.focus-banner .fb-right a.con,
+.iblock a span
 {
     padding: .25rem .75rem;
     display: block;

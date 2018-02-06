@@ -46,9 +46,7 @@ class Blogroll_model extends Fzhao_Model {
                 $conditions[] = array('p.'.$item => $cond[$item]);
             }
         }
-        if(!$cond['link_type']){
-            $conditions[] = array('p.link_type!=' => 'link');
-        }
+//        $conditions[] = array('p.link_type!=' => 'link');
         
         if (!empty($cond['startTime'])) {
             $conditions[] = array('p.update_time >=' => $cond['startTime']);
@@ -61,11 +59,28 @@ class Blogroll_model extends Fzhao_Model {
             'fields' => 'p.*',
             'table' => $this->table.' p',
             '_conditions' => $conditions,
-            'order' => array('p.'.$this->primary_key, 'desc'),
+            '_order' => array(array('link_term'=>'asc'),array('link_sort'=>'desc'),array('p.'.$this->primary_key, 'desc')),
             'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
             'likes' => $like
         ));
-        
+        $termIds = array_column($data, 'link_term');
+        if($termIds){
+            $termIds = array_filter(array_unique($termIds));
+        }
+        if($termIds){
+            $_terms = $this->getData(array(
+                'fields' => 'id,name',
+                'table' => 'term',
+                '_conditions' => array(array('isHidden'=>'0'),array('lang'=>_LANGUAGE_)),
+                'ins' => array(array('id'=>$termIds)),
+            ));
+            $terms = array_column($_terms,'name','id');
+        }
+        if($data){
+            foreach($data as &$item){
+                $item['link_term_name'] = !empty($terms[$item['link_term']])?$terms[$item['link_term']]:'-';
+            }
+        }
         $count = $this->getData(array(
             'table' => $this->table.' p',
             '_conditions' => $conditions,

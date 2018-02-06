@@ -65,6 +65,7 @@ class System extends Fzhao_Controller {
             //$data['indexB'] = $this->system_model->getTermByTaxonomy('newsInfo');
             //$data['indexM'] = $this->system_model->getTermByTaxonomy('company');
             $data['title'] = '网站设置';
+            $data['terms'] = $this->system_model->getTermByTaxonomy('banner_ad');
             $this->view('admin/options', $data);
             return true;
         }

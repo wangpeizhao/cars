@@ -70,8 +70,8 @@
 			<tr class="field">
 				<th width="3%">选择</th>
 				<th width="3%">ID</th>
-				<!-- <th width="10%">友情链接分类</th> -->
-				<th width="10%">友情链接名称</th>
+				<th width="10%">链接分类</th>
+				<th width="10%">链接名称</th>
 				<th width="15%">Web地址</th>
 				<th width="5%">图片</th>
 				<th width="5%">打开方式</th>

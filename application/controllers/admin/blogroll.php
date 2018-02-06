@@ -67,11 +67,16 @@ class Blogroll extends Fzhao_Controller {
     private function _verifyForm($info = array()) {
         $data = array();
 
-        $data['link_type'] = trim($this->input->post('link_type', true));
+//        $data['link_type'] = trim($this->input->post('link_type', true));
         $data['link_term'] = intval($this->input->post('link_term', true));
-        if (!$data['link_term'] && $data['link_type'] == 'link') {
+        if (!$data['link_term']) {
             $this->_doIframe('所属分类不能为空', 0);
         }
+        $term = $this->admin->getTermById($data['link_term']);
+        if(!$term){
+            $this->_doIframe('分类ID不存在', 0);
+        }
+        $data['link_type'] = $term['slug'];
         $data['link_name'] = trim($this->input->post('link_name', true));
         if (!$data['link_name']) {
             $this->_doIframe('链接名称不能为空', 0);
@@ -80,6 +85,7 @@ class Blogroll extends Fzhao_Controller {
         if (!$data['link_url']) {
             $this->_doIframe('链接url不能为空', 0);
         }
+        $result = null;
         if($data['link_type'] == 'link'){
             if ($info) {
                 $result = $this->admin->getRowByTitle(array(array('link_url' => $data['link_url']), array('id!=' => $info['id'])));
@@ -88,15 +94,17 @@ class Blogroll extends Fzhao_Controller {
             }
         }
         if ($result) {
-            $this->_doIframe('链接url已存在', 0);
+            $this->_doIframe('url已存在', 0);
         }
-        if (!empty($_FILES['link_image']['tmp_name'])) {
-            $link_image = $this->_uploadPic();
-            $data['link_image'] = $link_image;
-            if($link_image!=$info['link_image'] && $info['link_image'] && file_exists($info['link_image'])){
-                unlink($info['link_image']);
-            }
-        }
+//        if (!empty($_FILES['link_image']['tmp_name'])) {
+//            $link_image = $this->_uploadPic();
+//            $data['link_image'] = $link_image;
+//            if($link_image!=$info['link_image'] && $info['link_image'] && file_exists($info['link_image'])){
+//                unlink($info['link_image']);
+//            }
+//        }
+        $link_image = trim($this->input->post('thumb', true));
+        $data['link_image'] = $link_image? str_replace(site_url('/'), '',$link_image):'';
         $data['link_target'] = trim($this->input->post('link_target', true));
         $data['isHidden'] = (string) intval($this->input->post('isHidden', true));
         $data['link_sort'] = intval($this->input->post('link_sort', true));
@@ -124,6 +132,10 @@ class Blogroll extends Fzhao_Controller {
 
         $act = trim($this->input->post('act', true));
         if ($act == 'get') {
+            $info['link_image_thumb'] = changeImagePath($info['link_image']);
+            if(!file_exists($info['link_image_thumb'])){
+                $info['link_image_thumb'] = $info['link_image'];
+            }
             successOutput($info);
         }
         $fields = $this->_verifyForm($info);
