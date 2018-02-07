@@ -9,7 +9,6 @@ class HybridPower extends Client_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('default/home_model', 'home');
         $this->load->model('default/tag_model', 'tag');
         $this->load->model('default/news_model', 'news');
         $this->title = '混合动力';
@@ -20,7 +19,7 @@ class HybridPower extends Client_Controller {
         $data = array();
         $data['title'] = $this->title;
         //carousels
-        $carousels = $this->home->getLinks('hybrid-power');
+        $carousels = $this->news->getLinks('hybrid-power');
         $rands = array();
         
         get_array_rands($carousels,$rands,2);
@@ -30,6 +29,8 @@ class HybridPower extends Client_Controller {
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
+        //terms
+        $data['terms'] = $this->news->getTermByTaxonomy('hybrid-power');
         $this->view('hybridPower', $data);
     }
 

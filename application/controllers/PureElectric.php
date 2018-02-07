@@ -31,6 +31,8 @@ class PureElectric extends Client_Controller {
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
+        //terms
+        $data['terms'] = $this->news->getTermByTaxonomy('pure-electric');
         $this->view('pureElectric', $data);
     }
 

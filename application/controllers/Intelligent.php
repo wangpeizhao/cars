@@ -9,7 +9,6 @@ class Intelligent extends Client_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('default/home_model', 'home');
         $this->load->model('default/tag_model', 'tag');
         $this->load->model('default/news_model', 'news');
         $this->title = '智能';
@@ -20,7 +19,7 @@ class Intelligent extends Client_Controller {
         $data = array();
         $data['title'] = $this->title;
         //carousels
-        $carousels = $this->home->getLinks('intelligent');
+        $carousels = $this->news->getLinks('intelligent');
         $data['carousels_left'] = $carousels?array(array_shift($carousels)):array();
         $data['carousels_top'] = $carousels?array_slice($carousels,0,2):array();
         if($carousels){
@@ -34,6 +33,9 @@ class Intelligent extends Client_Controller {
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
+        //terms
+        $data['terms'] = $this->news->getTermByTaxonomy('intelligent');
+//        ww($data['terms']);
         $this->view('intelligent', $data);
     }
 

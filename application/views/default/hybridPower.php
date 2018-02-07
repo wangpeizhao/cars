@@ -89,28 +89,22 @@
             <div class="list_con" style="margin-top:0;">
                 <div class="car_tab" id="subNavShow">
                     <ul>
-                        <li class="active"><span><a href="">最新文章</a></span></li>
-                        <li><span><a href="">早期项目</a></span></li>
-                        <li><span><a href="">大公司</a></span></li>
-                        <li><span><a href="">创投新闻</a></span></li>
-                        <li><span><a href="">AI is</a></span></li>
-                        <li><span><a href="">消费升级</a></span></li>
-                        <li><span><a href="">深氪</a></span></li>
-                        <li><span><a href="">技能Get</a></span></li>
-                        <li><span><a href="">新能源</a></span></li>
+                        <li class="active"><span><a href="javascript:;" _act="all">最新文章</a></span></li>
+                        <?php if(!empty($terms['childs'])){
+                            foreach($terms['childs'] as $item){?>
+                        <li><span><a href="javascript:;"><?=$item['name']?></a></span></li>
+                        <?php }}?>
+                        <li><span><a href="javascript:;">What Is?</a></span></li>
                     </ul>
                 </div>
                 <div class="car_tab" id="subNavHide">
                     <ul>
-                        <li class="active"><span><a href="">最新文章</a></span></li>
-                        <li><span><a href="">早期项目</a></span></li>
-                        <li><span><a href="">大公司</a></span></li>
-                        <li><span><a href="">创投新闻</a></span></li>
-                        <li><span><a href="">AI is</a></span></li>
-                        <li><span><a href="">消费升级</a></span></li>
-                        <li><span><a href="">深氪</a></span></li>
-                        <li><span><a href="">技能Get</a></span></li>
-                        <li><span><a href="">新能源</a></span></li>
+                        <li class="active"><span><a href="javascript:;" _act="all">最新文章</a></span></li>
+                        <?php if(!empty($terms['childs'])){
+                            foreach($terms['childs'] as $item){?>
+                        <li><span><a href="javascript:;"><?=$item['name']?></a></span></li>
+                        <?php }}?>
+                        <li><span><a href="javascript:;">What Is?</a></span></li>
                     </ul>
                 </div>
                 <script type="text/javascript">

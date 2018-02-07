@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.17)
 # Database: automobile_service
-# Generation Time: 2018-02-07 06:56:59 +0000
+# Generation Time: 2018-02-07 08:02:55 +0000
 # ************************************************************
 
 
@@ -57,7 +57,7 @@ LOCK TABLES `tab_admin` WRITE;
 INSERT INTO `tab_admin` (`id`, `username`, `nickname`, `password`, `salt`, `role_id`, `branch`, `email`, `phone`, `mobile`, `qq`, `weixin`, `describe`, `sort`, `last_login_time`, `last_login_ip`, `isHidden`, `create_time`, `update_time`, `uid`, `lang`)
 VALUES
 	(2,'admin','王培照','deb6e94ac8b42e7718979d9e1471b478','x8sjd9',2,'技术部','342823274@qq.com','13533615794','13533615794','342823274',NULL,'php工程师',98,'2017-08-21 16:29:12','127.0.0.1','0','2013-01-29 23:08:10','2013-01-29 23:08:10',1,'cn'),
-	(9,'15622299006','王培照','a3e879b139fed00e052be8f7d64a5a6d','g2kbn5',1,'系统管理部','342823274@qq.com','15622299006','15622299006','342823274','342823274','PHP高级开发工程师asd',2,'2018-02-07 09:49:27','127.0.0.1','0','2017-07-26 16:23:28','2018-01-16 11:39:52',0,'cn'),
+	(9,'15622299006','王培照','a3e879b139fed00e052be8f7d64a5a6d','g2kbn5',1,'系统管理部','342823274@qq.com','15622299006','15622299006','342823274','342823274','PHP高级开发工程师asd',2,'2018-02-07 15:16:40','127.0.0.1','0','2017-07-26 16:23:28','2018-01-16 11:39:52',0,'cn'),
 	(10,'13728440363','陈啟英','26a28cde46cdb598dcc349702c3974e5','VbXOqG',3,'财务部','13728440363@qq.com','13728440363','13728440363','13728440363','13728440363','可爱漂亮',3,NULL,NULL,'1','2018-01-16 11:46:52','2018-01-16 11:46:52',9,'cn');
 
 /*!40000 ALTER TABLE `tab_admin` ENABLE KEYS */;
@@ -3944,7 +3944,55 @@ VALUES
 	(3844,'http://www.cars.com/admin/blogroll/index --- from[post] ----- http://www.cars.com/admin/system/options','{&post(link_term)=>[199]&post(link_target)=>[]&post(startTime)=>[]&post(endTime)=>[]&post(currentPage)=>[1]&post(rows)=>[10]}','127.0.0.1','2018-02-07 10:31:02',9),
 	(3845,'http://www.cars.com/admin/blogroll/index --- from[post] ----- http://www.cars.com/admin/system/options','{&post(link_term)=>[199]&post(link_target)=>[]&post(startTime)=>[]&post(endTime)=>[]&post(currentPage)=>[1]&post(rows)=>[10]}','127.0.0.1','2018-02-07 10:31:04',9),
 	(3846,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/system/options','','127.0.0.1','2018-02-07 10:34:03',9),
-	(3847,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/system/options','','127.0.0.1','2018-02-07 10:37:44',9);
+	(3847,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/system/options','','127.0.0.1','2018-02-07 10:37:44',9),
+	(3848,'http://www.cars.com/admin/login/index?url=http%3A%2F%2Fwww.cars.com%2Fadmin%2Fclassify%2Findex --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:16:36',0),
+	(3849,'http://www.cars.com/admin/login/vCode?1517987796 --- from[get] ----- http://www.cars.com/admin/login/index?url=http%3A%2F%2Fwww.cars.com%2Fadmin%2Fclassify%2Findex','','127.0.0.1','2018-02-07 15:16:36',0),
+	(3850,'http://www.cars.com/admin/login/checkVCode --- from[post] ----- http://www.cars.com/admin/login/index?url=http%3A%2F%2Fwww.cars.com%2Fadmin%2Fclassify%2Findex','{&post(vCode)=>[棒棒sd]}','127.0.0.1','2018-02-07 15:16:39',0),
+	(3851,'http://www.cars.com/admin/login/checkVCode --- from[post] ----- http://www.cars.com/admin/login/index?url=http%3A%2F%2Fwww.cars.com%2Fadmin%2Fclassify%2Findex','{&post(vCode)=>[棒棒sd]}','127.0.0.1','2018-02-07 15:16:39',0),
+	(3852,'http://www.cars.com/admin/login --- from[post] ----- http://www.cars.com/admin/login/index?url=http%3A%2F%2Fwww.cars.com%2Fadmin%2Fclassify%2Findex','{&post(username)=>[15622299006]&post(password)=>[I am very smart!]&post(captcha)=>[棒棒sd]}','127.0.0.1','2018-02-07 15:16:40',0),
+	(3853,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/login/index?url=http%3A%2F%2Fwww.cars.com%2Fadmin%2Fclassify%2Findex','','127.0.0.1','2018-02-07 15:16:40',9),
+	(3854,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[0]&post(name)=>[智能]&post(slug)=>[intelligent]&post(description)=>[智能]&post(sort)=>[80]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:17:16',9),
+	(3855,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:17:18',9),
+	(3856,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[200]&post(name)=>[VR虚拟现实]&post(slug)=>[vr]&post(description)=>[VR虚拟现实]&post(sort)=>[99]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:17:40',9),
+	(3857,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:17:41',9),
+	(3858,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[200]&post(name)=>[AR增强现实]&post(slug)=>[ar]&post(description)=>[AR增强现实]&post(sort)=>[98]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:18:03',9),
+	(3859,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:18:05',9),
+	(3860,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[200]&post(name)=>[AI人工智能]&post(slug)=>[ai]&post(description)=>[AI人工智能]&post(sort)=>[97]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:18:22',9),
+	(3861,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:18:23',9),
+	(3862,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[200]&post(name)=>[UAV无人机]&post(slug)=>[uav]&post(description)=>[UAV无人机]&post(sort)=>[96]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:18:45',9),
+	(3863,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:18:46',9),
+	(3864,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[0]&post(name)=>[无人驾驶]&post(slug)=>[driverless]&post(description)=>[无人驾驶]&post(sort)=>[81]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:40:55',9),
+	(3865,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:40:56',9),
+	(3866,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[205]&post(name)=>[中国研发]&post(slug)=>[china]&post(description)=>[中国研发]&post(sort)=>[99]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:41:28',9),
+	(3867,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:41:29',9),
+	(3868,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[205]&post(name)=>[百度研发]&post(slug)=>[baidu]&post(description)=>[百度研发]&post(sort)=>[98]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:41:49',9),
+	(3869,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:41:50',9),
+	(3870,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[205]&post(name)=>[清华研发]&post(slug)=>[tsinghua]&post(description)=>[清华研发]&post(sort)=>[97]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:42:21',9),
+	(3871,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:42:22',9),
+	(3872,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[205]&post(name)=>[谷歌]&post(slug)=>[google]&post(description)=>[谷歌]&post(sort)=>[96]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:43:02',9),
+	(3873,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:43:03',9),
+	(3874,'http://www.cars.com/admin/classify/edit --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[205]&post(name)=>[谷歌研发]&post(slug)=>[google]&post(description)=>[谷歌研发]&post(sort)=>[96]&post(isHidden)=>[0]&post(id)=>[209]}','127.0.0.1','2018-02-07 15:43:15',9),
+	(3875,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:43:16',9),
+	(3876,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[205]&post(name)=>[国外研发]&post(slug)=>[foreign]&post(description)=>[国外研发]&post(sort)=>[95]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:43:52',9),
+	(3877,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:43:53',9),
+	(3878,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[0]&post(name)=>[混合动力]&post(slug)=>[hybrid-power]&post(description)=>[混合动力]&post(sort)=>[83]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:48:49',9),
+	(3879,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:48:50',9),
+	(3880,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[211]&post(name)=>[发展现状]&post(slug)=>[status]&post(description)=>[发展现状]&post(sort)=>[99]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:49:46',9),
+	(3881,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:49:47',9),
+	(3882,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[211]&post(name)=>[国家政策]&post(slug)=>[policy]&post(description)=>[国家政策]&post(sort)=>[98]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:50:14',9),
+	(3883,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:50:15',9),
+	(3884,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[0]&post(name)=>[纯电动]&post(slug)=>[pure-electric]&post(description)=>[纯电动]&post(sort)=>[84]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:54:32',9),
+	(3885,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:54:33',9),
+	(3886,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[214]&post(name)=>[汽车优点]&post(slug)=>[advantage]&post(description)=>[汽车优点]&post(sort)=>[99]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:55:01',9),
+	(3887,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:55:02',9),
+	(3888,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[214]&post(name)=>[国家政策]&post(slug)=>[policy]&post(description)=>[国家政策]&post(sort)=>[98]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:55:27',9),
+	(3889,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:55:28',9),
+	(3890,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[0]&post(name)=>[新能源]&post(slug)=>[new-energy]&post(description)=>[新能源]&post(sort)=>[85]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:58:36',9),
+	(3891,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:58:37',9),
+	(3892,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[217]&post(name)=>[行业资讯]&post(slug)=>[industryNews]&post(description)=>[行业资讯]&post(sort)=>[99]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:59:30',9),
+	(3893,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:59:31',9),
+	(3894,'http://www.cars.com/admin/classify/add --- from[post] ----- http://www.cars.com/admin/classify/index','{&post(pid)=>[217]&post(name)=>[国家政策]&post(slug)=>[policy]&post(description)=>[国家政策]&post(sort)=>[98]&post(isHidden)=>[0]&post(id)=>[0]}','127.0.0.1','2018-02-07 15:59:52',9),
+	(3895,'http://www.cars.com/admin/classify/index --- from[get] ----- http://www.cars.com/admin/classify/index','','127.0.0.1','2018-02-07 15:59:53',9);
 
 /*!40000 ALTER TABLE `tab_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -4000,7 +4048,8 @@ VALUES
 	(29,'2018-02-05 23:22:18',9,'127.0.0.1'),
 	(30,'2018-02-06 09:15:09',9,'127.0.0.1'),
 	(31,'2018-02-07 00:33:51',9,'127.0.0.1'),
-	(32,'2018-02-07 09:49:27',9,'127.0.0.1');
+	(32,'2018-02-07 09:49:27',9,'127.0.0.1'),
+	(33,'2018-02-07 15:16:40',9,'127.0.0.1');
 
 /*!40000 ALTER TABLE `tab_admin_login_log` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -5282,7 +5331,27 @@ VALUES
 	(196,'合作商',NULL,'cooperation','link','合作商',9,195,0,'0',0,0,1,NULL,'2018-02-06 11:53:25','2018-02-06 11:53:25','cn'),
 	(197,'代理商',NULL,'agent','link','代理商',9,195,0,'0',0,0,2,NULL,'2018-02-06 11:54:05','2018-02-06 11:54:05','cn'),
 	(198,'Banner & ad',NULL,'banner_ad','attachments','Banner & ad',9,157,0,'0',0,0,0,NULL,'2018-02-06 12:16:33','2018-02-06 12:16:33','cn'),
-	(199,'首页第二Banner',NULL,'second_banner','banner_ad','',9,187,0,'0',0,0,99,NULL,'2018-02-07 10:24:55','2018-02-07 10:24:55','cn');
+	(199,'首页第二Banner',NULL,'second_banner','banner_ad','',9,187,0,'0',0,0,99,NULL,'2018-02-07 10:24:55','2018-02-07 10:24:55','cn'),
+	(200,'智能',NULL,'intelligent','intelligent','智能',9,0,0,'0',0,0,80,NULL,'2018-02-07 15:17:16','2018-02-07 15:17:16','cn'),
+	(201,'VR虚拟现实',NULL,'vr','intelligent','VR虚拟现实',9,200,0,'0',0,0,99,NULL,'2018-02-07 15:17:40','2018-02-07 15:17:40','cn'),
+	(202,'AR增强现实',NULL,'ar','intelligent','AR增强现实',9,200,0,'0',0,0,98,NULL,'2018-02-07 15:18:03','2018-02-07 15:18:03','cn'),
+	(203,'AI人工智能',NULL,'ai','intelligent','AI人工智能',9,200,0,'0',0,0,97,NULL,'2018-02-07 15:18:22','2018-02-07 15:18:22','cn'),
+	(204,'UAV无人机',NULL,'uav','intelligent','UAV无人机',9,200,0,'0',0,0,96,NULL,'2018-02-07 15:18:45','2018-02-07 15:18:45','cn'),
+	(205,'无人驾驶',NULL,'driverless','driverless','无人驾驶',9,0,0,'0',0,0,81,NULL,'2018-02-07 15:40:55','2018-02-07 15:40:55','cn'),
+	(206,'中国研发',NULL,'china','driverless','中国研发',9,205,0,'0',0,0,99,NULL,'2018-02-07 15:41:28','2018-02-07 15:41:28','cn'),
+	(207,'百度研发',NULL,'baidu','driverless','百度研发',9,205,0,'0',0,0,98,NULL,'2018-02-07 15:41:49','2018-02-07 15:41:49','cn'),
+	(208,'清华研发',NULL,'tsinghua','driverless','清华研发',9,205,0,'0',0,0,97,NULL,'2018-02-07 15:42:21','2018-02-07 15:42:21','cn'),
+	(209,'谷歌研发',NULL,'google','driverless','谷歌研发',9,205,0,'0',0,0,96,NULL,'2018-02-07 15:43:02','2018-02-07 15:43:15','cn'),
+	(210,'国外研发',NULL,'foreign','driverless','国外研发',9,205,0,'0',0,0,95,NULL,'2018-02-07 15:43:52','2018-02-07 15:43:52','cn'),
+	(211,'混合动力',NULL,'hybrid-power','hybrid-power','混合动力',9,0,0,'0',0,0,83,NULL,'2018-02-07 15:48:49','2018-02-07 15:48:49','cn'),
+	(212,'发展现状',NULL,'status','hybrid-power','发展现状',9,211,0,'0',0,0,99,NULL,'2018-02-07 15:49:46','2018-02-07 15:49:46','cn'),
+	(213,'国家政策',NULL,'policy','hybrid-power','国家政策',9,211,0,'0',0,0,98,NULL,'2018-02-07 15:50:14','2018-02-07 15:50:14','cn'),
+	(214,'纯电动',NULL,'pure-electric','pure-electric','纯电动',9,0,0,'0',0,0,84,NULL,'2018-02-07 15:54:32','2018-02-07 15:54:32','cn'),
+	(215,'汽车优点',NULL,'advantage','pure-electric','汽车优点',9,214,0,'0',0,0,99,NULL,'2018-02-07 15:55:01','2018-02-07 15:55:01','cn'),
+	(216,'国家政策',NULL,'policy','pure-electric','国家政策',9,214,0,'0',0,0,98,NULL,'2018-02-07 15:55:27','2018-02-07 15:55:27','cn'),
+	(217,'新能源',NULL,'new-energy','new-energy','新能源',9,0,0,'0',0,0,85,NULL,'2018-02-07 15:58:36','2018-02-07 15:58:36','cn'),
+	(218,'行业资讯',NULL,'industrynews','new-energy','行业资讯',9,217,0,'0',0,0,99,NULL,'2018-02-07 15:59:30','2018-02-07 15:59:30','cn'),
+	(219,'国家政策',NULL,'policy','new-energy','国家政策',9,217,0,'0',0,0,98,NULL,'2018-02-07 15:59:52','2018-02-07 15:59:52','cn');
 
 /*!40000 ALTER TABLE `tab_term` ENABLE KEYS */;
 UNLOCK TABLES;

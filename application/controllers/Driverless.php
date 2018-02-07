@@ -9,7 +9,6 @@ class Driverless extends Client_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('default/home_model', 'home');
         $this->load->model('default/tag_model', 'tag');
         $this->load->model('default/news_model', 'news');
         $this->title = '无人驾驶';
@@ -20,11 +19,13 @@ class Driverless extends Client_Controller {
         $data = array();
         $data['title'] = $this->title;
         //carousels
-        $data['carousels'] = $this->home->getLinks('driverless');
+        $data['carousels'] = $this->news->getLinks('driverless');
         //热门标签
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
+        //terms
+        $data['terms'] = $this->news->getTermByTaxonomy('driverless');
         $this->view('driverless', $data);
     }
 
