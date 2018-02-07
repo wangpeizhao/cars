@@ -232,13 +232,14 @@
 		        	var sort = tr.attr('_sort');
 		        	var isHidden = tr.attr('_isHidden');
 		        	var parent = tr.attr('_parent');
+		        	var taxonomy = tr.attr('_taxonomy');
 		        	var id = $(this).attr('_id');
 		        	$('.popup_content select[name="pid"]').val(pid);
 		        	$('.popup_content input[name="name"]').val(name);
 		        	$('.popup_content input[name="description"]').val(desc);
 
 		        	$('.popup_content input[name="slug"]').val(slug);
-		        	if(!parseInt(parent)){
+		        	if(!parseInt(parent) || taxonomy == 'banner_ad'){
 		        		$('.popup_content input[name="slug"]').attr('readonly',true);
 		        	}else{
 		        		$('.popup_content input[name="slug"]').removeAttr('readonly',false);

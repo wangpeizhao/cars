@@ -19,6 +19,10 @@ class Home extends Client_Controller {
         $data = array();
         //carousels
         $data['carousels'] = $this->admin->getLinks();
+        $second_banner = $this->admin->getLinks('second_banner');
+        $rands = array();
+        get_array_rands($second_banner, $rands,3);
+        $data['rands'] = $rands;
         
         //news
         $news = $this->admin->getData(array(

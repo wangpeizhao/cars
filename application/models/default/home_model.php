@@ -20,7 +20,7 @@ class Home_model extends Fzhao_Model {
      */
     public function getLinks($type = 'indexPic') {
         $result = $this->getData(array(
-            'fields' => 'link_url,link_name,link_image,link_target',
+            'fields' => 'link_url,link_name,link_image,link_target,link_description',
             'table' => 'links',
             '_conditions' => array(array('isHidden' => '0'), array('lang' => _LANGUAGE_), array('link_type' => $type)),
             '_order' => array(array('link_sort' => 'desc'), array('id' => 'desc'))

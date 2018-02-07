@@ -33,16 +33,15 @@
             </div>
             <div class="hotFocus">
                 <ul>
-                    <li>
-                        <a href="http://36kr.com/p/5114445.html"><img src="<?=img_url('u33ugxahv1vfjegl!heading.jpeg')?>"></a>
-                        <a href="http://36kr.com/p/5114445.html"><span>区块链+SaaS系统服务餐饮企业，「亿点点」获A轮融资</span></a>
-                    </li><li>
-                        <a href="http://36kr.com/p/5114526.html"><img src="<?=img_url('rgpz4dt5crigsxwu!heading.jpeg')?>"></a>
-                        <a href="http://36kr.com/p/5114526.html"><span>SpaceCycle完成B轮融资，阿里台湾创业者基金领投</span></a>
-                    </li><li>
-                        <a href="http://36kr.com/p/5112135.html"><img src="<?=img_url('n1cuq3gm3a0rgkqz!heading.jpeg')?>"></a>
-                        <a href="http://36kr.com/p/5112135.html"><span>「分子未来」要做区块链领域的“天天基金网”+“网贷之家”</span></a>
-                    </li>
+                    <?php if(!empty($rands)){
+                        foreach($rands as $item){?><li>
+                        <a href="<?=$item['link_url']?>">
+                            <img src="<?=site_url($item['link_image'])?>" alt="<?=$item['link_name']?>">
+                        </a>
+                        <a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>">
+                            <span><?=$item['link_name']?></span>
+                        </a>
+                    </li><?php }}?>
                 </ul>
             </div>
 
