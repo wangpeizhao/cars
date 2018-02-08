@@ -28,7 +28,7 @@ class Tag extends Client_Controller {
                 $item['praises'] = 0;
             }
         }
-        $data['news'] = $news;
+        $data['mainLists'] = $news;
         $data['title'] = $term['name'].$this->title;
         $data['hotTags'] = $this->admin->get_hot_tags(10);
         $data['hotTagsRSS'] = $this->admin->get_hot_tags(5);

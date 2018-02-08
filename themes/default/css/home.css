@@ -380,6 +380,9 @@
     float: right;
     vertical-align: middle;
 }
+.car_article_list .inner_li_abtest .comments-list span{
+    margin-right:5px;
+}
 
 .car_article_list ul li .info-flow-monographic-inner {
     position: relative;

@@ -29,9 +29,17 @@ class HybridPower extends Client_Controller {
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
+        
         //terms
         $terms = $this->news->getTermByTaxonomy('news');
-        $data['terms'] = $this->news->getSpecifyTermByNews($terms,'hybrid-power');
+        $_terms = $this->news->getSpecifyTermByNews($terms,'hybrid-power');
+        $data['terms'] = $_terms;
+        //main lists
+        $pageSize = getPageSize();
+        $page = getPages();
+        $mainData = $this->news->getMainLists($pageSize,$page,$_terms['id']);
+        $data['mainLists'] = $mainData['data'];
+        $data['total'] = $mainData['total'];
         $this->view('hybridPower', $data);
     }
 

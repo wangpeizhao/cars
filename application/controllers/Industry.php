@@ -26,6 +26,11 @@ class Industry extends Client_Controller {
         get_array_rands($carousels,$rands,2);
         $data['rands'] = $rands;
         
+        //热门标签
+        $data['hotTags'] = $this->tag->get_hot_tags(10);
+        //热门文章
+        $data['hotNews'] = $this->news->getHotNews(10);
+        
         //terms
         $terms = $this->news->getTermByTaxonomy('news');
         $_terms = $this->news->getSpecifyTermByNews($terms,'industry');
@@ -36,11 +41,6 @@ class Industry extends Client_Controller {
         $mainData = $this->news->getMainLists($pageSize,$page,$_terms['id']);
         $data['mainLists'] = $mainData['data'];
         $data['total'] = $mainData['total'];
-        
-        //热门标签
-        $data['hotTags'] = $this->tag->get_hot_tags(10);
-        //热门文章
-        $data['hotNews'] = $this->news->getHotNews(10);
         $this->view('industry', $data);
     }
 

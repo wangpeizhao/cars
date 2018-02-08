@@ -81,7 +81,7 @@ function writeFile($content, $file) {
  * 作者：Fzhao
  * 时间：2012/12/11
  */
-function delSpace($str) {
+function clearBlank($str) {
     $space = array(" ", "　", "\t", "\n", "\r");
     $trim = array("", "", "", "", "");
     return str_replace($space, $trim, $str);
