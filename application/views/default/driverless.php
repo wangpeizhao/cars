@@ -16,7 +16,7 @@
             <ul>
                 <?php if(!empty($carousels)){
                     foreach($carousels as $k=>$item){?>
-                    <li><a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
+                    <li><a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
                 <?php }
                 }?>
             </ul>
@@ -80,43 +80,45 @@
                 <div class="car_article_list">
                     <ul>
                         <?php if(!empty($news)){?>
-                            <?php foreach($news as $item){?>
-                                <li>
-                                    <div class="am-cf inner_li inner_li_abtest">
-                                        <a href="/p/<?=$item['id']?>.html" target="_blank">
-                                            <div class="img_box">
-                                                <div target="_blank">
-                                                    <img src="<?=WEB_DOMAIN.'/'.$item['thumb']?>" alt="<?=$item['title']?>" class="load-img fade">
-                                                </div>
+                        <?php foreach($news as $item){?>
+                            <li>
+                                <div class="am-cf inner_li inner_li_abtest">
+                                    <a href="/p/<?=$item['id']?>.html" target="_blank">
+                                        <div class="img_box">
+                                            <div target="_blank">
+                                                <img src="<?=WEB_DOMAIN.'/'.$item['thumb']?>" alt="<?=$item['title']?>" class="load-img fade">
                                             </div>
-                                            <div class="intro">
-                                                <h3><?=$item['title']?></h3>
-                                                <div class="abstract"><?=$item['summary']?></div>
+                                        </div>
+                                        <div class="intro">
+                                            <h3><?=$item['title']?></h3>
+                                            <div class="abstract"><?=$item['summary']?></div>
+                                        </div>
+                                    </a>
+                                    <div class="info">
+                                        <div class="info-list info-list-abtest">
+                                            <div class="user-info">
+                                                <a href="javascript:;" target="_blank" class="name"><?=$item['author']?></a>
+                                                <span class="oblique_line">·</span>
                                             </div>
-                                        </a>
-                                        <div class="info">
-                                            <div class="info-list info-list-abtest">
-                                                <div class="user-info">
-                                                    <a href="javascript:;" target="_blank" class="name"><?=$item['author']?></a>
-                                                    <span class="oblique_line">·</span>
-                                                </div>
-                                                <div class="time-div">
-                                                    <span class="time" title="<?=$item['create_time']?>"><?=$item['timeLine']?></span>
-                                                </div>
+                                            <div class="time-div">
+                                                <span class="time" title="<?=$item['create_time']?>"><?=$item['timeLine']?></span>
                                             </div>
-                                            <div class="tags-list">
-                                                <!-- <i class="icon-tag"></i> -->
-                                                <?php if($item['tags']){?>
-                                                    <?php foreach($item['tags'] as $k=>$item){?>
-                                                        <span><a href="/tag/<?=$k?>.html" target="_blank"><?=$item?></a></span><span class="separate">，</span>
-                                                    <?php }?>
+                                        </div>
+                                        <div class="tags-list">
+                                            <!-- <i class="icon-tag"></i> -->
+                                            <?php if($item['tags']){?>
+                                                <?php foreach($item['tags'] as $k=>$item){?>
+                                                    <span><a href="/tag/<?=$k?>.html" target="_blank"><?=$item?></a></span><span class="separate">，</span>
                                                 <?php }?>
-                                            </div>
-                                            <div class="comments-list"><span class="comments">10收藏</span></div>
+                                            <?php }?>
+                                        </div>
+                                        <div class="comments-list">
+                                            <span class="comments"><?=$item['praises']>$item['views']?$item['praises'].'赞':$item['views'].'浏览'?></span>
                                         </div>
                                     </div>
-                                </li>
-                            <?php }?>
+                                </div>
+                            </li>
+                        <?php }?>
                         <?php }?>
 
                         <?php for($i=0;$i<3;$i++){?>

@@ -9,7 +9,6 @@ class PureElectric extends Client_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('default/home_model', 'home');
         $this->load->model('default/tag_model', 'tag');
         $this->load->model('default/news_model', 'news');
         $this->title = '纯电动';
@@ -20,7 +19,7 @@ class PureElectric extends Client_Controller {
         $data = array();
         $data['title'] = $this->title;
         //carousels
-        $carousels = $this->home->getLinks('pure-electric');
+        $carousels = $this->news->getLinks('pure-electric');
         $data['carousels'] = $carousels?array(array_shift($carousels)):array();
         $rands = array();
         
@@ -32,7 +31,8 @@ class PureElectric extends Client_Controller {
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
         //terms
-        $data['terms'] = $this->news->getTermByTaxonomy('pure-electric');
+        $terms = $this->news->getTermByTaxonomy('news');
+        $data['terms'] = $this->news->getSpecifyTermByNews($terms,'pure-electric');
         $this->view('pureElectric', $data);
     }
 

@@ -10,7 +10,7 @@
                 <ul>
                     <?php if(!empty($carousels)){
                         foreach($carousels as $k=>$item){?>
-                        <li><a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
+                        <li><a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
                     <?php }
                     }?>
                 </ul>
@@ -35,10 +35,10 @@
                 <ul>
                     <?php if(!empty($rands)){
                         foreach($rands as $item){?><li>
-                        <a href="<?=$item['link_url']?>">
+                        <a href="<?=$item['link_url']?>"<?=$item['target']?>>
                             <img src="<?=site_url($item['link_image'])?>" alt="<?=$item['link_name']?>">
                         </a>
-                        <a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>">
+                        <a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>">
                             <span><?=$item['link_name']?></span>
                         </a>
                     </li><?php }}?>
@@ -87,109 +87,46 @@
                 </script>
                 <div class="car_article_list">
                     <ul>
-                        <?php for($i=0;$i<3;$i++){?>
+                        <?php if(!empty($mainLists)){
+                            foreach($mainLists as $_k=>$item){?>
                         <li>
                             <div class="am-cf inner_li inner_li_abtest">
-                                <a data-stat-click="103.zhufeed.wenzhangbeijing.1" href="/p/5114673.html" target="_blank">
+                                <a href="/p/<?=$item['id']?>.html" target="_blank">
                                     <div class="img_box">
-                                        <div data-stat-click="103.zhufeed.wenzhangtupian.1" href="/p/5114673.html" target="_blank">
-                                            <img src="https://pic.36krcnd.com/201801/18090922/yh6d36x9nxl3ulxb!heading" alt="微信是怎么做到亿级用户的异常检测的？" class="load-img fade">
+                                        <div href="/p/<?=$item['id']?>.html" target="_blank">
+                                            <img src="<?=WEB_DOMAIN.'/'.$item['thumb']?>" alt="<?=$item['title']?>" class="load-img fade">
                                         </div>
                                     </div>
                                     <div class="intro">
-                                        <h3 data-stat-click="103.zhufeed.wenzhangbiaoti.1">微信是怎么做到亿级用户的异常检测的？</h3>
-                                        <div class="abstract">本文将带你一窥究竟，微信是怎么做异常检测框架的？</div>
+                                        <h3><?=$item['title']?></h3>
+                                        <div class="abstract"><?=$item['summary']?></div>
                                     </div>
                                 </a>
                                 <div class="info">
                                     <div class="info-list info-list-abtest">
                                         <div class="user-info">
-                                            <a href="/user/323686438" data-stat-click="zhufeed.wenzhangzuozhe.1.5114673" target="_blank" class="name">InfoQ技术媒体</a>
+                                            <a href="javascript:;" target="_blank" class="name"><?=$item['author']?></a>
                                             <span class="oblique_line">·</span>
                                         </div>
                                         <div class="time-div">
-                                            <span class="time" title="2018-01-18 21:07">3小时前</span>
-                                            <span class="time h5_time">3小时前</span>
+                                            <span class="time" title="<?=$item['create_time']?>"><?=$item['create_time']?></span>
+                                            <span class="time h5_time" title="<?=$item['timeLine']?>"><?=$item['timeLine']?></span>
                                         </div>
                                     </div>
                                     <div class="tags-list">
-                                        <i class="icon-tag"></i>
-                                        <span><a href="/tag/%E5%A4%A7%E5%85%AC%E5%8F%B8" target="_blank">大公司</a><span>，
-                                        </span></span><span><a href="/tag/%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1" target="_blank">企业服务</a></span>
+                                        <?php if($item['tags']){?>
+                                            <?php foreach($item['tags'] as $k=>$_item){?>
+                                                <span><a href="/tag/<?=$k?>.html" target="_blank"><?=$_item?></a></span><span class="separate">，</span>
+                                            <?php }?>
+                                        <?php }?>
                                     </div>
-                                    <div class="comments-list"><span class="comments">10收藏</span></div>
+                                    <div class="comments-list">
+                                        <span class="comments"><?=$item['praises']>$item['views']?$item['praises'].'赞':$item['views'].'浏览'?></span>
+                                    </div>
                                 </div>
                             </div>
                         </li>
-
-                        <li>
-                            <div class="am-cf inner_li inner_li_abtest">
-                                <a data-stat-click="103.zhufeed.wenzhangbeijing.1" href="/p/5114673.html" target="_blank">
-                                    <div class="img_box">
-                                        <div data-stat-click="103.zhufeed.wenzhangtupian.1" href="/p/5114673.html" target="_blank">
-                                            <img src="https://pic.36krcnd.com/201801/19103046/4frfoke8by1d0dh4!heading" alt="微信是怎么做到亿级用户的异常检测的？" class="load-img fade">
-                                        </div>
-                                    </div>
-                                    <div class="intro">
-                                        <h3 data-stat-click="103.zhufeed.wenzhangbiaoti.1">「易企秀」获6400万元B+轮融资，H5第一梯队已稳定</h3>
-                                        <div class="abstract">「易企秀」获6400万元B+轮融资，H5第一梯队已稳定</div>
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <div class="info-list info-list-abtest">
-                                        <div class="user-info">
-                                            <a href="/user/323686438" data-stat-click="zhufeed.wenzhangzuozhe.1.5114673" target="_blank" class="name">InfoQ技术媒体</a>
-                                            <span class="oblique_line">·</span>
-                                        </div>
-                                        <div class="time-div">
-                                            <span class="time" title="2018-01-18 21:07">3小时前</span>
-                                            <span class="time h5_time">3小时前</span>
-                                        </div>
-                                    </div>
-                                    <div class="tags-list">
-                                        <i class="icon-tag"></i>
-                                        <span><a href="/tag/%E5%A4%A7%E5%85%AC%E5%8F%B8" target="_blank">大公司</a><span>，
-                                        </span></span><span><a href="/tag/%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1" target="_blank">企业服务</a></span>
-                                    </div>
-                                    <div class="comments-list"><span class="comments">10收藏</span></div>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="am-cf inner_li inner_li_abtest">
-                                <a data-stat-click="103.zhufeed.wenzhangbeijing.1" href="/p/5114673.html" target="_blank">
-                                    <div class="img_box">
-                                        <div data-stat-click="103.zhufeed.wenzhangtupian.1" href="/p/5114673.html" target="_blank">
-                                            <img src="https://pic.36krcnd.com/201801/18110620/4ovp0gvgy8f16f0o!heading" alt="微信是怎么做到亿级用户的异常检测的？" class="load-img fade">
-                                        </div>
-                                    </div>
-                                    <div class="intro">
-                                        <h3 data-stat-click="103.zhufeed.wenzhangbiaoti.1">瞄准全国晋商，「山西老乡严选」用小程序电商销售情怀和特产</h3>
-                                        <div class="abstract">瞄准全国晋商，「山西老乡严选」用小程序电商销售情怀和特产</div>
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <div class="info-list info-list-abtest">
-                                        <div class="user-info">
-                                            <a href="/user/323686438" data-stat-click="zhufeed.wenzhangzuozhe.1.5114673" target="_blank" class="name">InfoQ技术媒体</a>
-                                            <span class="oblique_line">·</span>
-                                        </div>
-                                        <div class="time-div">
-                                            <span class="time" title="2018-01-18 21:07">3小时前</span>
-                                            <span class="time h5_time">3小时前</span>
-                                        </div>
-                                    </div>
-                                    <div class="tags-list">
-                                        <i class="icon-tag"></i>
-                                        <span><a href="/tag/%E5%A4%A7%E5%85%AC%E5%8F%B8" target="_blank">大公司</a><span>，
-                                        </span></span><span><a href="/tag/%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1" target="_blank">企业服务</a></span>
-                                    </div>
-                                    <div class="comments-list"><span class="comments">10收藏</span></div>
-                                </div>
-                            </div>
-                        </li>
-
+                        <?php if($_k && ($_k+1)%5 == 0){?>
                         <li>
                             <div class="am-cf inner_li info-flow-monographic-wrapper">
                                 <div class="mark">专题</div>
@@ -205,41 +142,8 @@
                                 </div>
                             </div>
                         </li>
-
-                        <li>
-                            <div class="am-cf inner_li inner_li_abtest">
-                                <a data-stat-click="103.zhufeed.wenzhangbeijing.1" href="/p/5114673.html" target="_blank">
-                                    <div class="img_box">
-                                        <div data-stat-click="103.zhufeed.wenzhangtupian.1" href="/p/5114673.html" target="_blank">
-                                            <img src="https://pic.36krcnd.com/201801/15104447/clza2vb6hsa2755v!heading" alt="微信是怎么做到亿级用户的异常检测的？" class="load-img fade">
-                                        </div>
-                                    </div>
-                                    <div class="intro">
-                                        <h3 data-stat-click="103.zhufeed.wenzhangbiaoti.1">用供应链服务置换餐厅消费额度，「黄牛派」想同时连接供货商、餐厅和消费者</h3>
-                                        <div class="abstract">用供应链服务置换餐厅消费额度，「黄牛派」想同时连接供货商、餐厅和消费者</div>
-                                    </div>
-                                </a>
-                                <div class="info">
-                                    <div class="info-list info-list-abtest">
-                                        <div class="user-info">
-                                            <a href="/user/323686438" data-stat-click="zhufeed.wenzhangzuozhe.1.5114673" target="_blank" class="name">InfoQ技术媒体</a>
-                                            <span class="oblique_line">·</span>
-                                        </div>
-                                        <div class="time-div">
-                                            <span class="time" title="2018-01-18 21:07">3小时前</span>
-                                            <span class="time h5_time">3小时前</span>
-                                        </div>
-                                    </div>
-                                    <div class="tags-list">
-                                        <i class="icon-tag"></i>
-                                        <span><a href="/tag/%E5%A4%A7%E5%85%AC%E5%8F%B8" target="_blank">大公司</a><span>，
-                                        </span></span><span><a href="/tag/%E4%BC%81%E4%B8%9A%E6%9C%8D%E5%8A%A1" target="_blank">企业服务</a></span>
-                                    </div>
-                                    <div class="comments-list"><span class="comments">10收藏</span></div>
-                                </div>
-                            </div>
-                        </li>
                         <?php }?>
+                        <?php }}?>
                     </ul>
                 </div>
 
@@ -254,18 +158,19 @@
             <div class="real_time">
                 <h3><span>7×24h 快讯</span></h3>
                 <ul>
-                    <?php for($i=0;$i<10;$i++){?>                            
+                    <?php if($newsflash){
+                        foreach($newsflash as $item){?>                            
                     <li class="real_time_wrapper">
                         <span class="triangle"></span>
                         <div class="con">
                             <h4>
-                                <span class="title" data-stat-click="kuaixunmokuai.kuaixunbiaoti.1.99171">麦当劳中国联手融创 缔结策略伙伴关系加快业务发展</span>
+                                <span class="title"><?=$item['title']?></span>
                             </h4>
                             <div class="item0 hide show-content" style="display: none;">
-                                据美通社报道，麦当劳中国与融创房地产集团有限公司签订长期战略合作协议。麦当劳与融创在后者布局的全国八大区域的综合体、社区商业、写字楼、文旅等板块进行全面合作。融创将在其全国社区、文旅项目中为麦当劳餐厅提供优先选址权利；与此同时，麦当劳也将发挥其全球品牌效应，支持融创的社区配套与餐饮配套发展。
+                                <?=$item['summary']?>
                             </div>
                             <div>
-                                <span class="time" title="2018-01-19 18:32"><?=$i+3?>分钟前</span>
+                                <span class="time" title="<?=$item['create_time']?>"><?=$item['timeLine']?></span>
                                 <span class="share">
                                     <div class="fast-section-share-box hide-phone">
                                         <span class="share-title">分享至&nbsp;&nbsp; </span>
@@ -273,20 +178,17 @@
                                             <span class="icon-weixin"></span>
                                             <div class="panel-weixin">
                                                 <section class="weixin-section">
-                                                    <p><img src="http://s.jiathis.com/qrcode.php?url=http://36kr.com/newsflashes/99171" alt=""></p>
+                                                    <!-- <p><img src="http://s.jiathis.com/qrcode.php?url=<?=site_url('/p/'.$item['id'].'.html')?>" alt=""></p> -->
                                                 </section>
                                                 <h3>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</h3>
                                             </div>
-                                        </a>
-                                        <a href="http://share.baidu.com/s?type=text&amp;searchPic=1&amp;sign=on&amp;to=tsina&amp;key=595885820&amp;url=http://36kr.com/newsflashes/99171&amp;title=%E3%80%9036%E6%B0%AA%E5%BF%AB%E8%AE%AF%E3%80%91%E9%BA%A6%E5%BD%93%E5%8A%B3%E4%B8%AD%E5%9B%BD%E8%81%94%E6%89%8B%E8%9E%8D%E5%88%9B%20%E7%BC%94%E7%BB%93%E7%AD%96%E7%95%A5%E4%BC%99%E4%BC%B4%E5%85%B3%E7%B3%BB%E5%8A%A0%E5%BF%AB%E4%B8%9A%E5%8A%A1%E5%8F%91%E5%B1%95" target="_blank">
-                                            <span class="icon-sina"></span>
                                         </a>
                                     </div>
                                 </span>
                             </div>
                         </div>
                     </li>
-                    <?php }?>
+                    <?php }}?>
                     <script type="text/javascript">
                         $('.real_time_wrapper h4').click(function(){
                             var _S = $(this).parent().parent();
@@ -337,7 +239,7 @@
                             <!-- 首页资讯推荐start -->
                             <?php if($news){
                                 foreach($news as $item){?>
-                                <li><a href="/news/info/<?=$item['id']?>.html"><?=$item['title']?></a></li>
+                                <li><a href="/p/<?=$item['id']?>.html"><?=$item['title']?></a></li>
                             <?php    }
                             }?>
                         </ul>

@@ -9,10 +9,10 @@
                 <div class="focus-left">
                     <?php if(!empty($carousels)){
                         foreach($carousels as $item){?>
-                        <a href="<?=$item['link_url']?>">
+                        <a href="<?=$item['link_url']?>"<?=$item['target']?>>
                             <img src="<?=site_url($item['link_image'])?>" alt="<?=$item['link_name']?>">
                         </a>
-                        <a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>">
+                        <a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>">
                             <span><?=$item['link_name']?></span>
                         </a>
                     <?php }
@@ -22,10 +22,10 @@
                         <?php if(!empty($rands)){
                             foreach($rands as $item){?>
                         <li>
-                            <a href="<?=$item['link_url']?>">
+                            <a href="<?=$item['link_url']?>"<?=$item['target']?>>
                                 <img src="<?=site_url($item['link_image'])?>" alt="<?=$item['link_name']?>">
                             </a>
-                            <a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>">
+                            <a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>">
                                 <span><?=$item['link_name']?></span>
                             </a>
                         </li>

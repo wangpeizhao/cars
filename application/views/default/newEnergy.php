@@ -16,7 +16,7 @@
             <ul>
                 <?php if(!empty($carousels)){
                     foreach($carousels as $k=>$item){?>
-                    <li><a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
+                    <li><a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
                 <?php }
                 }?>
             </ul>

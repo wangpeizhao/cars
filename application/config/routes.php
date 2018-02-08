@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['nf'] = 'News/index';
+$route['nf'] = 'News/newsflash';
 $route['tu'] = 'Industry/index';
 $route['nev'] = 'NewEnergy/index';
 $route['pev'] = 'PureElectric/index';

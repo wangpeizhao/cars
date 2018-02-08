@@ -17,19 +17,32 @@ class Home extends Client_Controller {
     
     public function index() {
         $data = array();
-        //carousels
-        $data['carousels'] = $this->admin->getLinks();
-        $second_banner = $this->admin->getLinks('second_banner');
+        //carousels && banners
+        $data['carousels'] = $this->news->getLinks();
+        $second_banner = $this->news->getLinks('second_banner');
         $rands = array();
         get_array_rands($second_banner, $rands,3);
         $data['rands'] = $rands;
         
-        //news
+        //main lists
+        $pageSize = getPageSize();
+        $page = getPages();
+        $term_id = 0;
+        $slug = trim($this->input->get('slug',true));
+        if($slug){
+            $term = $this->news->getTermByTaxonomy($slug);
+            $term && $term_id = $term['id'];
+        }
+        $mainData = $this->news->getMainLists($pageSize,$page,$term_id);
+        $data['mainLists'] = $mainData['data'];
+        $data['total'] = $mainData['total'];
+        
+        //about us - news
         $news = $this->admin->getData(array(
             'fields' => 'a.id,a.title',
             'table' => 'news a',
             'conditions' => array('a.isHidden' => '0', 'a.lang' => _LANGUAGE_,'is_commend'=>'1','is_issue'=>'1'),
-            '_order' => array(array('sort'=>'desc'),array('views'=>'desc'),array('id'=>'desc')),
+            '_order' => array(array('sort'=>'desc'),array('praises'=>'desc'),array('id'=>'desc')),
             'limit' => array(5,0)
         ));
         $data['news'] = $news;
@@ -42,6 +55,10 @@ class Home extends Client_Controller {
             $about = str_replace('LWWEB_LWWEB_DEFAULT_URL', site_url(''), html_entity_decode(file_get_contents($file)));
             $data['about'] = trim(str_replace('&nbsp;','',strip_tags($about)));
         }
+        
+        //快讯
+        $data['newsflash'] = $this->news->get_newsflash();
+        //热门标签
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);

@@ -13,10 +13,12 @@ class News extends Client_Controller {
         $this->title = '7×24h 快讯';
     }
 
-    public function index() {
+    public function newsflash() {
         $this->checkCache();
         $data = array();
         $data['title'] = $this->title;
+        //快讯
+        $data['newsflash'] = $this->admin->get_newsflash(15);
         //热门标签
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章

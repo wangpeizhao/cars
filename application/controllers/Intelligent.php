@@ -34,8 +34,8 @@ class Intelligent extends Client_Controller {
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
         //terms
-        $data['terms'] = $this->news->getTermByTaxonomy('intelligent');
-//        ww($data['terms']);
+        $terms = $this->news->getTermByTaxonomy('news');
+        $data['terms'] = $this->news->getSpecifyTermByNews($terms,'intelligent');
         $this->view('intelligent', $data);
     }
 

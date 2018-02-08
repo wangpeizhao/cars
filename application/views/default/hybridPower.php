@@ -45,7 +45,7 @@
                 <ul>
                     <?php if(!empty($carousels)){
                         foreach($carousels as $k=>$item){?>
-                        <li><a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
+                        <li><a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>" style="background-image: url('<?=site_url($item['link_image'])?>')"></a></li>
                     <?php }
                     }?>
                 </ul>
@@ -71,10 +71,10 @@
                 <?php if(!empty($rands)){
                     foreach($rands as $item){?>
                 <li>
-                    <a href="<?=$item['link_url']?>">
+                    <a href="<?=$item['link_url']?>"<?=$item['target']?>>
                         <img src="<?=site_url($item['link_image'])?>" alt="<?=$item['link_name']?>">
                     </a>
-                    <a href="<?=$item['link_url']?>" title="<?=$item['link_name']?>">
+                    <a href="<?=$item['link_url']?>"<?=$item['target']?> title="<?=$item['link_name']?>">
                         <span><?=$item['link_name']?></span>
                     </a>
                 </li>

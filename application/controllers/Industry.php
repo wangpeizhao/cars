@@ -26,12 +26,21 @@ class Industry extends Client_Controller {
         get_array_rands($carousels,$rands,2);
         $data['rands'] = $rands;
         
+        //terms
+        $terms = $this->news->getTermByTaxonomy('news');
+        $_terms = $this->news->getSpecifyTermByNews($terms,'industry');
+        $data['terms'] = $_terms;
+        //main lists
+        $pageSize = getPageSize();
+        $page = getPages();
+        $mainData = $this->news->getMainLists($pageSize,$page,$_terms['id']);
+        $data['mainLists'] = $mainData['data'];
+        $data['total'] = $mainData['total'];
+        
         //热门标签
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
-        //terms
-        $data['terms'] = $this->news->getTermByTaxonomy('industry');
         $this->view('industry', $data);
     }
 

@@ -248,6 +248,7 @@ footer .f_bottom{
     -ms-flex-order: 2;
     order: 2;
     box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
 .dn{

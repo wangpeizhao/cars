@@ -728,7 +728,7 @@ function TimeLine($time) {
                 if ($seconds < 3600) {
                     //一分钟内
                     if ($seconds < 60) {
-                        if (3 > $seconds) {
+                        if (30 > $seconds) {
                             $message = '刚刚';
                         } else {
                             $message = $seconds . '秒前';

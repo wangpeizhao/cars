@@ -19,13 +19,14 @@ class NewEnergy extends Client_Controller {
         $data = array();
         $data['title'] = $this->title;
         //carousels
-        $data['carousels'] = $this->news->getLinks();
+        $data['carousels'] = $this->news->getLinks('new-energy');
         //热门标签
         $data['hotTags'] = $this->tag->get_hot_tags(10);
         //热门文章
         $data['hotNews'] = $this->news->getHotNews(10);
         //terms
-        $data['terms'] = $this->news->getTermByTaxonomy('new-energy');
+        $terms = $this->news->getTermByTaxonomy('news');
+        $data['terms'] = $this->news->getSpecifyTermByNews($terms,'new-energy');
         $this->view('newEnergy', $data);
     }
 

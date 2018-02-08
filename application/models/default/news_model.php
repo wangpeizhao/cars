@@ -27,6 +27,11 @@ class News_model extends Fzhao_Model {
             '_conditions' => array(array('isHidden' => '0'), array('lang' => _LANGUAGE_), array('link_type' => $type)),
             '_order' => array(array('link_sort' => 'desc'), array('id' => 'desc'))
         ));
+        if($result){
+            foreach($result as &$item){
+                $item['target'] = $item['link_target']=='_blank'?' target="_blank"':'';
+            }
+        }
 
         return $result;
     }
@@ -151,6 +156,112 @@ class News_model extends Fzhao_Model {
             }
         }
         return $news;
+    }
+    
+    public function getSpecifyTermByNews($terms,$slug){
+        if(!$terms || !$slug){
+            return false;
+        }
+        if(empty($terms['childs'])){
+            return false;
+        }
+        $_terms = array();
+        foreach($terms['childs'] as $item){
+            if($item['slug'] != $slug || empty($item['childs'])){
+                continue;
+            }
+            $_terms = $item;
+            break;
+        }
+        return $_terms;
+    }
+    
+    public function getMainLists($pageSize,$page,$term_id = 0){
+        $conditions = array(array('isHidden' => '0'),array('lang' => _LANGUAGE_),array('is_issue'=>'1'));
+        $where = '';
+        if($term_id){
+            $termIds = $this->getData(array(
+                'fields' => 'id',
+                'table' => 'term',
+                '_conditions' => array(array('parent' => $term_id),array('isHidden'=>'0')),
+            ));
+            $term_ids = array_column($termIds,'id');
+            $where .= "(term_id = ".$term_id."";
+            $term_ids && $where .= " OR term_id IN (".implode(",",$term_ids).")";
+            $where .= ")";
+        }
+        
+        //排除快讯 terms
+        $terms = $this->getTermByTaxonomy('news');
+        $term = $this->getSpecifyTermByNews($terms,'newsflash');
+        if(!$term){
+            return false;
+        }
+        $_term_id = $term['id'];
+        $_term_ids = array_column($term['childs'],'id');
+        $where .= $where?' AND ':'';
+        $where .= "(term_id != ".$_term_id."";
+        $_term_ids && $where .= " and term_id NOT IN (".implode(",",$_term_ids).")";
+        $where .= ")";
+        
+        $lists = $this->getData(array(
+            'fields' => 'id,term_id,title,from,author,tags,keywords,summary,views,thumb,praises,create_time',
+            'table' => 'news',
+            '_conditions' => $conditions,
+            'where' => $where,
+            '_order' => array(array('sort'=>'desc'),array('id'=>'desc')),
+            'limit' => array($pageSize, $pageSize * ($page - 1)),
+        ));
+//        ww($this->last_query());
+        if($lists){
+            $this->load->model('default/tag_model', 'tag');
+            foreach($lists as &$item){
+                $item['tags'] = $this->tag->get_tags($item['tags']);
+                $item['timeLine'] = TimeLine(strtotime($item['create_time']));
+            }
+        }
+        
+        $total = $this->getData(array(
+            'table' => 'news',
+            '_conditions' => $conditions,
+            'where' => $where,
+            '_order' => array(array('sort'=>'desc'),array('id'=>'desc')),
+            'count' => true
+        ));
+        return array('data'=>$lists,'total' => $total);
+    }
+    
+    public function get_newsflash($pageSize = 10,$page = 1){
+        $conditions = array(array('isHidden' => '0'),array('lang' => _LANGUAGE_),array('is_issue'=>'1'));
+        //terms
+        $terms = $this->getTermByTaxonomy('news');
+        $term = $this->getSpecifyTermByNews($terms,'newsflash');
+        if(!$term){
+            return false;
+        }
+        $where = '';
+        $term_id = $term['id'];
+        $term_ids = array_column($term['childs'],'id');
+        $where .= "(term_id = ".$term_id."";
+        $term_ids && $where .= " OR term_id IN (".implode(",",$term_ids).")";
+        $where .= ")";
+        $lists = $this->getData(array(
+            'fields' => 'id,title,from,author,tags,keywords,summary,create_time',
+            'table' => 'news',
+            '_conditions' => $conditions,
+            'where' => $where,
+            '_order' => array(array('id'=>'desc')),
+            'limit' => array($pageSize, $pageSize * ($page - 1)),
+        ));
+//        ww($this->last_query());
+        if($lists){
+            $this->load->model('default/tag_model', 'tag');
+            foreach($lists as &$item){
+//                $item['tags'] = $this->tag->get_tags($item['tags']);
+                $item['timeLine'] = TimeLine(strtotime($item['create_time']));
+            }
+        }
+        return $lists;
     }
 
 }
