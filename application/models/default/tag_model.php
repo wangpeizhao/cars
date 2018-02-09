@@ -34,7 +34,7 @@ class Tag_model extends Fzhao_Model {
         $news = $this->getData(array(
             'fields' => 'id,term_id,title,from,author,tags,summary,views,is_commend,is_issue,thumb,update_time,create_time,uid',
             'table' => 'news',
-            '_conditions' => array(array('isHidden' => '0'), array('lang' => _LANGUAGE_), array('thumb!=' => '')),
+            '_conditions' => array(array('isHidden' => '0'), array('is_issue' => '1'), array('lang' => _LANGUAGE_), array('thumb!=' => '')),
             'where' => "FIND_IN_SET('" . $termId . "',tags)>0",
             '_order' => array(array('sort' => 'desc'), array('create_time' => 'desc')),
             'limit' => array($rows, $rows * ($currPage - 1)),
@@ -77,6 +77,27 @@ class Tag_model extends Fzhao_Model {
             $tags[$item['id']] = $tag;
         }
         return $tags;
+    }
+    
+    public function getSpecifyTermByTags($terms,$slug){
+        if(!$terms || !$slug){
+            return false;
+        }
+        static $term = array();
+        if(!empty($terms['childs'])){
+            foreach($terms['childs'] as $item){
+                if(trim($item['slug']) == trim($slug)){
+                    $term = $item;
+                    return $term;
+                }
+                $this->getSpecifyTermByTags($item,$slug);
+            }
+        }else{
+            if(trim($terms['slug']) == trim($slug)){
+                $term = $terms;
+            }
+        }
+        return $term;
     }
 
 }

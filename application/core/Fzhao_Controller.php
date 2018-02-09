@@ -275,6 +275,7 @@ class Fzhao_Controller extends My_Controller {
         $this->grade = intval($adminLoginInfo['role_id']);
         $this->isLogin = true;
         defined('ADMIN_ID') or define('ADMIN_ID', $this->userId);
+        defined('ADMIN_USERNAME') or define('ADMIN_USERNAME', $adminLoginInfo['nickname']);
     }
 
     /**

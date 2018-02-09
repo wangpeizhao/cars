@@ -26,6 +26,14 @@
       // }
   }
 
+  function checkTagForm(){
+    var pid = $('.popup_content form select[name="pid"]').val();
+    if(!pid){
+      alert('请选择分类');
+      return false;
+    }
+  }
+
   function iResultAlter(str,status){
     if(status==0){
         alert(str);
@@ -162,7 +170,7 @@
                   <tr>
                     <th>标签：</th>
                     <td>
-                      <div id="tags">
+                      <div id="tags" style="height:220px;overflow:auto;">
                       <?php if(!empty($tags['childs'])){?>
                         <?php foreach($tags['childs'] as $item){?>
                           <p class="tags" id="t_<?=$item['id']?>">
@@ -301,7 +309,7 @@
 
       <div class="popup_bg">
         <div class="popup_content">
-          <form method="post" name="ModelForm" action="<?=WEB_DOMAIN?>/admin/classify/add" data-parsley-validate="" novalidate target="ajaxifr">
+          <form method="post" name="ModelForm" action="<?=WEB_DOMAIN?>/admin/classify/add" data-parsley-validate="" novalidate target="ajaxifr" onSubmit="return checkTagForm();">
             <span class="js-none"><i>×</i></span>
             <div class="title">
               <h1>添加标签</h1>

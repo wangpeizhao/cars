@@ -17,7 +17,10 @@ class Tag extends Client_Controller {
     public function index() {
         $tag = str_replace('.html','',strtolower(post_get('tag',2,'trim')));
         $this->verify($tag);
-        $term = $this->admin->getTermRowBySlug($tag);
+        
+        $terms = $this->news->getTermByTaxonomy('tags');
+        $term = $this->admin->getSpecifyTermByTags($terms,$tag);
+//        ww($term);
         $this->verify($term);
         $data = $term;
         $news = $this->admin->getNewsByTags(intval($term['id']));

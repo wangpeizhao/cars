@@ -25,13 +25,12 @@ function array_sort($arr, $keys, $type = 'asc') {
     return $new_array;
 }
 
-// 编码转换
-function conv($str) {
-    if (!trim($str)) {
-        return false;
+
+function conv($value) {
+    if (empty($value)) {
+        return $value;
     } else {
-        $encode = mb_detect_encoding($str, array("ASCII", "UTF-8", "GB2312", "GBK", "BIG5"));
-        return mb_convert_encoding($str, 'UTF-8', $encode);
+        return is_array($value) ? array_map('conv', $value) : mb_convert_encoding($value, 'UTF-8', mb_detect_encoding($value, array("ASCII", "UTF-8", "GB2312", "GBK", "BIG5")));
     }
 }
 

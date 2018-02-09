@@ -69,7 +69,7 @@ class Upload extends Fzhao_Controller {
      * 作者：Parker
      * 时间：2018-01-15
      */
-    function uploading() {
+    public function uploading() {
         if (!IS_POST) {
             show_404();
         }
@@ -124,9 +124,9 @@ class Upload extends Fzhao_Controller {
     
     private function _fill_attachment(&$attachment,$item,$act){
         if($act == 'location'){
-            $attachment['tid'] = intval($this->input->post('_type_2',true));
+            $attachment['tid'] = !empty($attachment['tid'])?$attachment['tid']:intval($this->input->post('_type_2',true));
         }else if($act == 'network'){
-            $attachment['tid'] = intval($this->input->post('_type_3',true));
+            $attachment['tid'] = !empty($attachment['tid'])?$attachment['tid']:intval($this->input->post('_type_3',true));
         }
         $attachment['file_orig'] = $item['orig_name'];
         $attachment['file_name'] = $item['file_name'];
@@ -543,5 +543,161 @@ class Upload extends Fzhao_Controller {
             $this->view('admin/database_optimizetable', $data);
         }
     }
+
+    /**
+     * Collect
+     * 简介：采集数据
+     * 参数：NULL
+     * 返回：Array
+     * 作者：Parker
+     * 时间：2018/01/17
+     */
+    function collect() {
+        $this->load->model('admin/collect_model', 'collect');
+        if (!IS_POST) {
+            $data['title'] = '采集数据';
+            $data['_title_'] = $data['title'];
+            $data['terms'] = $this->collect->getTermByTaxonomy('news');
+            $this->view('admin/collect', $data);
+            return true;
+        }
+        $term_id = intval($this->input->post('term_id',true));
+        $url = trim($this->input->post('url',true));
+        if(!$url){
+            $this->_doIframe('URL不能为空', 0);
+        }
+        $data = array();
+        $config = array(
+            'url' => $url,
+            'domHtml' => ''
+        );
+        $this->load->library('Php_Query',$config,'query');
+        
+        //http://auto.ofweek.com/
+        $rules = array(
+            'title' => array('title','text'),
+            'from' => array('span.laiyuan span','text'),
+            'summary' => array('.simple p','text'),
+            'tags' => array('.hot_read a','text'),
+            'imgs' => array('#articleC p img','src'),
+            'content' => array('#articleC','html'),
+        );
+        
+        foreach($rules as $k=>$item){
+            $data[$k] = $this->query->sq(array($k => $item));
+        }
+        
+        $fields = $this->_farmat_data($data);
+        $fields['term_id'] = $term_id;
+//        ww($fields);
+        $this->collect->dbInsert('news',$fields);
+        
+        $this->_doIframe('采集成功');
+    }
+    
+    private function _farmat_data($data){
+        $field = array();
+        $field['title'] = $data['title']?clearBlank($data['title'][0]['title']):'';
+        $this->load->helper('char');
+        $field['ft_title'] = wordSegment($field['title']);
+        $field['from'] = $data['from']?clearBlank($data['from'][0]['from']):'';
+        $field['summary'] = $data['summary']?clearBlank($data['summary'][0]['summary']):'';
+        $field['summary'] = str_replace('导读：','',$field['summary']);
+        $field['content'] = $data['content']?trim($data['content'][0]['content']):'';
+        
+        $tags = $data['tags']?array_column($data['tags'],'tags'):array();
+        $field['tags'] = $this->_set_tags($tags);
+                
+        $imgs = $data['imgs']?array_column($data['imgs'],'imgs'):array();
+        $imgsNew = $this->_set_imgs($imgs);
+        $field['content'] = $imgsNew?htmlspecialchars(str_replace($imgs, $imgsNew, $field['content'])):$field['content'];
+        
+        $field['update_time'] = _DATETIME_;
+        $field['create_time'] = _DATETIME_;
+        $field['uid'] = ADMIN_ID;
+        $field['lang'] = _LANGUAGE_;
+        $field['author'] = ADMIN_USERNAME;
+        $field['SEOKeywords'] = $tags?implode(",", $tags):'';
+        $field['SEODescription'] = $field['title'];
+        $field['thumb'] = $imgsNew?str_replace(site_url('/'),'',current($imgsNew)):'';
+        return $field;
+    }
+    
+    private function _set_imgs($imgs){
+        if(!$imgs){
+            return false;
+        }
+        $directory = implode("/", array(date('Y'), date('m'), date('d')));
+        $config['upload_path'] = 'uploads/' . $directory . '/images';
+        createFolder('uploads/' . $directory . '/images');
+        createFolder('uploads/' . $directory . '/small');
+        createFolder('uploads/' . $directory . '/tiny');
+        $imgsNew = array();
+        $attachment = array(
+            'tid' => 159,//新闻内容图
+            'create_time' => _DATETIME_, 
+            'update_time' => _DATETIME_, 
+            'uid' => ADMIN_ID
+        );
+        foreach($imgs as $item){
+            
+            $success = $this->_download_image_remote($item,$config['upload_path']);
+            if(!$success){
+                continue;
+            }
+            $this->_fill_attachment($attachment,$success,'network');
+            $attachment && $this->collect->dbInsert('attachments', $attachment);
+            $this->zoomImage($success['file_path'], $directory);
+            $imgsNew[] = _URL_ . $success['file_path'];
+        }
+        return $imgsNew;
+    }
+    
+    private function _set_tags($tags){
+        if(!$tags){
+            return '';
+        }
+        $_allTags = $this->collect->getData(array(
+            'fields' => 'id,name,slug',
+            'table' => 'term',
+            '_conditions' => array(array('isHidden'=>'0'),array('lang'=>_LANGUAGE_),array('taxonomy'=>'tags')),
+        ));
+        $_tagsName = array_column($_allTags, 'id', 'name');
+        $_tagsSlugs = array_column($_allTags,'slug');
+        
+        $_tags = array();
+        foreach($tags as $item){
+            $tag = trim($item);
+            if(!empty($_tagsName[$tag])){
+                $_tags[] = $_tagsName[$tag];
+                continue;
+            }
+            $_slug = $this->_set_pinyin_for_slug($tag,$_tagsSlugs);
+            $_term = array(
+                'name' => $item,
+                'slug' => $_slug,
+                'taxonomy' => 'tags',
+                'description' => $item,
+                'uid' => ADMIN_ID,
+                'parent' => 162,//分类中的标签
+                'create_time' => _DATETIME_,
+                'update_time' => _DATETIME_
+            );
+            $_tags[] = $this->collect->dbInsert('term',$_term,true);
+        }
+        return $_tags?implode(",", $_tags):'';
+    }
+
+    private function _set_pinyin_for_slug($name,$slugs) {
+        $this->load->library('Pinyin', 'pinyin');
+        $pinyin = $this->pinyin->utf8_to($name);
+        //是否有相同的拼音
+        if (in_array($pinyin,$slugs)) {
+            $pinyin = $pinyin . rand(1,9);
+        }
+        return $pinyin;
+    }
+    
+    
 
 }

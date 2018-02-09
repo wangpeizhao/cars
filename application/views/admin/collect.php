@@ -3,52 +3,32 @@
   <!-- 引入二级菜单-->
   <?php include('submenu.php');?>
   <!-- /引入二级菜单-->
-  <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/ckeditor/ckeditor.js"></script>
-  <script type='text/javascript' src="<?=site_url('')?>/themes/common/js/admin_add_edit.js"></script>
   <script type="text/javascript" src="<?=site_url('')?>/themes/common/js/parsley.js"></script>
   <link rel="stylesheet" href="<?=site_url('')?>/themes/common/css/parsley.css">
   <script type="text/javascript">
     function checkForm(){
-
-    }
-    //判断密码强弱程度
-    function check_pwd() {
-      var pwd = document.getElementById("newPwd").value;
-      var reg1=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9a-z]{6,20}$/;
-      var reg2=/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,20}$/;
-      var reg3=/(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*_])[0-9a-zA-Z!@#$%^&*_]{6,20}$/;
-      if (pwd.length < 6) {
-        $("#newPwd").siblings(".error").html("密码长度不能小于6位");
-        $(".pwdtip").css("display", "none");
-        $(".pwdLen span:eq(0)").removeClass("ruo");
-        $(".pwdLen span:eq(1)").removeClass("zho");
-        $(".pwdLen span:eq(2)").removeClass("qia");
+      var term_id = $('select[name="term_id"]').val();
+      if(!$.trim(term_id)){
+        alert('分类不能为空');
         return false;
-      } else{
-        $(".pwdtip").css("display", "block");
-        $("#newPwd").siblings(".error").html("");
-        if (reg1.test(pwd)) {
-          $(".pwdLen span:eq(0)").addClass("ruo");
-          $(".pwdLen span:eq(1)").removeClass("zho");
-          $(".pwdLen span:eq(2)").removeClass("qia");
-          return true;
-        }else if (reg2.test(pwd)) {
-          $(".pwdLen span:eq(0)").addClass("ruo");
-          $(".pwdLen span:eq(1)").addClass("zho");
-          $(".pwdLen span:eq(2)").removeClass("qia");
-          return true;
-        }else if(reg3.test(pwd)){
-          $(".pwdLen span:eq(0)").addClass("ruo");
-          $(".pwdLen span:eq(1)").addClass("zho");
-          $(".pwdLen span:eq(2)").addClass("qia");
-          return true;
-        }else{
-          $("#newPwd").siblings(".error").html("请输入6-20位字符，包含字母和数字");
-          $(".pwdtip").css("display", "none");
-        }
-        return true;
+      }
+      var URL = $('input[name="url"]').val();
+      if(!$.trim(URL)){
+        alert('URL不能为空');
+        return false;
       }
     }
+
+    function iResultAlter(str,status){
+        if(status==0){
+            alert(str);
+            return false;
+        }
+        alert(str);
+        $('input[name="url"]').val('');
+        $('button:submit').blur();
+    }
+
   </script>
   <style type="text/css">
     .error{color: #ff0000;display: inline-block;}
@@ -80,6 +60,18 @@
 					        <col width="148px"><col>
                 </colgroup>
                 <tbody>
+                  <tr>
+                    <th>分类：</th>
+                    <td>
+                      <select name="term_id" class="auto">
+                        <option value="" selected>- 请选择分类 -</option>
+                        <?php 
+                          include('terms.php');
+                        ?>
+                      </select>
+                      <label style="color:red;">*</label>
+                    </td>
+                  </tr>
                   <tr>
                     <th>URL：</th>
                     <td>

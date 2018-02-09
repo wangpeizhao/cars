@@ -37,7 +37,7 @@ function fillData(data, currPage) {
             html += '<tr id="' + data[i]['id'] + '">';
 			html += '	<td><input type="checkbox" value="' + data[i]['id'] + '" class="cursor"/></td>';
 			html += '	<td>' + data[i]['id'] + '</td>';
-			html += '	<td><a href="' + baseUrl + lang + '/news/sort/' + data[i]['slug'] + '" target="_blank">' + data[i]['term_name'] + '</a></td>';
+			html += '	<td><a href="javascript:;" target="_blank">' + data[i]['term_name'] + '</a></td>';
 			html += '	<td><a href="' + baseUrl + lang + '/p/' + data[i]['id'] + '.html' + '" target="_blank" title="' + data[i]['title'] + '">' + data[i]['title'] + '</a>' + '</td>';
 			html += '	<td title="' + data[i]['summary'] + '">' + data[i]['summary'] + '</td>';
             html += '   <td title="' + data[i]['tags'] + '">' + data[i]['tags'] + '</td>';
