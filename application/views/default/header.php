@@ -3,14 +3,14 @@
         <title><?=!empty($title)?$title.'_'.SITESNAMESHORT:SITESNAME?></title>
         <meta name="keywords" content="创业,互联网创业,互联网创业项目">
         <meta name="description" content="36氪为您提供创业资讯、科技新闻、投融资对接、股权投资、极速融资等创业服务，致力成为创业者可以依赖的创业服务平台，为创业者提供最好的产品和服务。">
-        <meta property="og:url" content="http://36kr.com/">
+        <meta property="og:url" content="">
         <meta property="og:type" content="article">
         <meta property="og:title" content="36氪 | 让创业更简单">
         <meta property="og:description" content="">
         <meta property="og:image" content="https://krplus-pic.b0.upaiyun.com/201602/24094427/3butngz6peklnpft.jpg"> 
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta name="renderer" content="webkit"> 
-        <link href="//36kr.com/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"> 
+        <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"> 
         <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1"> 
         <meta name="apple-mobile-web-app-title" content="Title"> 
         <meta name="apple-mobile-web-app-capable" content="yes">

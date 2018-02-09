@@ -573,19 +573,47 @@ class Upload extends Fzhao_Controller {
         );
         $this->load->library('Php_Query',$config,'query');
         
+        $uris = parse_url($url);
+        $this->verify($uris);
+        $_uri = md5($uris['host']);
+        
         //http://auto.ofweek.com/
-        $rules = array(
+        $_rules = array();
+        $_rules[md5('auto.ofweek.com')] = array(
             'title' => array('title','text'),
             'from' => array('span.laiyuan span','text'),
             'summary' => array('.simple p','text'),
             'tags' => array('.hot_read a','text'),
             'imgs' => array('#articleC p img','src'),
             'content' => array('#articleC','html'),
+            'SEOKeywords' => array('meta[name="keywords"]','content'),
+            'SEODescription' => array('meta[name="description"]','content'),
         );
+        $_rules[md5('www.sohu.com')] = array(
+//            'title' => array('.text-title h1','text'),
+            'title' => array('meta[property="og:title"]','content'),
+//            'from' => array('span.laiyuan span','text'),
+//            'summary' => array('.simple p','text'),
+            'tags' => array('span.tag a','text'),
+            'imgs' => array('article#mp-editor p img','src'),
+            'content' => array('#mp-editor','html'),
+            'SEOKeywords' => array('meta[name="keywords"]','content'),
+            'SEODescription' => array('meta[name="description"]','content'),
+        );
+        $rules = array();
+        if(!empty($_rules[$_uri])){
+            $rules = $_rules[$_uri];
+        }else{
+            $uri = substr($uris['host'], strstr($uris['host'], '.'));
+            if(!empty($_rules[md5($uri)])){
+                $rules = $_rules[md5($uri)];
+            }
+            $this->_doIframe('不支持当前域名', 0);
+        }
         
         foreach($rules as $k=>$item){
             $data[$k] = $this->query->sq(array($k => $item));
-        }
+        }ww($data);
         
         $fields = $this->_farmat_data($data);
         $fields['term_id'] = $term_id;
@@ -627,6 +655,8 @@ class Upload extends Fzhao_Controller {
         $field['summary'] = $data['summary']?clearBlank($data['summary'][0]['summary']):'';
         $field['summary'] = str_replace('导读：','',$field['summary']);
         $field['content'] = $data['content']?trim($data['content'][0]['content']):'';
+        $field['SEOKeywords'] = $data['SEOKeywords']?clearBlank($data['SEOKeywords'][0]['SEOKeywords']):'';
+        $field['SEODescription'] = $data['SEODescription']?clearBlank($data['SEODescription'][0]['SEODescription']):'';
         
         $tags = $data['tags']?array_column($data['tags'],'tags'):array();
         $field['tags'] = $this->_set_tags($tags);
@@ -640,8 +670,8 @@ class Upload extends Fzhao_Controller {
         $field['uid'] = ADMIN_ID;
         $field['lang'] = _LANGUAGE_;
         $field['author'] = ADMIN_USERNAME;
-        $field['SEOKeywords'] = $tags?implode(",", $tags):'';
-        $field['SEODescription'] = $field['title'];
+        $field['SEOKeywords'] = !empty($field['SEOKeywords'])?$field['SEOKeywords']:($tags?implode(",", $tags):'');
+        $field['SEODescription'] = !empty($field['SEODescription'])?$field['SEODescription']:$field['title'];
         $field['thumb'] = $imgsNew?str_replace(site_url('/'),'',current($imgsNew)):'';
         return $field;
     }
@@ -663,6 +693,11 @@ class Upload extends Fzhao_Controller {
             'uid' => ADMIN_ID
         );
         foreach($imgs as $item){
+            $item = ltrim($item,'//');
+            $prev = substr($item,0,2);
+            if($prev == '//'){
+                $item = substr($item,2);
+            }
             
             $success = $this->_download_image_remote($item,$config['upload_path']);
             if(!$success){

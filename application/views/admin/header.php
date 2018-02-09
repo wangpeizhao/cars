@@ -2,6 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title><?=!empty($title)?$title.' - ':''?>后台管理</title>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="renderer" content="webkit"> 
+<link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"> 
+<meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1"> 
+<meta name="apple-mobile-web-app-title" content="Title"> 
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+<meta name="HandheldFriendly" content="True"> 
+<meta name="MobileOptimized" content="320"> 
+<meta name="applicable-device" content="pc,mobile"> 
+<meta name="format-detection" content="telephone=no"> 
+<meta http-equiv="Cache-Control" content="no-transform"> 
+<meta http-equiv="Cache-Control" content="no-siteapp"> 
+<link rel="apple-touch-icon" href="/apple-touch-icon-iphone.png"> 
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-ipad.png"> 
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-iphone4.png">
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="<?=site_url('')?>/themes/admin/css/admin.css" />
 <script charset="UTF-8" src="<?=site_url('')?>/themes/common/js/jquery-1.7.2.min.js"></script>
