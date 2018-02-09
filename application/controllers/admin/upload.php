@@ -590,9 +590,32 @@ class Upload extends Fzhao_Controller {
         $fields = $this->_farmat_data($data);
         $fields['term_id'] = $term_id;
 //        ww($fields);
+        $this->collect->trans_start();
         $this->collect->dbInsert('news',$fields);
+        $this->_calculate_term_count($fields);
+        $this->collect->trans_complete();
         
         $this->_doIframe('采集成功');
+    }
+    
+    private function _calculate_term_count($fields,$info = array()){
+        $tags = $fields['tags']?explode(',',$fields['tags']):array();
+        $plusTags = $minusTags = array();
+        if($tags){
+            $originTags = !empty($info['tags'])?explode(',',$info['tags']):array();
+            $plusTags = array_diff($tags,$originTags);
+            $minusTags = array_diff($originTags,$tags);
+        }
+        if($plusTags){
+            foreach($plusTags as $item){
+                $this->collect->dbSet('term',array('count'=>'count + 1'), array('id' => $item));
+            }
+        }
+        if($minusTags){
+            foreach($minusTags as $item){
+                $this->collect->dbSet('term',array('count'=>'count - 1'), array('id' => $item));
+            }
+        }
     }
     
     private function _farmat_data($data){
