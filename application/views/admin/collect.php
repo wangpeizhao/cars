@@ -7,16 +7,16 @@
   <link rel="stylesheet" href="<?=site_url('')?>/themes/common/css/parsley.css">
   <script type="text/javascript">
     function checkForm(){
-      var term_id = $('select[name="term_id"]').val();
-      if(!$.trim(term_id)){
-        alert('分类不能为空');
-        return false;
-      }
-      var URL = $('input[name="url"]').val();
-      if(!$.trim(URL)){
-        alert('URL不能为空');
-        return false;
-      }
+      // var term_id = $('select[name="term_id"]').val();
+      // if(!$.trim(term_id)){
+      //   alert('分类不能为空');
+      //   return false;
+      // }
+      // var URL = $('input[name="url"]').val();
+      // if(!$.trim(URL)){
+      //   alert('URL不能为空');
+      //   return false;
+      // }
     }
 
     function iResultAlter(str,status){
@@ -63,12 +63,19 @@
                   <tr>
                     <th>分类：</th>
                     <td>
-                      <select name="term_id" class="auto">
+                      <select name="term_id" class="auto" required>
                         <option value="" selected>- 请选择分类 -</option>
                         <?php 
                           include('terms.php');
                         ?>
                       </select>
+                      <label style="color:red;">*</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>作者：</th>
+                    <td>
+                      <input type="text" title="作者" required placeholder="作者" pattern="\S" value="<?=ADMIN_USERNAME?>" name="author" class="normal">
                       <label style="color:red;">*</label>
                     </td>
                   </tr>

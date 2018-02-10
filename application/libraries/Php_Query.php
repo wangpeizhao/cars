@@ -19,17 +19,17 @@ class Php_Query {
         include 'phpQuery/phpQuery.php';
         include 'phpQuery/QueryList.php';
 //        include 'phpQuery/DImage.php';
-        phpQuery::$defaultCharset = "gbk";
+//        phpQuery::$defaultCharset = "gbk";
     }
 
-    private function _init($rules) {
+    private function _init($rules,$html) {
         $range = '';
         if(!empty($rules['range'])){
             $range = $rules['range'];
             unset($rules['range']);
         }
         //获取采集对象
-        $this->pq = QueryList::Query($this->url, $rules, $range);
+        $this->pq = QueryList::Query($html?$html:$this->url, $rules, $range);
     }
     
     //输出结果
@@ -44,14 +44,14 @@ class Php_Query {
         return $data;
     }
     
-    private function _rule($rules){
+    private function _rule($rules,$html){
         //下载图片
         if(!empty($rules['DImage'])){
             $this->isDImage = $rules['DImage'];
             unset($rules['DImage']);
         }
         if (!$this->pq) {
-            $this->_init($rules);
+            $this->_init($rules,$html);
         }
     }
 
@@ -61,8 +61,9 @@ class Php_Query {
     }
 
     //setQuery 重新设置选择器，不会再次重复的取抓取一遍目标页面源码，用于重复采集同一个页面多处的内容
-    public function sq($rules) {
-        $this->_rule($rules);
+    public function sq($rules,$html = '') {
+//        ww(QueryList::Query($this->url, $rules)->data);
+        $this->_rule($rules,$html);
         $this->pq->setQuery($rules);
         return $this->_data();
     }

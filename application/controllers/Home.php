@@ -64,5 +64,9 @@ class Home extends Client_Controller {
         $data['hotNews'] = $this->news->getHotNews(10);
         $this->view('home',$data);
     }
+    
+    public function test(){
+        $this->load->view('default/test');
+    }
 
 }

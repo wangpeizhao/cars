@@ -69,7 +69,16 @@ function w($val) {
     error_log(print_r($val, 1));
     exit();
 }
+//$doc = new DOMDocument();
+//$str = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+//"http://www.w3.org/TR/html4/loose.dtd"><html><head><meta http-equiv="Content-Type" content="text/html;charset=gbk"></head><body><div>
+//    <p>23423423423432sfsdf</p>
+//    <p>2018年，宝马在中国市场将有五款新能源汽车销售，包括新款i3、 i8 Roadster（敞篷版）、全新5系插电混动、745e和X5 xDrive45e。其中，宝马沈阳大东工厂生产的全新530Le系插电式混合动力车型，系统综合功率253马力，扭矩420牛·米，百公里加速时间为6.9秒，纯电续航里程达到了61公里（海外版45公里），官方售价为69.86万元。并且，宝马在华首家高压电池工厂已经开业，位于华晨宝马沈阳发动机工厂内，每年可生产3.3万套高压电池组。</p> 
+//</div></body></html>';
+//$result = $doc->loadHTML(mb_convert_encoding($str, 'gbk'));
+//ww($doc);
 
+//ww(file_get_contents('http://www.sohu.com/a/221651157_543764'));
 date_default_timezone_set("Asia/Shanghai");
 //读取域名
 if (isset($_SERVER['HTTP_HOST'])) {
