@@ -19,7 +19,7 @@ class Php_Query {
         include 'phpQuery/phpQuery.php';
         include 'phpQuery/QueryList.php';
 //        include 'phpQuery/DImage.php';
-        phpQuery::$defaultCharset = "gbk";
+//        phpQuery::$defaultCharset = "gbk";
     }
 
     private function _init($rules) {
