@@ -54,16 +54,18 @@
     </div>
 </div>
 
-<div class="hot_focus_right pad_inner">
+<div class="hot_focus_right pad_inner" style="margin-bottom: 1.5rem;">
     <h3><span>热点聚焦</span></h3>
     <div class="inner_con am-cf">
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="https://www.36jr.com/projects">股权投资项目</a>
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="https://www.36jr.com/project/203">普安药房股权投资</a>
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/533801.html">机器翻译</a>
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/tags/yijiaminsu">一家民宿</a>
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/5061409.html">王思聪香蕉体育</a>
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/532777.html">三好网社区</a>
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/p/5035627.html">更美医疗</a>
-        <a data-stat-click="redianjujiao.biaoqian" target="_blank" href="http://36kr.com/tags/feifanwang">非凡网相关报道</a>
+        <a target="_blank" href="https://www.36jr.com/projects">股权投资项目</a>
+        <a target="_blank" href="https://www.36jr.com/project/203">普安药房股权投资</a>
+        <a target="_blank" href="http://36kr.com/p/533801.html">机器翻译</a>
+        <a target="_blank" href="http://36kr.com/tags/yijiaminsu">一家民宿</a>
+        <a target="_blank" href="http://36kr.com/p/5061409.html">王思聪香蕉体育</a>
+        <a target="_blank" href="http://36kr.com/p/532777.html">三好网社区</a>
+        <a target="_blank" href="http://36kr.com/p/5035627.html">更美医疗</a>
+        <a target="_blank" href="http://36kr.com/tags/feifanwang">非凡网相关报道</a>
     </div>
 </div>
+
+<?php include('feedback.php');?>

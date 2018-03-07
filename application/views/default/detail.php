@@ -30,6 +30,78 @@
                             </div>
                         </div>
                     </section>
+
+                    <div class="article-oper">
+                        <div class="article-oper-1 left">
+                            <span class="read-num">阅读 (<em data-role="pv" data-val="$articleStat.pv">2.4万</em>)</span>
+                        </div>
+                        <div class="article-oper-r right">
+                            <span class="uninterested" id="uninterested"><a href="javascript:;" target="_blank" class="uninterested-link">不感兴趣</a>
+                                <div class="uninterested-box" style="display: none;">
+                                    <div class="cort"></div>
+                                    <h4>不感兴趣</h4>
+                                    <ul>
+                                        <li data-val="1" class=""><span class="checkbox-icon"><input type="checkbox"></span>广告软文</li>
+                                        <li data-val="2" class=""><span class="checkbox-icon"><input type="checkbox"></span>重复、旧闻</li>
+                                        <li data-val="3" class=""><span class="checkbox-icon"><input type="checkbox"></span>文章质量差</li>
+                                        <li data-val="4" class=""><span class="checkbox-icon"><input type="checkbox"></span>文字、图片、视频等展示问题</li>
+                                        <li data-val="5" class=""><span class="checkbox-icon"><input type="checkbox"></span>标题夸张、文不对题</li>
+                                        <li data-val="6" class=""><span class="checkbox-icon"><input type="checkbox"></span>与事实不符</li>
+                                        <li data-val="7" class=""><span class="checkbox-icon"><input type="checkbox"></span>低俗色情</li>
+                                        <li data-val="8" class=""><span class="checkbox-icon"><input type="checkbox"></span>欺诈或恶意营销</li>
+                                        <li data-val="9" class=""><span class="checkbox-icon"><input type="checkbox"></span>疑似抄袭</li>
+                                        <li data-val="10" class="otherquestion"><span class="checkbox-icon"><input type="checkbox"></span>其他问题，我要吐槽</li>
+                                    </ul>
+                                    <div class="unia" style="display: none;"><textarea maxlength="500"></textarea></div>
+                                    <div class="btn"><a href="#" target="_blank" class="uninterested-ok">确定</a><span style="display: none;">*请填写原因</span></div>
+                                </div>
+                                <div class="uninterested-no"><div class="cort"></div>请勿重复提交</div>
+                                <div class="unfeedback" style="display: none;"><i class="feedback-icon"></i><p>感谢您的反馈，我们将会减少此类文章的推荐</p></div>
+                            </span>
+                            <a class="complain-link contact-fun"  href="javascript:;"><em class="complain-icon icon"></em>投诉</a>
+                        </div>
+                        <script type="text/javascript">
+                            $(function(){
+                                $('a.uninterested-link').click(function(e){
+                                    $('.uninterested-box').fadeIn();
+                                    stopPropagation(e);
+                                });
+                                document.onclick = function(){
+                                    $(".uninterested-box").fadeOut();
+                                }
+                                $(".uninterested-box").click(function(e){
+                                    stopPropagation(e);
+                                });
+                                $('.article-detail .uninterested-box ul li').click(function(){
+                                    if($(this).hasClass('clk')){
+                                        $(this).removeClass('clk');
+                                        if($(this).hasClass('otherquestion')){
+                                            $('.unia').slideUp();
+                                        }
+                                    }else{
+                                        $(this).addClass('clk');
+                                        if($(this).hasClass('otherquestion')){
+                                            $('.unia').slideDown();
+                                        }
+                                    }
+
+                                });
+
+                                function stopPropagation(e){
+                                    var ev = e || window.event;
+                                    if(ev.stopPropagation){
+                                        ev.stopPropagation();
+                                    }
+                                    else if(window.event){
+                                        window.event.cancelBubble = true;//兼容IE
+                                    }
+                                }
+                            });
+
+                            
+                        </script>
+                    </div>
+
                     <div class="ads_box">
                         <a href="" style="background-image:url(https://pic.36krcnd.com//avatar/201712/18032420/p37snbq34xqdjtl7.jpg)" target="_blank" rel="nofollow"></a>
                     </div>
@@ -73,6 +145,7 @@
                             });
                         </script>
                     </div>
+
                 </div>
             </div>
             <?php if($interested){?>
@@ -98,7 +171,7 @@
         </div><!-- $main --><!-- ^right side --><div class="rightlib">
             <div class="pad_inner">
                 <div class="pin-wrapper" id="pin-wrapper-fixed">
-                    <div class="custom-pin-wrapper">
+                    <div class="custom-pin-wrapper" style="margin-bottom:20px;">
                         <div class="guess-posts-list">
                             <h4>相关文章</h4>
                             <ul>
@@ -177,7 +250,7 @@
                             }
                         });
                     </script>
-
+                    <?php include('feedback.php');?>
                 </div>
             </div>
         </div>

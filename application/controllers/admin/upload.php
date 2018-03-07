@@ -632,9 +632,16 @@ class Upload extends Fzhao_Controller {
         }
         
         foreach($rules as $k=>$item){
+<<<<<<< HEAD
             $data[$k] = $this->query->sq(array($k => $item),$html);
         }
 //        ww($data);
+=======
+            $data[$k] = $this->query->sq(array($k => $item));
+        }
+        //ww($data);
+        
+>>>>>>> 5f0c6ecb6d2bff9885433bd0d7f9ce86162e5ce4
         $fields = $this->_farmat_data($data);
         $fields['term_id'] = $term_id;
         $author && $fields['author'] = $author;

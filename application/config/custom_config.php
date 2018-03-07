@@ -47,5 +47,19 @@ $config['title'] = '人才协会网找回密码邮件';
 $config['sms_text'] = '感谢您使用人才协会网
 				验证码：%validate_num%
 				请前往人才协会网操作下一步';
+
+
+$config['uninterested'] = array(
+    '1' => '广告软文',
+    '2' => '重复、旧闻',
+    '3' => '文章质量差',
+    '4' => '文字、图片、视频等展示问题',
+    '5' => '标题夸张、文不对题',
+    '6' => '与事实不符',
+    '7' => '低俗色情',
+    '8' => '欺诈或恶意营销',
+    '9' => '疑似抄袭',
+    '10' => '其他问题，我要吐槽'
+);
 /* End of file custom_config.php */
 /* Location: ./application/config/custom_config.php */
