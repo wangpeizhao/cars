@@ -145,7 +145,8 @@
     line-height: 24px;
     padding: 0 15px;
     border: 1px solid #68727d;
-    border-radius: 15px;   
+    border-radius: 15px;
+    font-size: 12px;
 }
 .article-detail .fav-wrapper {
     text-align: center;
@@ -605,7 +606,7 @@
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADhSURBVHjaYnz+/Pl/fn5+Bk5OTgZSwPfv3xk+fvzIABBATEC2FYjx69cvojWD1IL0gPQCBBDD////GYCuiHr58uX/379//ycEQGpAaoF6QkF6AQIIbADUkJxXr179//PnD07NIDmQGpBamD6AAIIbADWk6vXr1////v2LoRkkBpIDqUHWAxBAKAZADWl+8+bN/3///sE1g9ggMZAcunqAAMIwAGpI74cPH+AGvH//HqS5F5tagADCagDUkGmfPn36D8IgNi51AAHECDYFC3jx4gU3kMqEcqdLSEh8xaYOIMAA7aRmBdQpoRgAAAAASUVORK5CYII=) no-repeat 0 0
 }
 .article-detail .vCode{
-    padding-left: 17px;
+    padding-left: 40px;
 }
 .article-detail .vCode img{
     display: inline-block;
@@ -620,7 +621,7 @@
 }
 
 .article-detail .input-mode{
-    width:80px;
+    width:85px;
     height: 30px;
     border: 1px #e7e7e7 solid;
     border-radius: 4px;

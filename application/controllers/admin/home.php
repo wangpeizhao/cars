@@ -14,11 +14,7 @@ class Home extends Fzhao_Controller {
 
     function index() {
         $data = array();
-        $data['data']['products'] = $this->system_model->getData(array(
-            'table' => 'products',
-            'conditions' => array('is_valid' => 1),
-            'count' => true,
-        ));
+        $data['data']['products'] = 0;
         $data['data']['news'] = $this->system_model->getData(array(
             'table' => 'news',
             'conditions' => array('isHidden' => '0'),

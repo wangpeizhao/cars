@@ -42,6 +42,14 @@ function fillData(data, currPage) {
             html += '	<td>' + data[i]['email'] + '</td>';
             html += '	<td>' + data[i]['user_ip'] + '</td>';
             html += '	<td>' + data[i]['declare'] + '</td>';
+            html += '   <td>';
+            if(data[i]['attachments']){
+                var attachments = data[i]['attachments'].split(',');
+                for(var n in attachments){
+                    html += '   <a href="javascript:;" class="imgPopover" style="margin-bottom: 5px;"><img src="' + baseUrl+attachments[n] + '" _src="' + baseUrl+attachments[n] + '" class="popover"></a>';
+                }
+            }
+            html += '   </td>';
             html += '	<td>' + (data[i]['is_public'] == 0 ? '<font color="#ff6600">否</font>': '<font color="#339900">是</font>') + '</td>';
             html += '	<td>' + (data[i]['is_shield'] == 0 ? '<font color="#ff6600">否</font>': '<font color="#339900">是</font>') + '</td>';
             html += '	<td>' + (data[i]['replyContent'] ? data[i]['replyContent'] : '') + '</td>';

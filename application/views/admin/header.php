@@ -5,7 +5,7 @@
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 <meta name="renderer" content="webkit"> 
-<link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"> 
+<link href="<?=site_url('favicon.ico')?>" rel="shortcut icon" type="image/vnd.microsoft.icon"> 
 <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1"> 
 <meta name="apple-mobile-web-app-title" content="Title"> 
 <meta name="apple-mobile-web-app-capable" content="yes">

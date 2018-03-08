@@ -582,41 +582,8 @@ class Upload extends Fzhao_Controller {
         $_uri = md5($uris['host']);
         
         //http://auto.ofweek.com/
-        $_rules = array();
-        $_rules[md5('auto.ofweek.com')] = array(
-            'title' => array('.main .article_left>h1','text'),
-            'from' => array('span.laiyuan span','text'),
-            'summary' => array('.simple p','text'),
-            'tags' => array('.hot_read a','text'),
-            'imgs' => array('#articleC p img','src'),
-            'content' => array('#articleC','html'),
-            'SEOKeywords' => array('meta[name="keywords"]','content'),
-            'SEODescription' => array('meta[name="description"]','content'),
-        );
-        $_rules[md5('www.sohu.com')] = array(
-//            'title' => array('.text-title h1','text'),
-            'title' => array('meta[property="og:title"]','content'),
-//            'from' => array('span.laiyuan span','text'),
-//            'summary' => array('.simple p','text'),
-            'tags' => array('.text span.tag a','text'),
-            'imgs' => array('.text article#mp-editor p img','src'),
-            'main' => array('.main','html'),
-            'content' => array('.text #mp-editor','html'),
-            'SEOKeywords' => array('meta[name="keywords"]','content'),
-            'SEODescription' => array('meta[name="description"]','content'),
-        );
-        $_rules[md5('www.cars.com')] = array(
-//            'title' => array('.text-title h1','text'),
-//            'title' => array('meta[property="og:title"]','content'),
-//            'from' => array('span.laiyuan span','text'),
-//            'summary' => array('.simple p','text'),
-//            'tags' => array('.text span.tag a','text'),
-//            'imgs' => array('.text article#mp-editor p img','src'),
-//            'main' => array('.main','html'),
-            'main' => array('div p','html'),
-//            'SEOKeywords' => array('meta[name="keywords"]','content'),
-//            'SEODescription' => array('meta[name="description"]','content'),
-        );
+        $_rules = $this->upload_model->getRules();
+        
         $rules = array();
         if(!empty($_rules[$_uri])){
             $rules = $_rules[$_uri];
@@ -630,21 +597,19 @@ class Upload extends Fzhao_Controller {
         if(in_array($uris['host'],array(''))){
             $html = file_get_contents($url);
         }
-        
-        foreach($rules as $k=>$item){
-<<<<<<< HEAD
-            $data[$k] = $this->query->sq(array($k => $item),$html);
+        try{
+            foreach($rules as $k=>$item){
+                $data[$k] = $this->query->sq(array($k => $item),$html);
+            }
+        }  catch (Exception $e){
+            $this->_doIframe($e->getMessage(), 0);
         }
+        
 //        ww($data);
-=======
-            $data[$k] = $this->query->sq(array($k => $item));
-        }
-        //ww($data);
-        
->>>>>>> 5f0c6ecb6d2bff9885433bd0d7f9ce86162e5ce4
         $fields = $this->_farmat_data($data);
         $fields['term_id'] = $term_id;
         $author && $fields['author'] = $author;
+        $fields['content'] .= $this->upload_model->getStyles($_uri);
 //        ww($fields);
         $this->collect->trans_start();
         $this->collect->dbInsert('news',$fields);
@@ -688,7 +653,10 @@ class Upload extends Fzhao_Controller {
         
         $tags = $data['tags']?array_column($data['tags'],'tags'):array();
         $field['tags'] = $this->_set_tags($tags);
-                
+        
+        $hyperlinks = $data['contentHyperlinks']?array_column($data['contentHyperlinks'],'contentHyperlinks'):array();
+        $field['content'] = $hyperlinks?str_replace($hyperlinks, 'javascript:;', $field['content']):$field['content'];
+
         $imgs = $data['imgs']?array_column($data['imgs'],'imgs'):array();
         $imgsNew = $this->_set_imgs($imgs);
         $field['content'] = $imgsNew?htmlspecialchars(str_replace($imgs, $imgsNew, $field['content'])):$field['content'];

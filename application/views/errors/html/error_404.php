@@ -1,64 +1,116 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="en">
+<!doctype html public "-//w3c//dtd xhtml 1.0 transitional//en" "http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
-<title>404 Page Not Found</title>
+<meta http-equiv="content-type" content="text/html; charset=gbk" />
+<title>您找的页面不存在</title>
 <style type="text/css">
-
-::selection { background-color: #E13300; color: white; }
-::-moz-selection { background-color: #E13300; color: white; }
-
+<!--
 body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
+	padding-right: 0px;
+	padding-left: 35px;
+	padding-bottom: 0px;
+	margin: 0px;
+	font: 12px arial, helvetica, sans-serif;
+	color: #333;
+	padding-top: 35px
 }
 
 a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
+	color: #007ab7;
+	text-decoration: none
 }
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
+a:hover {
+	color: #007ab7;
+	text-decoration: none
 }
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
+a:hover {
+	color: #de1d6a
 }
 
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
+.hidehr {
+	display: none
 }
 
-p {
-	margin: 12px 15px 12px 15px;
+.img404 {
+	padding-right: 0px;
+	padding-left: 0px;
+	background: url('<?= img_url('404_tips.gif')?>') no-repeat left top;
+	float: left;
+	padding-bottom: 0px;
+	margin: 0px;
+	width: 80px;
+	padding-top: 0px;
+	position: relative;
+	height: 90px
 }
+
+h2 {
+	padding-right: 0px;
+	padding-left: 0px;
+	font-siZe: 16px;
+	float: left;
+	padding-bottom: 25px;
+	margin: 0px;
+	width: 80%;
+	line-height: 0;
+	padding-top: 25px;
+	border-bottom: #ccc 1px solid;
+	position: relative
+}
+
+.content {
+	clear: both;
+	padding-right: 0px;
+	padding-left: 0px;
+	font-siZe: 13px;
+	left: 80px;
+	float: left;
+	padding-bottom: 0px;
+	margin: 0px;
+	width: 80%;
+	line-height: 19px;
+	padding-top: 0px;
+	position: relative;
+	top: -30px
+}
+
+.content ul {
+	padding-right: 35px;
+	padding-left: 35px;
+	padding-bottom: 20px;
+	margin: 0px;
+	padding-top: 10px
+}
+
+.show14 ul li {
+	margin-bottom: 5px
+}
+-->
 </style>
 </head>
 <body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
-	</div>
+	<h1 class=hidehr>当前在网站上（<?=site_url('')?>）找不到你要的页面。
+	</h1>
+	<div class=img404></div>
+	<h2>抱歉，找不到您要的页面……</h2>
+	<div class=content>
+		非常的抱歉，并没有找到您需要的页面。最可能的原因是：
+		<ul>
+			<li>地址栏的地址可能是错误的。
+			<li>您的点击链接不存在或者存在错误，请联系管理员解决。</li>
+		</ul>
+		<strong>请点击下面链接返回首页或者继续浏览上一页面</strong>（<a href="<?=site_url('')?>"
+			target="_blank">
+			<?=site_url('')?>
+		</a>）：
+		<div class=show14>
+			<ul>
+				<li><a title="返回站长好站首页" href="<?=site_url('')?>">返回网站首页</a>
+				<li><a title="返回上一个页面" href="javascript:history.back(-1)">返回上一页</a></li>
+			</ul>
+		</div>
+		<span style="visibility: hidden"></span>
 </body>
 </html>

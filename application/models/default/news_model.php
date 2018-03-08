@@ -104,15 +104,20 @@ class News_model extends Fzhao_Model {
         return $_news;
     }
     
-    public function checkRecord($type,$id){
+    public function checkRecord($type,$id,$today = true){
         if(!$id || !$type){
             return false;
         }
+        $ip = real_ip(); 
         $datetime = date('Y-m-d H:i:s',_TIME_ - 3600*24);
+        $conditions = array(array('isHidden'=>'0'),array('oid' => $id),array('ip' => $ip),array('type'=>$type));
+        if($today){
+            $conditions[] = array('create_time>'=>$datetime);
+        }
         $record = $this->getData(array(
             'fields' => 'id,create_time',
             'table' => 'records',
-            '_conditions' => array(array('isHidden'=>'0'),array('oid' => $id),array('type'=>$type),array('create_time>'=>$datetime)),
+            '_conditions' => $conditions,
             'row' => TRUE
         ));
         if(!$record){

@@ -145,5 +145,74 @@ class News_model extends Fzhao_Model {
         ));
         return $result;
     }
+    
+    public function feedback($cond, $isHidden = '0', $type= 'uninterested'){
+        $conditions = array(array('p.isHidden' => $isHidden), array('p.type' => $type), array('p.lang' => _LANGUAGE_));
+        $like = array();
+        if (!empty($cond['search']) && trim($cond['keywords'])) {
+            if(in_array($cond['search'],array('oid'))){
+                $conditions[] = array('p.'.$cond['search'] => $cond['keywords']);
+            }
+        }
+
+        if (!empty($cond['startTime'])) {
+            $conditions[] = array('p.create_time >=' => $cond['startTime']);
+        }
+        if (!empty($cond['endTime'])) {
+            $conditions[] = array('p.create_time <=' => $cond['endTime']);
+        }
+
+        $data = $this->getData(array(
+            'fields' => 'p.*',//,t.name term_name,t.slug
+            'table' => 'records p',
+            '_conditions' => $conditions,
+            'order' => array('p.id', 'desc'),
+            'limit' => array($cond['rows'], $cond['rows'] * ($cond['currPage'] - 1)),
+            'likes' => $like
+        ));
+        $ids = array_filter(array_unique(array_column($data, 'id')));
+        $oids = array_filter(array_unique(array_column($data, 'oid')));
+        $titles = array();
+        $records_ext = array();
+        $others = array();
+        $this->config->load('custom_config');
+        $uninterested_config = $this->config->item('uninterested');
+        if ($oids) {
+            $news = $this->getData(array(
+                'fields' => 'id,title',
+                'table' => 'news',
+                '_conditions' => array(array('isHidden' => '0')),
+                'ins' => array(array('id' => $oids)),
+            ));
+            $titles = array_column($news, 'title', 'id');
+        }
+        if ($oids) {
+            $_exts = $this->getData(array(
+                'fields' => 'oid,tid,content',
+                'table' => 'records_ext',
+                'ins' => array(array('oid' => $ids)),
+            ));//ww($this->last_query());
+            if($_exts){
+                foreach($_exts as $item){
+                    !empty($uninterested_config[$item['tid']]) && $records_ext[$item['oid']][] = $uninterested_config[$item['tid']];
+                    $item['content'] && $others[$item['oid']][] = $item['content'];
+                }
+            }
+        }
+        if($data){
+            foreach ($data as &$item) {
+                $item['title'] = !empty($titles[$item['oid']]) ? $titles[$item['oid']] : '-';
+                $item['detail'] = !empty($records_ext[$item['id']]) ? implode("<br>",$records_ext[$item['id']]) : '-';
+                $item['other'] = !empty($others[$item['id']]) ? implode("<br>",$others[$item['id']]) : '-';
+            }
+        }
+        $count = $this->getData(array(
+            'table' => 'records p',
+            '_conditions' => $conditions,
+            'count' => true,
+            'likes' => $like
+        ));
+        return array('data' => $data, 'count' => $count);
+    }
 
 }

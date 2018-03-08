@@ -22,7 +22,7 @@
 
                     <div class="article-oper">
                         <div class="article-oper-1 left">
-                            <span class="read-num">阅读 (<em><?=$views?>万</em>)</span>
+                            <span class="read-num">阅读 (<em><?=round($views/10000,2)?>万</em>)</span>
                         </div>
                         <div class="article-oper-r right">
                             <span class="uninterested" id="uninterested"><a href="javascript:;" target="_blank" class="uninterested-link">不感兴趣</a>
@@ -30,24 +30,19 @@
                                     <div class="cort"></div>
                                     <h4>不感兴趣</h4>
                                     <ul>
-                                        <li data-val="1" class=""><span class="checkbox-icon"><input type="checkbox"></span>广告软文</li>
-                                        <li data-val="2" class=""><span class="checkbox-icon"><input type="checkbox"></span>重复、旧闻</li>
-                                        <li data-val="3" class=""><span class="checkbox-icon"><input type="checkbox"></span>文章质量差</li>
-                                        <li data-val="4" class=""><span class="checkbox-icon"><input type="checkbox"></span>文字、图片、视频等展示问题</li>
-                                        <li data-val="5" class=""><span class="checkbox-icon"><input type="checkbox"></span>标题夸张、文不对题</li>
-                                        <li data-val="6" class=""><span class="checkbox-icon"><input type="checkbox"></span>与事实不符</li>
-                                        <li data-val="7" class=""><span class="checkbox-icon"><input type="checkbox"></span>低俗色情</li>
-                                        <li data-val="8" class=""><span class="checkbox-icon"><input type="checkbox"></span>欺诈或恶意营销</li>
-                                        <li data-val="9" class=""><span class="checkbox-icon"><input type="checkbox"></span>疑似抄袭</li>
-                                        <li data-val="10" class="otherquestion"><span class="checkbox-icon"><input type="checkbox"></span>其他问题，我要吐槽</li>
+                                        <?php if(!empty($uninterested)){
+                                            foreach($uninterested as $key=>$item){?>
+                                            <li data-val="<?=$key?>" class="<?=$key==10?'otherquestion':''?>"><span class="checkbox-icon"><input type="checkbox"></span><?=$item?></li>
+                                        <?php   }
+                                        }?>
                                     </ul>
-                                    <div class="unia" style="display: none;"><textarea maxlength="500"></textarea></div>
+                                    <div class="unia" style="display: none;"><textarea maxlength="500" name="reason"></textarea></div>
                                     <div class="vCode">
                                         <input type="text" name="vCode" class="input-mode" placeholder="请输入验证码" maxlength="4">
                                         <img src="<?=site_url('')?>themes/common/images/loadding.gif" id="loaddingNote">
-                                        <img src="" onclick="this.src='/home/vCode?'+Math.round(Math.random()*1000000)" id="vCodeImg">
+                                        <img src="" onclick="this.src='/home/vCodeFB?'+Math.round(Math.random()*1000000)" id="vCodeImg">
                                     </div>
-                                    <div class="btn"><a href="#" target="_blank" class="uninterested-ok">确定</a><span style="display: none;">*请填写原因</span></div>
+                                    <div class="btn"><a href="javascript:;" class="uninterested-ok">确定</a><span style="display: none;">*请填写原因</span></div>
                                 </div>
                                 <div class="uninterested-no"><div class="cort"></div>请勿重复提交</div>
                                 <div class="unfeedback" style="display: none;"><i class="feedback-icon"></i><p>感谢您的反馈，我们将会减少此类文章的推荐</p></div>
@@ -56,9 +51,14 @@
                         </div>
                         <script type="text/javascript">
                             $(function(){
+                                var domain = '<?=site_url()?>';
+                                var feedbacked = false;
                                 $('a.uninterested-link').click(function(e){
+                                    if(feedbacked){
+                                        return true;
+                                    }
                                     $('.uninterested-box').fadeIn(function(){
-                                        $('#vCodeImg').attr('src','/home/vCode');
+                                        $('#vCodeImg').attr('src','/home/vCodeFB');
                                         $('#loaddingNote').fadeOut(function(){
                                             $('#vCodeImg').fadeIn();
                                         });
@@ -85,6 +85,58 @@
                                     }
 
                                 });
+                                $('.uninterested-ok').click(function(){
+                                    var clks = $('.article-detail .uninterested-box ul li.clk');
+                                    if(clks.length==0){
+                                        alert('请至少选择一项不感兴趣的原因');
+                                        return false;
+                                    }
+                                    var other = false;
+                                    var tids = [];
+                                    clks.each(function(k,v){
+                                        var val = $(v).attr('data-val');
+                                        tids.push(val);
+                                        if(val == '10'){
+                                            other = true;
+                                        }
+                                    });
+                                    var reason = $.trim($('textarea[name="reason"]').val());
+                                    if(other && !reason){
+                                        $('textarea[name="reason"]').focus();
+                                        alert('请填写“其他问题，我要吐槽”的原因');
+                                        return false;
+                                    }
+                                    if(other && reason.length<10){
+                                        alert('“其他问题，我要吐槽”的原因描述不能低于10个字.');
+                                        return false;
+                                    }
+                                    if(!other){
+                                        reason = '';
+                                    }
+                                    var vCode = $.trim($('input[name="vCode"]').val());
+                                    if(!vCode){
+                                        $('input[name="vCode"]').focus();
+                                        alert('请填写验证码');
+                                        return false;
+                                    }
+                                    var oid = '<?=$id?>';
+                                    $.post(domain+ "/home/feedback",{oid:oid,tids:tids,reason:reason,vCode:vCode}, function(data){
+                                        if(data.code == 1){
+                                            feedbacked = true;
+                                            $('.uninterested-link').text('感谢您的反馈，我们将会减少此类文章的推荐。');
+                                            alert('感谢您的反馈，我们将会减少此类文章的推荐。');
+                                            $(".uninterested-box").fadeOut();
+                                            return true;
+                                        }else if(data.msg){
+                                            alert(data.msg);
+                                            return false;
+                                        }else{
+                                            alert('提交失败,请重试');
+                                            return false;
+                                        }
+                                    },"json");
+                                });
+                                
 
                                 function stopPropagation(e){
                                     var ev = e || window.event;
@@ -242,18 +294,18 @@
                     </div>
                     <script type="text/javascript">
                         $(function(){
-                            var maxHeight = $(document).height();
                             var height = document.getElementById('pin-wrapper-fixed').offsetTop;
                             var top = parseInt($('#pin-wrapper-fixed').css('top'));
                             var fixed = $('#pin-wrapper-fixed').height(); 
                             var footer = $('footer').height();
                             var _top = 0;
                             window.onscroll = function(){
+                                var maxHeight = $(document).height();
                                 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                                // console.log('top:'+top+';scrollTop:'+scrollTop+';height:'+height);
+                                // console.log('maxHeight:'+maxHeight+';fixed:'+fixed+';footer:'+footer+';top:'+top+';scrollTop:'+scrollTop+';height:'+height);
                                 
-                                if(maxHeight-scrollTop<fixed+footer+100){
-                                    _top = (maxHeight-scrollTop) - (fixed+footer+100);
+                                if(maxHeight-scrollTop<fixed+footer){
+                                    _top = (maxHeight-scrollTop) - (fixed+footer);
                                 }else if(scrollTop<=height){
                                     _top = top-scrollTop;
                                 }

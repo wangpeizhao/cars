@@ -533,6 +533,11 @@ class Client_Controller extends My_Controller {
             'company' => 'company'
         );
         $data['foot_terms'] = $this->home_model->getTermByTaxonomy(array('contactUs', 'products', 'sheji', 'cases', 'company')); //ww($data['foot_terms']);
+        
+        $this->config->load('custom_config');
+        $data['uninterested'] = $this->config->item('uninterested');
+        $data['feedback'] = $this->config->item('feedback');
+        
         $this->load->view('default/'.$path, $data);
     }
 

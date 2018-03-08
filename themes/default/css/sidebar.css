@@ -831,9 +831,27 @@ display: block;
 
 .us-pop .box-pic .tt {
     padding-top: 0px;
-    float: none;
-    display: inline-block;
-    vertical-align: middle;
+    float: left;
+    /*display: inline-block;
+    vertical-align: middle;*/
+}
+
+.us-pop .box-pic #mt-file-upload{
+    padding-top: 0px;
+    float: left;
+}
+
+.us-pop .box-pic .preview {
+    padding-top: 0px;
+    float: left;
+    height: 30px;
+    overflow: hidden;
+}
+.us-pop .box-pic .preview img{
+    width: 80px;
+    height: auto;
+    margin-left: 10px;
+    float: left;
 }
 
 .us-pop .add-file {
@@ -841,10 +859,10 @@ display: block;
     width: 70px;
     height: 35px;
     position: relative;
-    /*float: left;*/
+    float: left;
     /*margin-top: 5px;*/
-    display: inline-block;
-    vertical-align: middle;
+    /*display: inline-block;
+    vertical-align: middle;*/
     cursor: pointer;
 }
 

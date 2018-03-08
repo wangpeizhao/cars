@@ -116,6 +116,7 @@
 				<th width="12%">用户Email</th>
 				<th width="8%">用户IP</th>
 				<th width="20%">留言内容</th>
+				<th width="8%">附件</th>
 				<th width="3%">公开</th>
 				<th width="3%">屏蔽</th>
 				<th width="13%">管理员回复</th>
@@ -136,6 +137,7 @@
 			</select>
 		</div>
 	</div>
+	<?php include('popover.php');?>
 <!-- 引入底部-->
 <?php include('footer.php');?>
 <!-- /引入底部-->

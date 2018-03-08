@@ -80,6 +80,7 @@ class Home extends Client_Controller {
         $tid = intval($this->input->post('tid', true));
         $detail = trim($this->input->post('detail', true));
         $contact = trim($this->input->post('contact', true));
+        $attachments = trim($this->input->post('attachments', true));
         if(!$detail){
             errorOutput('请填写描述');
         }
@@ -95,6 +96,7 @@ class Home extends Client_Controller {
         }else{
             $data['phone'] = $contact;
         }
+        $data['attachments'] = $attachments;
         $data['tid'] = $tid;
         $data['declare'] = $detail;
         $data['user_ip'] = real_ip();
@@ -105,6 +107,58 @@ class Home extends Client_Controller {
 //            $data['username'] = $_SESSION['memberInfo']['nickname'];
 //        }
         $result = $this->admin->dbInsert('comments',$data);
+        if ($result) {
+            successOutput('提交成功');
+        } else {
+            errorOutput('提交失败');
+        }
+    }
+    
+    public function feedback(){
+        if (!IS_POST) {
+            show_404();
+        }
+        $this->_checkVCode('VerifyCodeCommentFB');
+        $tids = $this->input->post('tids', true);
+        $oid = intval($this->input->post('oid', true));
+        $reason = trim($this->input->post('reason', true));
+        if(!$tids){
+            errorOutput('请至少选择一项不感兴趣的原因');
+        }
+        if(in_array('10',$tids) && !$reason){
+            errorOutput('请填写“其他问题，我要吐槽”的原因');
+        }
+        if(in_array('10',$tids) && strlen($reason)<10){
+            errorOutput('“其他问题，我要吐槽”的原因描述不能低于10个字.');
+        }
+        $data = $this->news->getRowById($oid);
+        $this->verify($data);
+        $checkRecord = $this->news->checkRecord('uninterested',$data['id'],false);
+        if($checkRecord){
+            errorOutput('已收到过您的反馈(^-^),请勿重复提交,期待您的继续关注.');
+        }
+        $this->admin->trans_start();
+        $record = array(
+            'type' => 'uninterested',
+            'oid' => $data['id'],
+            'ip' => real_ip(),
+            'create_time' => _DATETIME_
+        );
+        $result = $this->admin->dbInsert('records',$record,true);
+        if($result){
+            $records_ext = array();
+            foreach($tids as $item){
+                $records_ext[] = array(
+                    'oid' => $result,
+                    'tid' => $item,
+                    'content' => $item == '10'?$reason:null
+                );
+            }
+            if($records_ext){
+                $this->admin->dbInsertBatch('records_ext',$records_ext);
+            }
+        }
+        $this->admin->trans_complete();
         if ($result) {
             successOutput('提交成功');
         } else {
@@ -125,6 +179,18 @@ class Home extends Client_Controller {
     }
 
     /**
+     * vCode
+     * 简介：生成验证码
+     * 参数：NULL
+     * 返回：Array
+     * 作者：Fzhao
+     * 时间：2014-1-24
+     */
+    public function vCodeFB() {
+        $this->SetCode(4, 12, 85, 30, 'VerifyCodeCommentFB');
+    }
+
+    /**
      * checkVCode
      * 简介：验证验证码
      * 参数：NULL
@@ -132,12 +198,12 @@ class Home extends Client_Controller {
      * 作者：Fzhao
      * 时间：2014-1-24
      */
-    private function _checkVCode() {
+    private function _checkVCode($key = 'VerifyCodeComment') {
         $vCode = $this->input->post('vCode',true);
-        if (!$this->session->userdata('VerifyCodeComment')) {
+        if (!$this->session->userdata($key)) {
             errorOutput('验证码已过期');
         }
-        if ($this->session->userdata('VerifyCodeComment') != strtolower($vCode)) {
+        if ($this->session->userdata($key) != strtolower($vCode)) {
             errorOutput('验证码不正确');
         }
     }
@@ -183,8 +249,37 @@ class Home extends Client_Controller {
         imagedestroy($im);
     }
     
-    public function test(){
-        $this->load->view('default/test');
+//    public function test(){
+//        $this->load->view('default/test');
+//    }
+    
+    public function feedbackUpload(){
+        if(!IS_POST){
+            show_404();
+        }
+        $index = md5(real_ip().date('YmdH'));
+        $status = $this->session->userdata($index);
+        if($status>=20){
+            $this->_doIframe('操作过于频繁,请稍后再试', 0);
+        }
+        $this->session->set_userdata($index, intval($status)+1);
+        
+        $directory = implode("/", array(date('Y'), date('m'), date('d')));
+        $config['upload_path'] = 'uploads/feedback/' . $directory;
+        createFolder('uploads/feedback/' . $directory);
+        //上传图片
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size'] = '1024';
+        $config['encrypt_name'] = true; //是否重命名文件。如果该参数为TRUE，上传的文件将被重命名为随机的加密字符串。
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload('feedbackFile')) {
+            $error = $this->upload->display_errors();
+            $this->_doIframe($error, 0);
+        }
+        $success = $this->upload->data();
+        $_path = '/'.$config['upload_path'] . '/' . $success['file_name'];
+        $this->_doIframe($_path);
     }
 
 }

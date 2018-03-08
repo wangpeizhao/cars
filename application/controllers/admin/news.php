@@ -303,4 +303,27 @@ class News extends Fzhao_Controller {
         }
     }
 
+    /**
+     * feedback
+     * 简介：用户反馈
+     * 参数：NULL
+     * 返回：Array
+     * 作者：Parker
+     * 时间：2018-03-8
+     */
+    function feedback() {
+        $data = array();
+        if (IS_POST) {
+            $data = $this->input->post(null, true);
+            $data['currPage'] = getPages();
+            $data['rows'] = getPageSize();
+            $result = $this->admin->feedback($data);
+            $this->doJson($result);
+        } else {
+            $data['title'] = $this->title.'-用户反馈';
+            $data['_title_'] = $this->title;
+            $this->view('admin/feedback', $data);
+        }
+    }
+
 }

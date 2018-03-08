@@ -1,8 +1,11 @@
+<?php $_class_ = get_style_class();?>
 <div class="hot_contact_right pad_inner">
     <ul class="pages-fun">
         <li class="contact-fun" data-role="contract-btn"><a href="javascript:;"><em class="contact-icon icon"></em>联系我们</a></li>
-        <li class="back-top" data-role="go_top" style=""><a href="javascript:void(0)" style="display: block;line-height:90px;">Top</a></li>
+        <li class="back-top" data-role="go_top" style=""><a href="javascript:;" style="display: block;line-height:90px;">Top↑</a></li>
+        <?php if($_class_=='_p'){?>
         <li><a href="<?=site_url('/')?>" style="display: block;line-height:90px;">回到首页</a></li>
+        <?php }?>
     </ul>
 </div>
 
@@ -15,14 +18,11 @@
                 <div class="box box-problem _clear">
                     <h4>您想要解决的问题（必填）</h4>
                     <ul class="radio-sel">
-                        <li data-id="1" class="clk"><span class="radio-icon"><input type="radio"></span>网站功能问题反馈</li>
-                        <li data-id="2" class=""><span class="radio-icon"><input type="radio"></span>内容问题反馈</li>
-                        <li data-id="3" class=""><span class="radio-icon"><input type="radio"></span>侵权投诉</li>
-                        <!-- <li data-id="4" class=""><span class="radio-icon"><input type="radio"></span>产品合作</li> -->
-                        <!-- <li data-id="5" class=""><span class="radio-icon"><input type="radio"></span>商务、媒体合作</li> -->
-                        <!-- <li data-id="6" class=""><span class="radio-icon"><input type="radio"></span>公众平台相关问题</li> -->
-                        <li data-id="7" class=""><span class="radio-icon"><input type="radio"></span>广告合作与投诉</li>
-                        <li data-id="8" class=""><span class="radio-icon"><input type="radio"></span>其他</li>
+                        <?php if(!empty($feedback)){
+                        	foreach($feedback as $key=>$item){?>
+                        	<li data-id="<?=$key?>" class="<?=$key==1?'clk':''?>"><span class="radio-icon"><input type="radio"></span><?=$item?></li>
+                        <?php	}
+                        }?>
                     </ul>
                 </div>
                 <div class="box box-need _clear">
@@ -31,12 +31,11 @@
                     <span style="color:#ff0000;display: none" class="err-info">必须填写</span>
                 </div>
                 <div class="box box-pic _clear">
-                    <span class="tt">添加图片：</span><form id="mt-file-upload">
-                        <span class="add-file"><input type="file" class="myFile" name="file" accept="image/jpg,image/jpeg,image/png"><a href="#" class="file-btn">点击上传</a></span>
-                        <div class="preview" data-role="img-pool">
-                        </div>
+                    <span class="tt">添加图片：</span>
+                    <form id="mt-file-upload" action="/home/feedbackUpload" method="post" target="ajaxifr" enctype="multipart/form-data">
+                        <span class="add-file"><input type="file" class="myFile" name="feedbackFile" accept="image/jpg,image/jpeg,image/png"><a href="#" class="file-btn">点击上传</a></span>
                     </form>
-                    <span class="err-info upload-err-info">图片最多上传5张</span>          
+                    <span class="preview"></span>
                 </div>
                 <div class="box box-mode _clear">
                     <span class="tt">您的联系方式：</span><input type="text" name="contact" class="input-mode" placeholder="微信/QQ/手机/邮箱，方便工作人员与您取得联系。">
@@ -91,6 +90,20 @@
             $(this).addClass('clk').siblings().removeClass('clk');
         });
 
+        $('input.myFile').click(function(){
+        	if($('.preview img').length>=5){
+        		alert('图片最多上传5张');
+        		return false;
+        	}
+        });
+        $('input.myFile').change(function(){
+        	var val = $(this).val();
+        	if(!val){
+        		return false;
+        	}
+        	$('#mt-file-upload').submit();
+        });
+
         $('.us-btn-ok').click(function(){
             $(this).blur();
             var _P = $('.popup_bg');
@@ -128,10 +141,10 @@
                                 _P.find('input[name="contact"]').val('');
                                 _P.find('input[name="vCode"]').val('');
                                 _P.find('textarea[name="detail"]').val('');
-                                _P.find(".preview").val('');
+                                _P.find(".preview").html('');
                             });
                             
-                        },500);
+                        },1000);
                     }else if(data.msg){
                         _P.find('.tips').html('<font color="#ff6600">'+data.msg+'</font>');
                     }else{
@@ -142,9 +155,23 @@
                 alert(e.message);
             }
         });
+
+		$('.back-top').click(function(){
+			document.getElementById("header").scrollIntoView();
+		});
     });
 
-    function checkForm(){
-
+    function iResultAlter(str,status){
+    	if(status == '1'){
+    		$('.preview').append('<img src="'+str+'">');
+    		var val = [];
+    		$('.preview img').each(function(k,v){
+    			val.push($(this).attr('src'));
+    		});
+    		$('input[name="attachments"]').val(val.length?val.join(','):'');
+    		return true;
+    	}
+    	alert(str);
+    	return false;
     }
 </script>
