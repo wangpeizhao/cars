@@ -61,5 +61,15 @@ $config['uninterested'] = array(
     '9' => '疑似抄袭',
     '10' => '其他问题，我要吐槽'
 );
+$config['feedback'] = array(
+    '1' => '网站功能问题反馈',
+    '2' => '内容问题反馈',
+    '3' => '侵权投诉',
+    '4' => '产品合作',
+    '5' => '商务、媒体合作',
+    '6' => '公众平台相关问题',
+    '7' => '广告合作与投诉',
+    '8' => '其他'
+);
 /* End of file custom_config.php */
 /* Location: ./application/config/custom_config.php */

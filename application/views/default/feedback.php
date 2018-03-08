@@ -44,7 +44,7 @@
                 <div class="box box-mode _clear">
                     <span class="tt">验证码：</span>
                     <img src="<?=site_url('')?>themes/common/images/loadding.gif" id="loadding_note" style="width:16px;height:16px;margin:3px 0 0 5px;">
-                    <img src="" onclick="this.src='/home/vCode?'+Math.round(Math.random()*1000000)" id="_vCode" style="display:none;">
+                    <img src="" onclick="this.src='/home/vCode?'+Math.round(Math.random()*1000000)" id="_vCode" style="display:none;margin-left:4px;">
                     <input type="text" name="vCode" class="input-mode" placeholder="请输入验证码" style="width:100px;" maxlength="4">
                 </div>
                 <div class="btns">

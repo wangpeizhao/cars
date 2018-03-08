@@ -19,21 +19,10 @@
                     <div class="content-wrapper">
                         <div><?=html_entity_decode($content)?></div>
                     </div>
-                    <!-- 声明 -->
-                    <section class="article-footer-label">
-                        <div>
-                            <div>
-                                <div>
-                                    原创文章，作者：<?=$author?> 杜。转载或内容合作请点击<a href="javascript:;" target="_blank">转载说明</a>，违规转载法律必究。
-                                </div>
-                                <div>寻求报道，<a href="javascript:;" target="_blank">请点击这里</a></div>
-                            </div>
-                        </div>
-                    </section>
 
                     <div class="article-oper">
                         <div class="article-oper-1 left">
-                            <span class="read-num">阅读 (<em data-role="pv" data-val="$articleStat.pv">2.4万</em>)</span>
+                            <span class="read-num">阅读 (<em><?=$views?>万</em>)</span>
                         </div>
                         <div class="article-oper-r right">
                             <span class="uninterested" id="uninterested"><a href="javascript:;" target="_blank" class="uninterested-link">不感兴趣</a>
@@ -53,6 +42,11 @@
                                         <li data-val="10" class="otherquestion"><span class="checkbox-icon"><input type="checkbox"></span>其他问题，我要吐槽</li>
                                     </ul>
                                     <div class="unia" style="display: none;"><textarea maxlength="500"></textarea></div>
+                                    <div class="vCode">
+                                        <input type="text" name="vCode" class="input-mode" placeholder="请输入验证码" maxlength="4">
+                                        <img src="<?=site_url('')?>themes/common/images/loadding.gif" id="loaddingNote">
+                                        <img src="" onclick="this.src='/home/vCode?'+Math.round(Math.random()*1000000)" id="vCodeImg">
+                                    </div>
                                     <div class="btn"><a href="#" target="_blank" class="uninterested-ok">确定</a><span style="display: none;">*请填写原因</span></div>
                                 </div>
                                 <div class="uninterested-no"><div class="cort"></div>请勿重复提交</div>
@@ -63,7 +57,12 @@
                         <script type="text/javascript">
                             $(function(){
                                 $('a.uninterested-link').click(function(e){
-                                    $('.uninterested-box').fadeIn();
+                                    $('.uninterested-box').fadeIn(function(){
+                                        $('#vCodeImg').attr('src','/home/vCode');
+                                        $('#loaddingNote').fadeOut(function(){
+                                            $('#vCodeImg').fadeIn();
+                                        });
+                                    });
                                     stopPropagation(e);
                                 });
                                 document.onclick = function(){
@@ -101,6 +100,18 @@
                             
                         </script>
                     </div>
+
+                    <!-- 声明 -->
+                    <section class="article-footer-label">
+                        <div>
+                            <div>
+                                <div>
+                                    原创文章，作者：<?=$author?> 杜。转载或内容合作请点击<a href="javascript:;" target="_blank">转载说明</a>，违规转载法律必究。
+                                </div>
+                                <div>寻求报道，<a href="javascript:;" target="_blank">请点击这里</a></div>
+                            </div>
+                        </div>
+                    </section>
 
                     <div class="ads_box">
                         <a href="" style="background-image:url(https://pic.36krcnd.com//avatar/201712/18032420/p37snbq34xqdjtl7.jpg)" target="_blank" rel="nofollow"></a>
