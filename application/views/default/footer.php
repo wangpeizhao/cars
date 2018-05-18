@@ -96,17 +96,33 @@
 	    	<?php include('dynamic/footer_detail.php');?>
 	    </div>
 	</footer>
-	<script type="text/javascript"> 
-		// document.body.oncopy = function(){ 
-		//   setTimeout( 
-		//     function (){ 
-		//     var text = window.clipboardData.getData("text"); 
-		//     if(text){ 
-		//       text = text + "\r\n本文来自: (<?=site_url('/')?>) 详细出处参考："+location.href; 
-		//       window.clipboardData.setData("text", text); 
-		//     } 
-		//   },100) 
-		// } 
-	</script>
+	<script>
+        function setClipboardText(event){ 
+            event.preventDefault();
+            var node = document.createElement('div');
+            node.appendChild(window.getSelection().getRangeAt(0).cloneContents());
+            var copyright = "\r\n\r\n本文来自: (<?=site_url('')?>) \r\n详细出处请参考：" + location.href;
+            var _htmlData = node.innerHTML;
+            var _length = node.innerText.length;
+            var htmlData = '<div>'
+            	+ _htmlData
+            	+ (_length >= 100?copyright:'')
+                + '</div>';
+            var _textData = window.getSelection().getRangeAt(0);
+            var textData = _textData
+            	+ (_length >= 100?copyright:'');
+            if(event.clipboardData){  
+                event.clipboardData.setData("text/html", htmlData);
+                event.clipboardData.setData("text/plain", textData);
+            }
+            else if(window.clipboardData){ 
+                return window.clipboardData.setData("text", textData);  
+            }  
+        };  
+        var obj = document.getElementById("app");
+        obj.addEventListener('copy',function(e){
+            setClipboardText(e);
+        });
+    </script>
 	</body>
 </html>
